@@ -10,6 +10,13 @@ namespace CwRetail.Data.Repositories.Implementation
 {
     public class ProductRepository : IProductRepository
     {
+        private readonly string _connectionString;
+
+        public ProductRepository(string connectionString)
+        { 
+            _connectionString = connectionString;
+        }
+
         public IEnumerable<Product> Get()
         {
             try

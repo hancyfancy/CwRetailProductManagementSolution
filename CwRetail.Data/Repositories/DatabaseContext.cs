@@ -10,14 +10,14 @@ namespace CwRetail.Data.Repositories
 {
     public class DatabaseContext
     {
-        private static readonly IProductRepository _products;
+        private readonly IProductRepository _products;
 
-        static DatabaseContext()
+        public DatabaseContext(string connectionString)
         {
-            _products = new ProductRepository();
+            _products = new ProductRepository(connectionString);
         }
 
-        public static IProductRepository Products
+        public IProductRepository Products
         { 
             get { return _products; }
         }
