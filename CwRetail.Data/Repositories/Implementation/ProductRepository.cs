@@ -9,5 +9,6 @@ namespace CwRetail.Data.Repositories.Implementation
 {
     public class ProductRepository : IProductRepository
     {
+        
     }
 }

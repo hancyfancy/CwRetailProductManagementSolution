@@ -1,6 +1,11 @@
-﻿using CwRetail.Api.Enumerations;
+﻿using CwRetail.Data.Enumerations;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace CwRetail.Api.Models
+namespace CwRetail.Data.Models
 {
     public class Product
     {

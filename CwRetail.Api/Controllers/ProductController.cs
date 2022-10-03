@@ -1,4 +1,4 @@
-using CwRetail.Api.Models;
+using CwRetail.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CwRetail.Api.Controllers
