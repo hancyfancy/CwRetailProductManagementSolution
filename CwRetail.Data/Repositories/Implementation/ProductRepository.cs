@@ -1,4 +1,5 @@
-﻿using CwRetail.Data.Repositories.Interface;
+﻿using CwRetail.Data.Models;
+using CwRetail.Data.Repositories.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,16 @@ namespace CwRetail.Data.Repositories.Implementation
 {
     public class ProductRepository : IProductRepository
     {
-        
+        public IEnumerable<Product> Get()
+        {
+            try
+            {
+                return null;
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
     }
 }
