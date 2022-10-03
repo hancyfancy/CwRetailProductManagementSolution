@@ -1,5 +1,5 @@
 -- create schemas
-CREATE SCHEMA production;
+CREATE SCHEMA production
 GO
 
 -- create tables
@@ -9,7 +9,7 @@ CREATE TABLE production.products (
 	Price DECIMAL (18,2) NOT NULL,
 	Type NVARCHAR (50) NOT NULL,
 	Active BIT NOT NULL
-);
+)
 GO
 
 -- create stored procedures
