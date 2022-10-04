@@ -33,5 +33,20 @@ namespace CwRetail.Api.Controllers
                 throw;
             }
         }
+
+        [HttpPost(Name = "Create")]
+        public int Create([FromBody] Product product)
+        {
+            try
+            {
+                return _context.Products.Insert(product);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "ProductReadController_Get");
+
+                throw;
+            }
+        }
     }
 }

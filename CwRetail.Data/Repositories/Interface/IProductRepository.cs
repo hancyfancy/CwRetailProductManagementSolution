@@ -10,5 +10,7 @@ namespace CwRetail.Data.Repositories.Interface
     public interface IProductRepository
     {
         IEnumerable<Product> Get();
+
+        int Insert(Product product);
     }
 }
