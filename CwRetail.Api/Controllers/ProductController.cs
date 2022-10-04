@@ -1,6 +1,11 @@
+using CwRetail.Api.Extensions;
 using CwRetail.Data.Models;
 using CwRetail.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace CwRetail.Api.Controllers
 {
@@ -40,6 +45,23 @@ namespace CwRetail.Api.Controllers
             try
             {
                 return _context.Products.Insert(product);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "ProductReadController_Get");
+
+                throw;
+            }
+        }
+
+        [HttpPut(Name = "Edit")]
+        public int Edit([FromHeader] long id, [FromBody] JsonElement product)
+        {
+            try
+            {
+                string json = product.GetRawText();
+
+                return _context.Products.Update(id, json);
             }
             catch (Exception e)
             {

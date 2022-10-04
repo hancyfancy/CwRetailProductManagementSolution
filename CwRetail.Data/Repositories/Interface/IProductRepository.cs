@@ -12,5 +12,7 @@ namespace CwRetail.Data.Repositories.Interface
         IEnumerable<Product> Get();
 
         int Insert(Product product);
+
+        int Update(long id, string product);
     }
 }

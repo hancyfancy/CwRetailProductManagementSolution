@@ -1,4 +1,5 @@
-﻿using CwRetail.Data.Models;
+﻿using CwRetail.Data.Extensions;
+using CwRetail.Data.Models;
 using CwRetail.Data.Repositories.Interface;
 using Dapper;
 using System;
@@ -71,6 +72,34 @@ namespace CwRetail.Data.Repositories.Implementation
                     Price = product.Price,
                     Type = product.Type.ToString(),
                     Active = product.Active
+                });
+
+                _connection.Close();
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        public int Update(long id, string product)
+        {
+            try
+            {
+                _connection.Open();
+
+                string sql = $@"UPDATE
+	                                production.products
+                                SET
+	                                @Properties
+                                WHERE
+                                    Id = @Id";
+                var result = _connection.Execute(sql, new
+                {
+                    Properties = product.AsUpdateSql(),
+                    Id = id
                 });
 
                 _connection.Close();
