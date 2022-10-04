@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CwRetail.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]/[action]")]
     public class ProductController : ControllerBase
     {
         private readonly ILogger<ProductController> _logger;
