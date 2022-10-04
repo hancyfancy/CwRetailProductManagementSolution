@@ -8,6 +8,6 @@ namespace CwRetail.Data.Repositories
 {
     public static class ConnectionStrings
     {
-        public static string Test = "Data Source=localhost;Initial Catalog=CwRetail;Persist Security Info=true;User ID=some_user; Password = some_password";
+        public static string Test = "Data Source=localhost;Initial Catalog=CwRetail;Persist Security Info=true;User ID=TestUser; Password = ABC123";
     }
 }
