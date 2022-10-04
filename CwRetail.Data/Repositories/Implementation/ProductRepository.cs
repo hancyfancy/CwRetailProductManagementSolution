@@ -93,12 +93,11 @@ namespace CwRetail.Data.Repositories.Implementation
                 string sql = $@"UPDATE
 	                                production.products
                                 SET
-	                                @Properties
+	                                {product.AsUpdateSql()}
                                 WHERE
                                     Id = @Id";
                 var result = _connection.Execute(sql, new
                 {
-                    Properties = product.AsUpdateSql(),
                     Id = id
                 });
 
