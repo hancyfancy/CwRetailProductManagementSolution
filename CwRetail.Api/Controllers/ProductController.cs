@@ -1,4 +1,3 @@
-using CwRetail.Api.Extensions;
 using CwRetail.Data.Models;
 using CwRetail.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -62,6 +61,21 @@ namespace CwRetail.Api.Controllers
                 string json = product.GetRawText();
 
                 return _context.Products.Update(id, json);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "ProductReadController_Get");
+
+                throw;
+            }
+        }
+
+        [HttpDelete(Name = "Remove")]
+        public int Remove([FromHeader] long id)
+        {
+            try
+            {
+                return _context.Products.Delete(id);
             }
             catch (Exception e)
             {

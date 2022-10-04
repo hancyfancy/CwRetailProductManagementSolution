@@ -110,5 +110,30 @@ namespace CwRetail.Data.Repositories.Implementation
                 throw;
             }
         }
+
+        public int Delete(long id)
+        {
+            try
+            {
+                _connection.Open();
+
+                string sql = $@"DELETE FROM
+	                                production.products
+                                WHERE
+	                                Id = @Id";
+                var result = _connection.Execute(sql, new
+                {
+                    Id = id
+                });
+
+                _connection.Close();
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
     }
 }
