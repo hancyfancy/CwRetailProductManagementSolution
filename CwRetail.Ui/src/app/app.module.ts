@@ -4,10 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
-import { AppComponent } from './app.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductComponent } from './product/product.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   imports: [
@@ -20,12 +20,12 @@ import { NotFoundComponent } from './not-found/not-found.component';
       { path: '', redirectTo: '/products', pathMatch: 'full' },
       { path: '**', component: NotFoundComponent }
     ]),
+    AppRoutingModule,
   ],
   declarations: [
-    AppComponent,
     ProductComponent,
     ProductDetailComponent
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [ProductComponent]
 })
 export class AppModule { }
