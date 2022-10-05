@@ -9,7 +9,7 @@ using System.Text.Json.Serialization;
 
 namespace CwRetail.Api.Controllers
 {
-    [EnableCors("_permittedSpecificOrigins")]
+    [System.Web.Http.Cors.EnableCors("*", "*", "*")]
     [ApiController]
     [Route("api/[controller]/[action]")]
     public class ProductController : ControllerBase

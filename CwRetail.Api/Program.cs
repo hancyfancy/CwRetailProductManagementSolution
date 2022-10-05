@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Cors;
+
 var permittedSpecificOrigins = "_permittedSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,13 +15,12 @@ builder.Services.AddCors(options =>
         {
             policy.AllowAnyOrigin()
             .AllowAnyHeader()
-            .AllowAnyMethod();
+            .AllowAnyMethod()
+            .WithExposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Methods");
         });
 });
 
 var app = builder.Build();
-
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
