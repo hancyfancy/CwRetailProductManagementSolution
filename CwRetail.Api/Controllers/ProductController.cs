@@ -1,5 +1,6 @@
 using CwRetail.Data.Models;
 using CwRetail.Data.Repositories;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -8,6 +9,7 @@ using System.Text.Json.Serialization;
 
 namespace CwRetail.Api.Controllers
 {
+    [EnableCors("_permittedSpecificOrigins")]
     [ApiController]
     [Route("api/[controller]/[action]")]
     public class ProductController : ControllerBase
