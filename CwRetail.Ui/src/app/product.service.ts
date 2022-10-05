@@ -9,7 +9,7 @@ import { Product } from './product';
 @Injectable({ providedIn: 'root' })
 export class ProductService {
 
-  private domain : string = 'https://localhost:7138';
+  private domain: string = 'http://localhost:5138';
   private urlPrefix : string = this.domain + '/api/Product';
 
   httpOptions = {
