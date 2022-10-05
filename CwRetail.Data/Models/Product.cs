@@ -9,6 +9,8 @@ namespace CwRetail.Data.Models
 {
     public class Product
     {
+        public long Id { get; set; }
+
         //max 100 characters
         public string Name { get; set; }
 

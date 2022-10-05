@@ -28,6 +28,7 @@ namespace CwRetail.Data.Repositories.Implementation
                 _connection.Open();
 
                 string sql = $@"SELECT 
+                                        p.Id,
 	                                    p.Name, 
 	                                    p.Price, 
 	                                    p.Type, 
