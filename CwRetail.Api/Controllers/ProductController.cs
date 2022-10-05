@@ -32,7 +32,7 @@ namespace CwRetail.Api.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "ProductReadController_Get");
+                _logger.LogError(e, "ProductController_Get");
 
                 throw;
             }
@@ -47,7 +47,7 @@ namespace CwRetail.Api.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "ProductReadController_Get");
+                _logger.LogError(e, "ProductController_Create");
 
                 throw;
             }
@@ -64,7 +64,7 @@ namespace CwRetail.Api.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "ProductReadController_Get");
+                _logger.LogError(e, "ProductController_Edit");
 
                 throw;
             }
@@ -79,7 +79,7 @@ namespace CwRetail.Api.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "ProductReadController_Get");
+                _logger.LogError(e, "ProductController_Remove");
 
                 throw;
             }
