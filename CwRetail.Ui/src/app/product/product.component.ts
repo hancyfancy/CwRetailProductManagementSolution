@@ -1,12 +1,7 @@
-import { Component, OnInit, NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-import { Product } from '../product';
+import { Component, OnInit } from '@angular/core';
 
-@NgModule({
-  imports: [
-    HttpClientModule,
-  ],
-})
+import { Product } from '../product';
+import { ProductService } from '../product.service';
 
 @Component({
   selector: 'app-product',
@@ -14,13 +9,31 @@ import { Product } from '../product';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
+  private products: Product[] = [];
 
-  products: Product[] = [];
-
-  constructor() { }
+  constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
+    this.getProducts();
   }
 
+  getProducts(): void {
+    this.productService.getProducts()
+      .subscribe(products => this.products = products);
+  }
+
+  add(name: string, price: number, type: string, active: boolean): void {
+    name = name.trim();
+    if (!name) { return; }
+    this.productService.addProduct({ name, price, type, active } as Product)
+      .subscribe(product => {
+        this.products.push(product);
+      });
+  }
+
+  delete(product: Product): void {
+    this.products = this.products.filter(p => p !== product);
+    this.productService.deleteProduct(product.id).subscribe();
+  }
 
 }
