@@ -5,7 +5,9 @@ VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CwRetail.Api", "CwRetail.Api\CwRetail.Api.csproj", "{848AAF8E-BB24-488E-879D-4BFF216F5CEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CwRetail.Data", "CwRetail.Data\CwRetail.Data.csproj", "{EBF63397-270F-4C65-ABAF-BF5D20E580BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CwRetail.Data", "CwRetail.Data\CwRetail.Data.csproj", "{EBF63397-270F-4C65-ABAF-BF5D20E580BF}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "CwRetail.Ui", "CwRetail.Ui\CwRetail.Ui.esproj", "{71782B99-3F46-4B36-A683-F13CCF961F05}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,12 @@ Global
 		{EBF63397-270F-4C65-ABAF-BF5D20E580BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBF63397-270F-4C65-ABAF-BF5D20E580BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBF63397-270F-4C65-ABAF-BF5D20E580BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71782B99-3F46-4B36-A683-F13CCF961F05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71782B99-3F46-4B36-A683-F13CCF961F05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71782B99-3F46-4B36-A683-F13CCF961F05}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{71782B99-3F46-4B36-A683-F13CCF961F05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71782B99-3F46-4B36-A683-F13CCF961F05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71782B99-3F46-4B36-A683-F13CCF961F05}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
