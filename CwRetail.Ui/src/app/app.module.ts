@@ -14,17 +14,12 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot([
-      { path: 'products', component: ProductComponent },
-      { path: 'details', component: ProductDetailComponent },
-      { path: '', redirectTo: '/products', pathMatch: 'full' },
-      { path: '**', component: NotFoundComponent }
-    ]),
     AppRoutingModule,
   ],
   declarations: [
     ProductComponent,
-    ProductDetailComponent
+    ProductDetailComponent,
+    NotFoundComponent
   ],
   bootstrap: [ProductComponent]
 })
