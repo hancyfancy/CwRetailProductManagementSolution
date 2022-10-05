@@ -47,7 +47,12 @@ export class ProductService {
 
   /** DELETE **/
   deleteProduct(id: bigint): Observable<Product> {
-    return this.http.delete<Product>(this.urlPrefix + '/Remove', this.httpOptions).pipe(
+    var deleteHttpOptions = {
+      headers: new HttpHeaders()
+        .set('Content-Type', 'application/json')
+        .set('Id', id.toString())
+    };
+    return this.http.delete<Product>(this.urlPrefix + '/Remove', deleteHttpOptions).pipe(
       tap(_ => this.log(`deleted product id=${id}`)),
       catchError(this.handleError<Product>('deleteProduct'))
     );
