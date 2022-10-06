@@ -17,7 +17,7 @@ namespace CwRetail.Data.Models
         //2 decimals
         public decimal Price { get; set; }
 
-        public ProductEnum Type { get; set; }
+        public ProductTypeEnum Type { get; set; }
 
         public bool Active { get; set; }
     }

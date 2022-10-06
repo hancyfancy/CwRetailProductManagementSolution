@@ -34,7 +34,7 @@ namespace CwRetail.Data.Extensions
                     {
                         int enumInt = int.Parse(kv[1]);
 
-                        kv[1] = "'" + ((ProductEnum)enumInt).ToString() + "'";
+                        kv[1] = "'" + ((ProductTypeEnum)enumInt).ToString() + "'";
                     }
 
                     output += kv[0].Replace("\"", "") + "=" + kv[1].Replace("\"", "'").Replace("true", "1").Replace("false", "0");

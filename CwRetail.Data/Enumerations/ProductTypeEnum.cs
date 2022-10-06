@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CwRetail.Data.Enumerations
 {
-    public enum ProductEnum
+    public enum ProductTypeEnum
     {
         Books = 1,
         Electronics = 2,
