@@ -65,7 +65,13 @@ export class ProductComponent implements OnInit, OnDestroy {
 
   delete(product: Product): void {
     this.products = this.products.filter(p => p !== product);
-    this.productService.deleteProduct(product.id).subscribe();
+    this.productService.deleteProduct(product.id)
+      .then(() => {
+        this.getProducts();
+      })
+      .catch((error) => {
+        console.log("Promise rejected with " + JSON.stringify(error));
+      });
   }
 
   onNextClick(): void {
