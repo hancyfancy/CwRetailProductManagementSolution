@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -11,7 +11,7 @@ import { ProductService } from '../../services/product.service';
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
-export class ProductComponent implements OnInit {
+export class ProductComponent implements OnInit, OnDestroy {
   protected products: Product[] = [];
   protected displayedColumns: string[] = ['name', 'price', 'type', 'active', 'edit', 'delete'];
   protected dataSource: MatTableDataSource<Product> = new MatTableDataSource<Product>();
@@ -19,7 +19,7 @@ export class ProductComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) protected paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
   @ViewChild(MatSort, { static: true }) protected sort: MatSort = new MatSort();
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService, private elementRef: ElementRef) { }
 
   ngOnInit(): void {
     this.paginator.pageSizeOptions = [5, 10, 20, 50, 100];
@@ -28,12 +28,22 @@ export class ProductComponent implements OnInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.getProducts();
+
+    console.log(this.elementRef.nativeElement);
+
+    this.elementRef.nativeElement.querySelector('[aria-label="Next page"]')
+      .addEventListener('click', this.onNextClick.bind(this));
+  }
+
+  ngOnDestroy(): void {
+    this.elementRef.nativeElement.querySelector('[aria-label="Next page"]')
+      .removeEventListener('click');
   }
 
   getProducts(): void {
     var lastId: bigint = this.products.length > 0 ? this.products.map(item => item.id).reduce((m, e) => e > m ? e : m) : 0n;
     var limit: number = Math.max(...this.dataSource.paginator?.pageSizeOptions!);
-    this.productService.getProducts(limit, lastId)
+    this.productService.getProducts(0, 0n)
       .then((products) => {
         this.products = this.dataSource.data = products!;
       })
@@ -58,4 +68,8 @@ export class ProductComponent implements OnInit {
     this.productService.deleteProduct(product.id).subscribe();
   }
 
+  onNextClick(): void {
+    console.log('Next button clicked');
+    this.getProducts();
+  }
 }
