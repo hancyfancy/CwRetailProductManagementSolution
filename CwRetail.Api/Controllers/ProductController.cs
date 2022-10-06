@@ -1,3 +1,4 @@
+using CwRetail.Data.Enumerations;
 using CwRetail.Data.Models;
 using CwRetail.Data.Repositories;
 using Microsoft.AspNetCore.Cors;
@@ -25,12 +26,31 @@ namespace CwRetail.Api.Controllers
         }
 
         [HttpGet(Name = "Get")]
-        public IEnumerable<Product> Get()
+        public IEnumerable<dynamic> Get()
         {
             try
             {
                 //Need to specify limit as a parameter to get
-                return _context.Products.Get();
+
+                IEnumerable<Product> products = _context.Products.Get();
+
+                List<dynamic> productDyn = new List<dynamic>();
+
+                for (int i = 0; i < products.Count(); i++)
+                {
+                    Product product = products.ElementAt(i);
+
+                    productDyn.Add(new 
+                    { 
+                        Id = product.Id, 
+                        Name = product.Name, 
+                        Price = product.Price,
+                        Type = product.Type.ToString(),
+                        Active = product.Active,
+                    });
+                }
+
+                return productDyn;
             }
             catch (Exception e)
             {
