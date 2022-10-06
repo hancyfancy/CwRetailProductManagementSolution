@@ -20,12 +20,12 @@ export class ProductService {
     private http: HttpClient) { }
 
   /** GET **/
-  getProducts() {
+  getProducts(limit: number, lastId: bigint) {
     var getHttpOptions = {
       headers: new HttpHeaders()
         .set('Content-Type', 'application/json')
-        .set('Limit', '50')
-        .set('LastId', '0')
+        .set('Limit', limit.toString())
+        .set('LastId', lastId.toString())
     };
     return this.http.get<Product[]>(this.urlPrefix + '/Get', getHttpOptions)
       .pipe(

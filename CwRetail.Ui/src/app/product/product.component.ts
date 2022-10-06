@@ -22,13 +22,18 @@ export class ProductComponent implements OnInit {
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
-    this.getProducts();
+    this.paginator.pageSizeOptions = [5, 10, 20, 50, 100];
+    this.paginator.pageSize = 5;
+
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+    this.getProducts();
   }
 
   getProducts(): void {
-    this.productService.getProducts()
+    var lastId: bigint = this.products.length > 0 ? this.products.map(item => item.id).reduce((m, e) => e > m ? e : m) : 0n;
+    var limit: number = Math.max(...this.dataSource.paginator?.pageSizeOptions!);
+    this.productService.getProducts(limit, lastId)
       .then((products) => {
         this.products = this.dataSource.data = products!;
       })
