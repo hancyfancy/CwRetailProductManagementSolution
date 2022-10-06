@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -21,7 +21,13 @@ export class ProductService {
 
   /** GET **/
   getProducts() {
-    return this.http.get<Product[]>(this.urlPrefix + '/Get')
+    var getHttpOptions = {
+      headers: new HttpHeaders()
+        .set('Content-Type', 'application/json')
+        .set('Limit', '50')
+        .set('LastId', '0')
+    };
+    return this.http.get<Product[]>(this.urlPrefix + '/Get', getHttpOptions)
       .pipe(
         tap(_ => this.log('fetched products')),
         catchError(this.handleError<Product[]>('getProducts', []))

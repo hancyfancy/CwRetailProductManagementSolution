@@ -27,7 +27,7 @@ namespace CwRetail.Api.Controllers
         }
 
         [HttpGet(Name = "Get")]
-        public IEnumerable<dynamic> Get([FromBody] ProductBatchRequest request)
+        public IEnumerable<dynamic> Get([FromHeader] int limit, [FromHeader] long lastId)
         {
             try
             {
@@ -35,9 +35,9 @@ namespace CwRetail.Api.Controllers
 
                 IEnumerable<Product> products = null;
 
-                if (request.Limit > 0)
+                if (limit > 0)
                 {
-                    products = _context.Products.Get(request.Limit, request.LastId);
+                    products = _context.Products.Get(limit, lastId);
                 }
                 else
                 {
