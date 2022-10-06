@@ -91,7 +91,9 @@ button.delete {
   }
 
 table {
+  table-layout: fixed;
   width: 100%;
+  display: table;
 }
 
 th.mat-sort-header-sorted {
