@@ -20,7 +20,8 @@ import { MatSortModule } from '@angular/material/sort';
     AppRoutingModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    RouterModule
   ],
   declarations: [
     ProductComponent,

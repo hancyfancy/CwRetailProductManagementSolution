@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@ang
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { Router } from '@angular/router';
 
 import { Product } from '../../models/product';
 import { ProductService } from '../../services/product.service';
@@ -19,7 +20,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, { static: true }) protected paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
   @ViewChild(MatSort, { static: true }) protected sort: MatSort = new MatSort();
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService, private router: Router) { }
 
   ngOnInit(): void {
     this.paginator.pageSizeOptions = [5, 10, 20, 50, 100];
@@ -63,5 +64,10 @@ export class ProductComponent implements OnInit, OnDestroy {
       .catch((error) => {
         console.log("Promise rejected with " + JSON.stringify(error));
       });
+  }
+
+  goToDetails(): void {
+    const navigationDetails: string[] = ['/product-detail'];
+    this.router.navigate(navigationDetails);
   }
 }
