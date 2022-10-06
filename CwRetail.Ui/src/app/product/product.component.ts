@@ -22,7 +22,7 @@ const ELEMENT_DATA: Product[] = [
 })
 export class ProductComponent implements OnInit {
   protected products: Product[] = [];
-  protected displayedColumns: string[] = ['name', 'price', 'type', 'active'];
+  protected displayedColumns: string[] = ['name', 'price', 'type', 'active', 'edit', 'delete'];
   protected dataSource: MatTableDataSource<Product> = new MatTableDataSource<Product>();
 
   @ViewChild(MatPaginator, { static: true }) protected paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);

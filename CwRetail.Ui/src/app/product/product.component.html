@@ -34,28 +34,34 @@
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort>
 
-    <!-- Position Column -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header mat-sort-header-arrow sortActionDescription="Sort by name"> Name <i class="material-icons">{{sort.active=="name" && sort.direction=="asc"?"keyboard_arrow_up":sort.active=="name" && sort.direction=="desc"?"keyboard_arrow_down":"horizontal_rule"}}</i> </th>
       <td mat-cell *matCellDef="let element"> {{element.name}} </td>
     </ng-container>
 
-    <!-- Name Column -->
     <ng-container matColumnDef="price">
       <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by price"> Price <i class="material-icons">{{sort.active=="price" && sort.direction=="asc"?"keyboard_arrow_up":sort.active=="price" && sort.direction=="desc"?"keyboard_arrow_down":"horizontal_rule"}}</i> </th>
       <td mat-cell *matCellDef="let element"> {{element.price}} </td>
     </ng-container>
 
-    <!-- Weight Column -->
     <ng-container matColumnDef="type">
       <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by type"> Type <i class="material-icons">{{sort.active=="type" && sort.direction=="asc"?"keyboard_arrow_up":sort.active=="type" && sort.direction=="desc"?"keyboard_arrow_down":"horizontal_rule"}}</i> </th>
       <td mat-cell *matCellDef="let element"> {{element.type}} </td>
     </ng-container>
 
-    <!-- Symbol Column -->
     <ng-container matColumnDef="active">
       <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by active"> Active <i class="material-icons">{{sort.active=="active" && sort.direction=="asc"?"keyboard_arrow_up":sort.active=="active" && sort.direction=="desc"?"keyboard_arrow_down":"horizontal_rule"}}</i> </th>
       <td mat-cell *matCellDef="let element"> {{element.active}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef><i class="material-icons">edit</i></td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef><i class="material-icons">delete</i></td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
