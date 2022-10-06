@@ -32,15 +32,18 @@ export class ProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProducts();
-    const data = this.products;
-    this.dataSource = new MatTableDataSource(ELEMENT_DATA);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
 
   getProducts(): void {
     this.productService.getProducts()
-      .subscribe(products => this.products = products);
+      .then((products) => {
+        this.products = this.dataSource.data = products!;
+      })
+      .catch((error) => {
+        console.log("Promise rejected with " + JSON.stringify(error));
+      });
   }
 
   add(name: string, priceAsString: string, type: string, activeAsString: string): void {

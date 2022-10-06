@@ -20,12 +20,12 @@ export class ProductService {
     private http: HttpClient) { }
 
   /** GET **/
-  getProducts(): Observable<Product[]> {
+  getProducts() {
     return this.http.get<Product[]>(this.urlPrefix + '/Get')
       .pipe(
         tap(_ => this.log('fetched products')),
         catchError(this.handleError<Product[]>('getProducts', []))
-      );
+      ).toPromise();
   }
 
 
