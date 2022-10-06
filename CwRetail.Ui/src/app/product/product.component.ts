@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -19,7 +19,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, { static: true }) protected paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
   @ViewChild(MatSort, { static: true }) protected sort: MatSort = new MatSort();
 
-  constructor(private productService: ProductService, private elementRef: ElementRef) { }
+  constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
     this.paginator.pageSizeOptions = [5, 10, 20, 50, 100];
@@ -28,16 +28,9 @@ export class ProductComponent implements OnInit, OnDestroy {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.getProducts();
-
-    console.log(this.elementRef.nativeElement);
-
-    this.elementRef.nativeElement.querySelector('[aria-label="Next page"]')
-      .addEventListener('click', this.onNextClick.bind(this));
   }
 
   ngOnDestroy(): void {
-    this.elementRef.nativeElement.querySelector('[aria-label="Next page"]')
-      .removeEventListener('click');
   }
 
   getProducts(): void {
@@ -70,10 +63,5 @@ export class ProductComponent implements OnInit, OnDestroy {
       .catch((error) => {
         console.log("Promise rejected with " + JSON.stringify(error));
       });
-  }
-
-  onNextClick(): void {
-    console.log('Next button clicked');
-    this.getProducts();
   }
 }
