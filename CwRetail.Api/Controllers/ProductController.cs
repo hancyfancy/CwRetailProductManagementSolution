@@ -27,22 +27,11 @@ namespace CwRetail.Api.Controllers
         }
 
         [HttpGet(Name = "Get")]
-        public IEnumerable<dynamic> Get([FromHeader] int limit, [FromHeader] long lastId)
+        public IEnumerable<dynamic> Get()
         {
             try
             {
-                //Need to specify limit as a parameter to get
-
-                IEnumerable<Product> products = null;
-
-                if (limit > 0)
-                {
-                    products = _context.Products.Get(limit, lastId);
-                }
-                else
-                {
-                    products = _context.Products.Get();
-                }
+                IEnumerable<Product> products = _context.Products.Get();
 
                 List<dynamic> productDyn = new List<dynamic>();
 

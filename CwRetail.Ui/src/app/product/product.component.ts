@@ -41,9 +41,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   getProducts(): void {
-    var lastId: bigint = this.products.length > 0 ? this.products.map(item => item.id).reduce((m, e) => e > m ? e : m) : 0n;
-    var limit: number = Math.max(...this.dataSource.paginator?.pageSizeOptions!);
-    this.productService.getProducts(0, 0n)
+    this.productService.getProducts()
       .then((products) => {
         this.products = this.dataSource.data = products!;
       })
