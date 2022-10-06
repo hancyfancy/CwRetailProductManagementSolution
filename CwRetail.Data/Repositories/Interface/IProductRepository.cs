@@ -11,6 +11,8 @@ namespace CwRetail.Data.Repositories.Interface
     {
         IEnumerable<Product> Get();
 
+        IEnumerable<Product> Get(int limit, long lastId);
+
         int Insert(Product product);
 
         int Update(long id, string product);

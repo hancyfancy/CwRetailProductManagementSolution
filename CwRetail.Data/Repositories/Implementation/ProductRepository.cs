@@ -47,6 +47,37 @@ namespace CwRetail.Data.Repositories.Implementation
             }
         }
 
+        public IEnumerable<Product> Get(int limit, long lastId)
+        {
+            try
+            {
+                _connection.Open();
+
+                string sql = $@"SELECT TOP " + limit + $@"
+                                        p.Id,
+	                                    p.Name, 
+	                                    p.Price, 
+	                                    p.Type, 
+	                                    p.Active
+                                    FROM 
+	                                    production.products p
+									WHERE 
+										P.Id > @LastId";
+                var result = _connection.Query<Product>(sql, new { 
+                    Limit = limit,
+                    LastId = lastId
+                });
+
+                _connection.Close();
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
         public int Insert(Product product)
         {
             try

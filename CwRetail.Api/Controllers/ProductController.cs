@@ -1,3 +1,4 @@
+using CwRetail.Api.Requests;
 using CwRetail.Data.Enumerations;
 using CwRetail.Data.Models;
 using CwRetail.Data.Repositories;
@@ -26,13 +27,22 @@ namespace CwRetail.Api.Controllers
         }
 
         [HttpGet(Name = "Get")]
-        public IEnumerable<dynamic> Get()
+        public IEnumerable<dynamic> Get([FromBody] ProductBatchRequest request)
         {
             try
             {
                 //Need to specify limit as a parameter to get
 
-                IEnumerable<Product> products = _context.Products.Get();
+                IEnumerable<Product> products = null;
+
+                if (request.Limit > 0)
+                {
+                    products = _context.Products.Get(request.Limit, request.LastId);
+                }
+                else
+                {
+                    products = _context.Products.Get();
+                }
 
                 List<dynamic> productDyn = new List<dynamic>();
 
