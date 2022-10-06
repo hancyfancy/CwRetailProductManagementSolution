@@ -6,15 +6,6 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { Product } from '../../models/product';
 import { ProductService } from '../../services/product.service';
 
-const ELEMENT_DATA: Product[] = [
-  {
-    id: 1n, name: 'Title one1', price: 2.35, type: 'type a', active: true
-  },
-  {
-    id: 2n, name: 'Title one2', price: 4.87, type: 'type b', active: false
-  },
-];
-
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
