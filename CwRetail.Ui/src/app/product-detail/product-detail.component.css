@@ -9,7 +9,7 @@
   width: 15em;
 }
 
-input, select {
+input, select, button {
   display: block;
   width: 100%;
   padding: .5rem;
