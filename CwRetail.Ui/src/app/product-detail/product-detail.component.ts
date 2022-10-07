@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Route, Router } from '@angular/router';
+import { Product } from '../../models/product';
 
 @Component({
   selector: 'app-product-detail',
@@ -6,10 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./product-detail.component.css']
 })
 export class ProductDetailComponent implements OnInit {
+  private productId: bigint = 0n;
+  protected path: string = '';
 
-  constructor() { }
+  constructor(private route: Route) { }
 
   ngOnInit(): void {
+    this.path = this.route.path!;
   }
 
 }
