@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import * as CryptoJS from 'crypto-js';
 
 import { Product } from '../../models/product';
 import { ProductService } from '../../services/product.service';
@@ -27,7 +28,7 @@ export class ProductDetailComponent implements OnInit {
   constructor(private productService: ProductService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.product = JSON.parse(this.route.snapshot.paramMap.get('product')!) as Product;
+    this.product = this.decrypt(this.route.snapshot.paramMap.get('product')!);
     this.actionText = this.product.id > 0 ? 'Edit' : 'Add';
   }
 
@@ -79,6 +80,16 @@ export class ProductDetailComponent implements OnInit {
         .catch((error) => {
           console.log("Promise rejected with " + JSON.stringify(error));
         });
+    }
+  }
+
+  decrypt(data : string) : Product {
+    try {
+      const bytes = CryptoJS.AES.decrypt(data, this.productService.secretKey);
+      return JSON.parse(bytes.toString(CryptoJS.enc.Utf8)) as Product;
+    } catch (e) {
+      console.log(e);
+      throw (e);
     }
   }
 }

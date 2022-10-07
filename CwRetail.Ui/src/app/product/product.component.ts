@@ -3,6 +3,7 @@ import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
+import * as CryptoJS from 'crypto-js';
 
 import { Product } from '../../models/product';
 import { ProductService } from '../../services/product.service';
@@ -59,7 +60,16 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   goToDetails(product: Product = new Product()): void {
-    const navigationDetails: string[] = ['/details', JSON.stringify(product, (_, v) => typeof v === 'bigint' ? v.toString() : v)];
+    const navigationDetails: string[] = ['/details', this.encrypt(product)];
     this.router.navigate(navigationDetails);
+  }
+
+  encrypt(data: Product) : string {
+    try {
+      return CryptoJS.AES.encrypt(JSON.stringify(data, (_, v) => typeof v === 'bigint' ? v.toString() : v), this.productService.secretKey).toString();
+    } catch (e) {
+      console.log(e);
+      throw (e);
+    }
   }
 }
