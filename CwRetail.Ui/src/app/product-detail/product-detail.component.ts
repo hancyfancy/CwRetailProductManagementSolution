@@ -29,6 +29,8 @@ export class ProductDetailComponent implements OnInit {
   ngOnInit(): void {
     this.product = JSON.parse(this.route.snapshot.paramMap.get('product')!) as Product;
     this.actionText = this.product.id > 0 ? 'Edit' : 'Add';
+
+    this.logToConsole(this.product.type);
   }
 
   addOrEdit(name: string, priceAsString: string, type: string, activeAsString: string): void {
@@ -80,5 +82,10 @@ export class ProductDetailComponent implements OnInit {
           console.log("Promise rejected with " + JSON.stringify(error));
         });
     }
+  }
+
+  logToConsole(name: string): void {
+    console.log(name);
+    console.log(name.toUpperCase());
   }
 }
