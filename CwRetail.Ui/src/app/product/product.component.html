@@ -2,11 +2,8 @@
 
 <div class="mat-elevation-z8">
 
-  <div>
-    <button type="button" (click)="goToDetails()" class="align-right"><i class="material-icons">add</i></button>
-  </div>
+  <button type="button" (click)="goToDetails()" class="align-right"><i class="material-icons">add</i></button>
 
-  <div>
   <table mat-table [dataSource]="dataSource" matSort>
 
     <ng-container matColumnDef="name">
@@ -47,6 +44,5 @@
                  showFirstLastButtons
                  aria-label="Select page">
   </mat-paginator>
-  </div>
 </div>
 
