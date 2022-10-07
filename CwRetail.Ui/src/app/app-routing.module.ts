@@ -9,7 +9,7 @@ import { Product } from '../models/product';
 const routes: Routes = [
   { path: '', component: AppComponent },
   { path: 'products', component: ProductComponent },
-  { path: 'details/:id', component: ProductDetailComponent },
+  { path: 'details/:product', component: ProductDetailComponent },
   { path: '**', component: NotFoundComponent }
 ];
 

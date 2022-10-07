@@ -30,19 +30,24 @@ export class ProductService {
 
 
   /** POST **/
-  addProduct(product: Product): Observable<Product> {
+  addProduct(product: Product) {
     return this.http.post<Product>(this.urlPrefix + '/Create', product, this.httpOptions).pipe(
       tap((newProduct: Product) => this.log(`added product w/ id=${newProduct.id}`)),
       catchError(this.handleError<Product>('addProduct'))
-    );
+    ).toPromise();
   }
 
   /** PUT **/
-  updateProduct(product: Product): Observable<any> {
-    return this.http.put(this.urlPrefix + '/Edit', product, this.httpOptions).pipe(
+  updateProduct(product: any) {
+    var updateHttpOptions = {
+      headers: new HttpHeaders()
+        .set('Content-Type', 'application/json')
+        .set('Id', product.id.toString())
+    };
+    return this.http.put(this.urlPrefix + '/Edit', product, updateHttpOptions).pipe(
       tap(_ => this.log(`updated product id=${product.id}`)),
       catchError(this.handleError<any>('updateProduct'))
-    );
+    ).toPromise();
   }
 
   /** DELETE **/

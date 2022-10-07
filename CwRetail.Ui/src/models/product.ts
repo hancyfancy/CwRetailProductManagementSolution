@@ -1,7 +1,3 @@
 export class Product {
-  id: bigint = 0n;
-  name: string = '';
-  price: number = 0.0;
-  type: string = '';
-  active: boolean = false;
+  constructor(public id: bigint = 0n, public name: string = '', public price: number = 0, public type: string = '', public active: boolean = false) { }
 }

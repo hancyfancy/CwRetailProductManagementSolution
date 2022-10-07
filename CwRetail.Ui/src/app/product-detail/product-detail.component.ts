@@ -9,25 +9,64 @@ import { ProductService } from '../../services/product.service';
   styleUrls: ['./product-detail.component.css']
 })
 export class ProductDetailComponent implements OnInit {
-  protected productId: bigint = 0n;
+  protected product: Product = new Product();
   protected actionText: string = '';
 
   constructor(private productService: ProductService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.productId = BigInt(this.route.snapshot.paramMap.get('id')!);
-    this.actionText = this.productId > 0 ? 'Edit' : 'Add';
+    this.product = JSON.parse(this.route.snapshot.paramMap.get('product')!) as Product;
+    this.actionText = this.product.id > 0 ? 'Edit' : 'Add';
   }
 
-  add(name: string, priceAsString: string, type: string, activeAsString: string): void {
+  addOrEdit(name: string, priceAsString: string, type: string, activeAsString: string): void {
     name = name.trim();
-    if (!name) { return; }
+    priceAsString = priceAsString.trim();
+    type = type.trim();
+    activeAsString = activeAsString.trim();
+
+    if ((!name) || (!priceAsString) || (!type) || (!activeAsString)) { return; }
+
     var price: number = +priceAsString;
     var active: boolean = (/true/i).test(activeAsString.toLowerCase());
-    this.productService.addProduct({ name, price, type, active } as Product)
-      .subscribe(product => {
-        //Need to convert addProduct method into promise
-        //this.products.push(product);
-      });
+
+    if (this.product.id > 0) {
+
+      var dynObj: any = {};
+
+      if (this.product.name != name) {
+        dynObj.name = name;
+      }
+
+      if (this.product.price != price) {
+        dynObj.price = price;
+      }
+
+      if (this.product.type != type) {
+        dynObj.type = type;
+      }
+
+      if (this.product.active != active) {
+        dynObj.active = active;
+      }
+
+      this.productService.updateProduct(dynObj)
+        .then(() => {
+
+        })
+        .catch((error) => {
+          console.log("Promise rejected with " + JSON.stringify(error));
+        });
+    }
+    else
+    {
+      this.productService.addProduct({ name, price, type, active } as Product)
+        .then(() => {
+          
+        })
+        .catch((error) => {
+          console.log("Promise rejected with " + JSON.stringify(error));
+        });
+    }
   }
 }
