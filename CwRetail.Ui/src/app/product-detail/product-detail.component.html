@@ -1,56 +1,25 @@
 <h2>{{actionText}} Product</h2>
 
 <div>
-  <!--<form class="example-form">-->
-    <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Product name: </mat-label>
-      <input type="text" matInput [formControl]="nameFormControl" [errorStateMatcher]="matcher"
-             [value]="product.id > 0 ? product.name : ''"
-             maxlength="100"
-             #productName
-             placeholder="Name of product">
-      <mat-hint align="start">Valid</mat-hint>
-      <mat-hint align="end">{{productName.value.length}} / 100</mat-hint>
-      <mat-error *ngIf="nameFormControl.hasError('required')">
-        Name is <strong>required</strong>
-      </mat-error>
-    </mat-form-field>
+  <label for="new-product-name">Product name: </label>
+  <input id="new-product-name" #productName value="{{product.id > 0 ? product.name : ''}}" />
 
-    <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Product price: </mat-label>
-      <span matPrefix>$ &nbsp;</span>
-      <input type="number" matInput [formControl]="priceFormControl" [errorStateMatcher]="matcher"
-             [value]="product.id > 0 ? product.price : '0'"
-             step=".01"
-             #productPrice
-             placeholder="0">
-      <mat-hint>Valid</mat-hint>
-      <mat-error *ngIf="priceFormControl.hasError('required')">
-        Name is <strong>required</strong>
-      </mat-error>
-    </mat-form-field>
+  <label for="new-product-price">Product price: </label>
+  <input id="new-product-price" #productPrice value="{{product.id > 0 ? product.price.toString() : ''}}" />
 
-    <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Product type: </mat-label>
-      <mat-select #productType>
-        <mat-option value="toys">Toys</mat-option>
-        <mat-option value="food">Food</mat-option>
-        <mat-option value="electronics">Electronics</mat-option>
-        <mat-option value="furniture">Furniture</mat-option>
-        <mat-option value="books">Books</mat-option>
-      </mat-select>
-    </mat-form-field>
+  <label for="new-product-type">Product type: </label>
+  <select id="new-product-type" #productType>
+    <option value="toys" selected="{{product.type == productPrice.value ? 'selected' : 'deselected'}}">Toys</option>
+    <option value="food" selected="{{product.type == productPrice.value ? 'selected' : 'deselected'}}">Food</option>
+    <option value="electronics" selected="{{product.type == productPrice.value ? 'selected' : 'deselected'}}">Electronics</option>
+    <option value="furniture" selected="{{product.type == productPrice.value ? 'selected' : 'deselected'}}">Furniture</option>
+    <option value="books" selected="{{product.type == productPrice.value ? 'selected' : 'deselected'}}">Books</option>
+  </select>
 
-    <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Product active: </mat-label>
-      <mat-slide-toggle #productActive
-                        color="accent"
-                        checked="{{product.active ? 'checked' : 'unchecked'}}">
-      </mat-slide-toggle>
-    </mat-form-field>
+  <label for="new-product-active">Product available: </label>
+  <input id="new-product-active" #productActive value="{{product.id > 0 ? product.active : ''}}" />
 
-    <button type="submit" (click)="addOrEdit(productName.value, productPrice.value, productType.value, productActive.checked.toString()); productName.value=''; productPrice.value=''; productType.value=''; productActive.checked=false;">
-      {{actionText}} product
-    </button>
-  <!--</form>-->
+  <button type="button" class="add-button" (click)="addOrEdit(productName.value, productPrice.value, productType.value, productActive.value); productName.value=''; productPrice.value=''; productType.value=''; productActive.value='';">
+    {{actionText}} product
+  </button>
 </div>
