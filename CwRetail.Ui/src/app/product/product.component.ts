@@ -47,14 +47,15 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   delete(product: Product): void {
-    this.products = this.products.filter(p => p !== product);
-    this.productService.deleteProduct(product.id)
-      .then(() => {
-        this.getProducts();
-      })
-      .catch((error) => {
-        console.log("Promise rejected with " + JSON.stringify(error));
-      });
+    if (confirm("Delete product " + product.name + "?")) {
+      this.productService.deleteProduct(product.id)
+        .then(() => {
+          this.getProducts();
+        })
+        .catch((error) => {
+          console.log("Promise rejected with " + JSON.stringify(error));
+        });
+    }
   }
 
   goToDetails(product: Product = new Product()): void {
