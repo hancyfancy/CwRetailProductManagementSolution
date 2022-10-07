@@ -11,10 +11,10 @@ export class ProductDetailComponent implements OnInit {
   private productId: bigint = 0n;
   protected path: string = '';
 
-  constructor(private route: Route) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.path = this.route.path!;
+    this.path = 'hello';
   }
 
 }
