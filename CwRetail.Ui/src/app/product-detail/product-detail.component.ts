@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Route, Router } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Product } from '../../models/product';
 
 @Component({
@@ -8,13 +8,12 @@ import { Product } from '../../models/product';
   styleUrls: ['./product-detail.component.css']
 })
 export class ProductDetailComponent implements OnInit {
-  private productId: bigint = 0n;
-  protected path: string = '';
+  protected productId: bigint = 0n;
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.path = 'hello';
+    this.productId = BigInt(this.route.snapshot.paramMap.get('id')!);
   }
 
 }
