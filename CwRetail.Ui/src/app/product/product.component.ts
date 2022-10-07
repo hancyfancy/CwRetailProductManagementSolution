@@ -58,7 +58,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   goToDetails(product: Product = new Product()): void {
-    const navigationDetails: string[] = ['/details', JSON.stringify(product)];
+    const navigationDetails: string[] = ['/details', JSON.stringify(product, (_, v) => typeof v === 'bigint' ? v.toString() : v)];
     this.router.navigate(navigationDetails);
   }
 }
