@@ -1,24 +1,5 @@
 <h2>Products</h2>
 
-<div>
-  <label for="new-product-name">Product name: </label>
-  <input id="new-product-name" #productName />
-
-  <label for="new-product-price">Product price: </label>
-  <input id="new-product-price" #productPrice />
-
-  <label for="new-product-type">Product type: </label>
-  <input id="new-product-type" #productType />
-
-  <label for="new-product-active">Product available: </label>
-  <input id="new-product-active" #productActive />
-
-  <!-- (click) passes input value to add() and then clears the input -->
-  <button type="button" class="add-button" (click)="add(productName.value, productPrice.value, productType.value, productActive.value); productName.value=''; productPrice.value=''; productType.value=''; productActive.value='';">
-    Add product
-  </button>
-</div>
-
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort>
 

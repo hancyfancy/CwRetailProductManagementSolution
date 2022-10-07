@@ -44,17 +44,6 @@ export class ProductComponent implements OnInit, OnDestroy {
       });
   }
 
-  add(name: string, priceAsString: string, type: string, activeAsString: string): void {
-    name = name.trim();
-    if (!name) { return; }
-    var price: number = +priceAsString;
-    var active: boolean = (/true/i).test(activeAsString.toLowerCase());
-    this.productService.addProduct({ name, price, type, active } as Product)
-      .subscribe(product => {
-        this.products.push(product);
-      });
-  }
-
   delete(product: Product): void {
     this.products = this.products.filter(p => p !== product);
     this.productService.deleteProduct(product.id)
