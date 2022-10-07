@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { AppComponent } from './app/app.component';
 
 @NgModule({
   imports: [
@@ -26,8 +27,9 @@ import { MatSortModule } from '@angular/material/sort';
   declarations: [
     ProductComponent,
     ProductDetailComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    AppComponent
   ],
-  bootstrap: [ProductComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

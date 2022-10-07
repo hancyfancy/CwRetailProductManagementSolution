@@ -3,11 +3,12 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { ProductComponent } from './product/product.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AppComponent } from './app/app.component';
 
 const routes: Routes = [
+  { path: '', component: AppComponent },
   { path: 'products', component: ProductComponent },
   { path: 'details', component: ProductDetailComponent },
-  { path: '', redirectTo: '/products', pathMatch: 'full' },
   { path: '**', component: NotFoundComponent }
 ];
 
