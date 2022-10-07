@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -10,7 +10,8 @@ import { ProductService } from '../../services/product.service';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css']
+  styleUrls: ['./product.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductComponent implements OnInit, OnDestroy {
   protected products: Product[] = [];
@@ -20,7 +21,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, { static: true }) protected paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
   @ViewChild(MatSort, { static: true }) protected sort: MatSort = new MatSort();
 
-  constructor(private productService: ProductService, private router: Router) { }
+  constructor(private productService: ProductService, private router: Router, private changeDetectorRefs: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.paginator.pageSizeOptions = [5, 10, 20, 50, 100];
@@ -38,6 +39,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     this.productService.getProducts()
       .then((products) => {
         this.products = this.dataSource.data = products!;
+        this.changeDetectorRefs.detectChanges();
       })
       .catch((error) => {
         console.log("Promise rejected with " + JSON.stringify(error));
