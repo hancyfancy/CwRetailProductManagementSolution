@@ -1,23 +1,52 @@
 <h2>{{actionText}} Product</h2>
 
 <div>
-  <label for="new-product-name">Product name: </label>
-  <input id="new-product-name" #productName value="{{product.id > 0 ? product.name : ''}}" />
+  <mat-form-field appearance="fill">
+    <mat-label>Product name: </mat-label>
+    <input type="text" matInput [formControl]="nameFormControl" [errorStateMatcher]="matcher"
+           value="{{product.id > 0 ? product.name : ''}}"
+           #productName
+           placeholder="Name of product">
+    <mat-hint>Valid</mat-hint>
+    <mat-error *ngIf="nameFormControl.hasError('required')">
+      Name is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
 
   <label for="new-product-price">Product price: </label>
   <input id="new-product-price" #productPrice value="{{product.id > 0 ? product.price.toString() : ''}}" />
 
-  <label for="new-product-type">Product type: </label>
-  <select id="new-product-type" #productType>
-    <option value="toys" selected="{{product.type == productPrice.value ? 'selected' : 'deselected'}}">Toys</option>
-    <option value="food" selected="{{product.type == productPrice.value ? 'selected' : 'deselected'}}">Food</option>
-    <option value="electronics" selected="{{product.type == productPrice.value ? 'selected' : 'deselected'}}">Electronics</option>
-    <option value="furniture" selected="{{product.type == productPrice.value ? 'selected' : 'deselected'}}">Furniture</option>
-    <option value="books" selected="{{product.type == productPrice.value ? 'selected' : 'deselected'}}">Books</option>
-  </select>
+  <mat-form-field appearance="fill">
+    <mat-label>Product price: </mat-label>
+    <input type="text" matInput [formControl]="priceFormControl" [errorStateMatcher]="matcher"
+           value="{{product.id > 0 ? product.price : '0'}}"
+           #productPrice
+           placeholder="Name of product">
+    <mat-hint>Valid</mat-hint>
+    <mat-error *ngIf="priceFormControl.hasError('required')">
+      Name is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
 
-  <label for="new-product-active">Product available: </label>
-  <input id="new-product-active" #productActive value="{{product.id > 0 ? product.active : ''}}" />
+  <mat-form-field appearance="fill">
+    <mat-label>Product type: </mat-label>
+    <mat-select #productType>
+      <mat-option value="toys" selected="{{product.type == productType.value ? 'selected' : 'deselected'}}">Toys</mat-option>
+      <mat-option value="food" selected="{{product.type == productType.value ? 'selected' : 'deselected'}}">Food</mat-option>
+      <mat-option value="electronics" selected="{{product.type == productType.value ? 'selected' : 'deselected'}}">Electronics</mat-option>
+      <mat-option value="furniture" selected="{{product.type == productType.value ? 'selected' : 'deselected'}}">Furniture</mat-option>
+      <mat-option value="books" selected="{{product.type == productType.value ? 'selected' : 'deselected'}}">Books</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Product active: </mat-label>
+    <mat-slide-toggle #productActive
+                      value="{{product.active ? true : false}}"
+                      color="accent"
+                      checked="{{product.active ? 'checked' : 'unchecked'}}">
+    </mat-slide-toggle>
+  </mat-form-field>
 
   <button type="button" class="add-button" (click)="addOrEdit(productName.value, productPrice.value, productType.value, productActive.value); productName.value=''; productPrice.value=''; productType.value=''; productActive.value='';">
     {{actionText}} product

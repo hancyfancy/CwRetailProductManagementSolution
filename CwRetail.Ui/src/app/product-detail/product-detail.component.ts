@@ -1,7 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+
 import { Product } from '../../models/product';
 import { ProductService } from '../../services/product.service';
+
+export class RequiredErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null): boolean {
+    return !!(control && control.invalid && (control.dirty || control.touched));
+  }
+}
 
 @Component({
   selector: 'app-product-detail',
@@ -11,6 +20,9 @@ import { ProductService } from '../../services/product.service';
 export class ProductDetailComponent implements OnInit {
   protected product: Product = new Product();
   protected actionText: string = '';
+  protected nameFormControl: FormControl = new FormControl('', [Validators.required, Validators.maxLength(100)]);
+  protected priceFormControl: FormControl = new FormControl('', [Validators.required]);
+  protected matcher: ErrorStateMatcher = new RequiredErrorStateMatcher();
 
   constructor(private productService: ProductService, private route: ActivatedRoute) { }
 
