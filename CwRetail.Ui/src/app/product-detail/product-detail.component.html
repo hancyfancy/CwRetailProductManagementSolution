@@ -1,11 +1,11 @@
 <h2>{{actionText}} Product</h2>
 
 <div>
-  <form class="example-form">
+  <!--<form class="example-form">-->
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Product name: </mat-label>
       <input type="text" matInput [formControl]="nameFormControl" [errorStateMatcher]="matcher"
-             value="{{product.id > 0 ? product.name : ''}}"
+             [value]="product.id > 0 ? product.name : ''"
              maxlength="100"
              #productName
              placeholder="Name of product">
@@ -20,7 +20,7 @@
       <mat-label>Product price: </mat-label>
       <span matPrefix>$ &nbsp;</span>
       <input type="number" matInput [formControl]="priceFormControl" [errorStateMatcher]="matcher"
-             value="{{product.id > 0 ? product.price : '0'}}"
+             [value]="product.id > 0 ? product.price : '0'"
              step=".01"
              #productPrice
              placeholder="0">
@@ -52,5 +52,5 @@
     <button type="submit" (click)="addOrEdit(productName.value, productPrice.value, productType.value, productActive.checked.toString()); productName.value=''; productPrice.value=''; productType.value=''; productActive.checked=false;">
       {{actionText}} product
     </button>
-  </form>
+  <!--</form>-->
 </div>

@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 
+import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -24,6 +25,7 @@ import { AppComponent } from './app/app.component';
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
+    MatFormFieldModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
