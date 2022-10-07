@@ -1,6 +1,9 @@
 <h2>Products</h2>
 
 <div class="mat-elevation-z8">
+
+  <button type="button" (click)="goToDetails()"><i class="material-icons">add</i></button>
+
   <table mat-table [dataSource]="dataSource" matSort>
 
     <ng-container matColumnDef="name">
