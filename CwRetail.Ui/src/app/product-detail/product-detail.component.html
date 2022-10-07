@@ -16,40 +16,41 @@
       </mat-error>
     </mat-form-field>
 
-  <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Product price: </mat-label>
-    <input type="number" matInput [formControl]="priceFormControl" [errorStateMatcher]="matcher"
-           value="{{product.id > 0 ? product.price : '0'}}"
-           step=".01"
-           #productPrice
-           placeholder="Name of product">
-    <mat-hint>Valid</mat-hint>
-    <mat-error *ngIf="priceFormControl.hasError('required')">
-      Name is <strong>required</strong>
-    </mat-error>
-  </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Product price: </mat-label>
+      <span matPrefix>$ &nbsp;</span>
+      <input type="number" matInput [formControl]="priceFormControl" [errorStateMatcher]="matcher"
+             value="{{product.id > 0 ? product.price : '0'}}"
+             step=".01"
+             #productPrice
+             placeholder="0">
+      <mat-hint>Valid</mat-hint>
+      <mat-error *ngIf="priceFormControl.hasError('required')">
+        Name is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
 
-  <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Product type: </mat-label>
-    <mat-select #productType>
-      <mat-option value="toys">Toys</mat-option>
-      <mat-option value="food">Food</mat-option>
-      <mat-option value="electronics">Electronics</mat-option>
-      <mat-option value="furniture">Furniture</mat-option>
-      <mat-option value="books">Books</mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Product type: </mat-label>
+      <mat-select #productType>
+        <mat-option value="toys">Toys</mat-option>
+        <mat-option value="food">Food</mat-option>
+        <mat-option value="electronics">Electronics</mat-option>
+        <mat-option value="furniture">Furniture</mat-option>
+        <mat-option value="books">Books</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Product active: </mat-label>
-    <mat-slide-toggle #productActive
-                      color="accent"
-                      checked="{{product.active ? 'checked' : 'unchecked'}}">
-    </mat-slide-toggle>
-  </mat-form-field>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Product active: </mat-label>
+      <mat-slide-toggle #productActive
+                        color="accent"
+                        checked="{{product.active ? 'checked' : 'unchecked'}}">
+      </mat-slide-toggle>
+    </mat-form-field>
 
-  <button type="submit" (click)="addOrEdit(productName.value, productPrice.value, productType.value, productActive.checked.toString()); productName.value=''; productPrice.value=''; productType.value=''; productActive.checked=false;">
-    {{actionText}} product
-  </button>
+    <button type="submit" (click)="addOrEdit(productName.value, productPrice.value, productType.value, productActive.checked.toString()); productName.value=''; productPrice.value=''; productType.value=''; productActive.checked=false;">
+      {{actionText}} product
+    </button>
   </form>
 </div>
