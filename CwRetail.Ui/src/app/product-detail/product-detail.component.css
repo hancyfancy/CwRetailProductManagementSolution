@@ -151,3 +151,10 @@ input:checked + .slider:before {
   .slider.round:before {
     border-radius: 50%;
   }
+
+label.toggle-label {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+}
