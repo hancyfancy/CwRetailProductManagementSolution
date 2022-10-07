@@ -8,7 +8,13 @@
   <input id="new-product-price" #productPrice value="{{product.id > 0 ? product.price.toString() : ''}}" />
 
   <label for="new-product-type">Product type: </label>
-  <input id="new-product-type" #productType value="{{product.id > 0 ? product.type : ''}}" />
+  <select id="new-product-type" #productType>
+    <option value="toys" selected="{{product.type == productPrice.value ? 'selected' : 'deselected'}}">Toys</option>
+    <option value="food" selected="{{product.type == productPrice.value ? 'selected' : 'deselected'}}">Food</option>
+    <option value="electronics" selected="{{product.type == productPrice.value ? 'selected' : 'deselected'}}">Electronics</option>
+    <option value="furniture" selected="{{product.type == productPrice.value ? 'selected' : 'deselected'}}">Furniture</option>
+    <option value="books" selected="{{product.type == productPrice.value ? 'selected' : 'deselected'}}">Books</option>
+  </select>
 
   <label for="new-product-active">Product available: </label>
   <input id="new-product-active" #productActive value="{{product.id > 0 ? product.active : ''}}" />
