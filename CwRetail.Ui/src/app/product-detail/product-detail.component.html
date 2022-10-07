@@ -16,8 +16,11 @@
     <option value="books" selected="{{product.type == productPrice.value ? 'selected' : 'deselected'}}">Books</option>
   </select>
 
-  <label for="new-product-active">Product available: </label>
-  <input id="new-product-active" #productActive value="{{product.id > 0 ? product.active : ''}}" />
+  <label for="new-product-active">Product active: </label>
+  <label class="switch">
+    <input id="new-product-active" #productActive type="checkbox" checked="{{product.active ? 'checked' : 'unchecked'}}">
+    <span class="slider round"></span>
+  </label>
 
   <button type="button" class="add-button" (click)="addOrEdit(productName.value, productPrice.value, productType.value, productActive.value); productName.value=''; productPrice.value=''; productType.value=''; productActive.value='';">
     {{actionText}} product
