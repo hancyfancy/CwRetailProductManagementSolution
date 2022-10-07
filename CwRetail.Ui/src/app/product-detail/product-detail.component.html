@@ -8,7 +8,7 @@
   <input id="new-product-price" type="number" #productPrice value="{{product.id > 0 ? product.price.toString() : ''}}" />
 
   <label for="new-product-type">Product type: </label>
-  <select id="new-product-type" value="{{product.id > 0 ? product.type.toLowerCase() : 'toys'}}" (click)="logToConsole(toysOption.value);logToConsole(foodOption.value);logToConsole(electronicsOption.value);logToConsole(furnitureOption.value);logToConsole(booksOption.value);logToConsole((product.type.toUpperCase() == electronicsOption.value.toUpperCase()).toString());logToConsole(productType.value);" #productType>
+  <select id="new-product-type" #productType>
     <option #toysOption value="toys" [selected]="product.type.toUpperCase() == toysOption.value.toUpperCase()">Toys</option>
     <option #foodOption value="food" [selected]="product.type.toUpperCase() == foodOption.value.toUpperCase()">Food</option>
     <option #electronicsOption value="electronics" [selected]="product.type.toUpperCase() == electronicsOption.value.toUpperCase()">Electronics</option>
