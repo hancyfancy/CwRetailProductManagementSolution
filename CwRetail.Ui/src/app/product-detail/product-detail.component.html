@@ -1,6 +1,7 @@
 <h2>{{actionText}} Product</h2>
 
 <div>
+  <form>
   <mat-form-field appearance="fill">
     <mat-label>Product name: </mat-label>
     <input type="text" matInput [formControl]="nameFormControl" [errorStateMatcher]="matcher"
@@ -13,13 +14,11 @@
     </mat-error>
   </mat-form-field>
 
-  <label for="new-product-price">Product price: </label>
-  <input id="new-product-price" #productPrice value="{{product.id > 0 ? product.price.toString() : ''}}" />
-
   <mat-form-field appearance="fill">
     <mat-label>Product price: </mat-label>
-    <input type="text" matInput [formControl]="priceFormControl" [errorStateMatcher]="matcher"
+    <input type="number" matInput [formControl]="priceFormControl" [errorStateMatcher]="matcher"
            value="{{product.id > 0 ? product.price : '0'}}"
+           step=".01"
            #productPrice
            placeholder="Name of product">
     <mat-hint>Valid</mat-hint>
@@ -47,7 +46,8 @@
     </mat-slide-toggle>
   </mat-form-field>
 
-  <button type="button" class="add-button" (click)="addOrEdit(productName.value, productPrice.value, productType.value, productActive.checked.toString()); productName.value=''; productPrice.value=''; productType.value=''; productActive.checked=false;">
+  <button type="submit" (click)="addOrEdit(productName.value, productPrice.value, productType.value, productActive.checked.toString()); productName.value=''; productPrice.value=''; productType.value=''; productActive.checked=false;">
     {{actionText}} product
   </button>
+  </form>
 </div>
