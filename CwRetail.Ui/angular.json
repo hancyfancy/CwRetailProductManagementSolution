@@ -93,8 +93,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
-              "src/material-design-icons.min.css"
+              "src/styles.css"
             ],
             "scripts": []
           }
