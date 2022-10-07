@@ -31,11 +31,11 @@
   <mat-form-field appearance="fill">
     <mat-label>Product type: </mat-label>
     <mat-select #productType>
-      <mat-option value="toys" selected="{{product.type == productType.value ? 'selected' : 'deselected'}}">Toys</mat-option>
-      <mat-option value="food" selected="{{product.type == productType.value ? 'selected' : 'deselected'}}">Food</mat-option>
-      <mat-option value="electronics" selected="{{product.type == productType.value ? 'selected' : 'deselected'}}">Electronics</mat-option>
-      <mat-option value="furniture" selected="{{product.type == productType.value ? 'selected' : 'deselected'}}">Furniture</mat-option>
-      <mat-option value="books" selected="{{product.type == productType.value ? 'selected' : 'deselected'}}">Books</mat-option>
+      <mat-option value="toys" [selected]="{{product.type == productType.value ? 'selected' : 'deselected'}}">Toys</mat-option>
+      <mat-option value="food" [selected]="{{product.type == productType.value ? 'selected' : 'deselected'}}">Food</mat-option>
+      <mat-option value="electronics" [selected]="{{product.type == productType.value ? 'selected' : 'deselected'}}">Electronics</mat-option>
+      <mat-option value="furniture" [selected]="{{product.type == productType.value ? 'selected' : 'deselected'}}">Furniture</mat-option>
+      <mat-option value="books" [selected]="{{product.type == productType.value ? 'selected' : 'deselected'}}">Books</mat-option>
     </mat-select>
   </mat-form-field>
 
