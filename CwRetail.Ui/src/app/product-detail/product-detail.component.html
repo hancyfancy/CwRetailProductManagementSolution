@@ -2,16 +2,16 @@
 
 <div>
   <label for="new-product-name">Product name: </label>
-  <input id="new-product-name" #productName />
+  <input id="new-product-name" #productName value="{{product.id > 0 ? product.name : ''}}" />
 
   <label for="new-product-price">Product price: </label>
-  <input id="new-product-price" #productPrice />
+  <input id="new-product-price" #productPrice value="{{product.id > 0 ? product.price.toString() : ''}}" />
 
   <label for="new-product-type">Product type: </label>
-  <input id="new-product-type" #productType />
+  <input id="new-product-type" #productType value="{{product.id > 0 ? product.type : ''}}" />
 
   <label for="new-product-active">Product available: </label>
-  <input id="new-product-active" #productActive />
+  <input id="new-product-active" #productActive value="{{product.id > 0 ? product.active : ''}}" />
 
   <button type="button" class="add-button" (click)="addOrEdit(productName.value, productPrice.value, productType.value, productActive.value); productName.value=''; productPrice.value=''; productType.value=''; productActive.value='';">
     {{actionText}} product
