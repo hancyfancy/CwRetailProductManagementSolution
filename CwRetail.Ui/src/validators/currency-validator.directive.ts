@@ -19,11 +19,4 @@ export class CurrencyValidatorDirective implements Validator {
     }
     return null;
   }
-
-  static validate(nameRe: RegExp): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const forbidden = !nameRe.test(control.value);
-      return forbidden ? { forbiddenName: { value: control.value } } : null;
-    };
-  }
 }

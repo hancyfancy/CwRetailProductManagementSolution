@@ -19,6 +19,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { AppComponent } from './app/app.component';
 
 import { CurrencyValidatorDirective } from '../validators/currency-validator.directive';
+import { LengthValidatorDirective } from '../validators/length-validator.directive';
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import { CurrencyValidatorDirective } from '../validators/currency-validator.dir
     ProductDetailComponent,
     NotFoundComponent,
     AppComponent,
-    CurrencyValidatorDirective
+    CurrencyValidatorDirective,
+    LengthValidatorDirective
   ],
   bootstrap: [AppComponent]
 })

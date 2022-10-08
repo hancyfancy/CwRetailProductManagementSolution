@@ -2,14 +2,14 @@
 
 <div>
   <label for="new-product-name">Product name: </label>
-  <input id="new-product-name" type="text" required maxlength="100" [(ngModel)]="product.name" #productName="ngModel" value="{{product.id > 0 ? product.name : ''}}" />
+  <input id="new-product-name" type="text" required lengthValidator [(ngModel)]="product.name" #productName="ngModel" value="{{product.id > 0 ? product.name : ''}}" />
 
   <div *ngIf="productName.invalid && (productName.dirty || productName.touched)"
        class="alert">
     <div *ngIf="productName.errors?.['required']">
       Name is required.
     </div>
-    <div *ngIf="productName.errors?.['maxlength']">
+    <div *ngIf="productName.errors?.['lengthInvalid']">
       Name can not exceed 100 characters.
     </div>
   </div>
