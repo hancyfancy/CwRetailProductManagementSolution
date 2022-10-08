@@ -31,7 +31,7 @@ namespace CwRetail.Data.Test.Repositories
 
         [Theory]
         [ClassData(typeof(ProductRepositoryInsertTestData))]
-        public void InsertTest(Product product, int expectedNumberOfProductsInserted)
+        public void InsertTest(int expectedNumberOfProductsInserted, Product product)
         {
             int numberOfProductsInserted = _repo.Insert(product);
 
