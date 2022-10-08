@@ -130,5 +130,28 @@ namespace CwRetail.Data.Test.Repositories
 
             Assert.Equal(expectedNumberOfProductsDeleted, numberOfProductsDeleted);
         }
+
+        [Theory]
+        [ClassData(typeof(ProductRepositoryDeleteTestData))]
+        public void DeleteMockTest(int expectedNumberOfProductsDeleted, long testId)
+        {
+            using (var mock = AutoMock.GetLoose())
+            {
+                var mocked = mock.Mock<IProductRepository>();
+
+                mocked
+                    .Setup(x => x.Delete(testId))
+                    .Returns(expectedNumberOfProductsDeleted);
+
+                var repo = mock.Create<IProductRepository>();
+
+                var expected = expectedNumberOfProductsDeleted;
+                var actual = repo.Delete(testId);
+
+                mocked.Verify(x => x.Delete(testId), Times.Exactly(1));
+
+                Assert.Equal(expected, actual);
+            }
+        }
     }
 }

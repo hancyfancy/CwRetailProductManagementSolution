@@ -14,7 +14,7 @@ namespace CwRetail.Data.Test.Repositories.TestData
         {
             yield return new object[] { 0, -1 };
             yield return new object[] { 0, 0 };
-            yield return new object[] { 1, 2 };
+            yield return new object[] { 1, 3 };
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
