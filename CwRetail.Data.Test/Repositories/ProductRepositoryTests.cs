@@ -47,5 +47,14 @@ namespace CwRetail.Data.Test.Repositories
 
             Assert.Equal(expectedNumberOfProductsUpdated, numberOfProductsUpdated);
         }
+
+        [Theory]
+        [ClassData(typeof(ProductRepositoryDeleteTestData))]
+        public void DeleteTest(int expectedNumberOfProductsDeleted, long testId)
+        {
+            int numberOfProductsDeleted = _repo.Delete(testId);
+
+            Assert.Equal(expectedNumberOfProductsDeleted, numberOfProductsDeleted);
+        }
     }
 }
