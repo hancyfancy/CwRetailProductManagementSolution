@@ -24,10 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\CwRetail.Data\CwRetail.Data.csproj" />
   </ItemGroup>
 
