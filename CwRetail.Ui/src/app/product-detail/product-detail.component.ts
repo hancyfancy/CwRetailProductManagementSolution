@@ -21,20 +21,22 @@ export class ProductDetailComponent implements OnInit {
     this.actionText = this.product.id > 0 ? 'Edit' : 'Add';
   }
 
-  addOrEdit(name: string, priceAsString: string, type: string, activeAsString: string): void {
+  addOrEdit(name: string, price: number, typeAsString: string, activeAsString: string): void {
     name = name.trim();
-    priceAsString = priceAsString.trim();
-    type = type.trim();
+    typeAsString = typeAsString.trim();
     activeAsString = activeAsString.trim();
 
-    if ((!name) || (!priceAsString) || (!type) || (!activeAsString)) { return; }
+    if ((!name) || (!price) || (!typeAsString) || (!activeAsString)) { return; }
 
-    var price: number = +priceAsString;
     var active: boolean = (/true/i).test(activeAsString.toLowerCase());
+    var type: number = typeAsString == 'books' ? 1 : typeAsString == 'electronics' ? 2 : typeAsString == 'food' ? 3 : typeAsString == 'furniture' ? 4 : typeAsString == 'toys' ? 5 : 0;
 
     if (this.product.id > 0) {
 
       var dynObj: any = {};
+
+      console.log(this.product.name);
+      console.log(name);
 
       if (this.product.name != name) {
         dynObj.name = name;
@@ -62,7 +64,12 @@ export class ProductDetailComponent implements OnInit {
     }
     else
     {
-      this.productService.addProduct({ name, price, type, active } as Product)
+      console.log(name);
+      console.log(price);
+      console.log(type);
+      console.log(active);
+
+      this.productService.addProduct(new Product(0n, name, price, type, active))
         .then(() => {
           
         })

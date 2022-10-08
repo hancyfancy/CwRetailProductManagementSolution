@@ -29,11 +29,11 @@
 
   <label for="new-product-type">Product type: </label>
   <select id="new-product-type" #productType>
-    <option #toysOption value="toys" [selected]="product.type.toUpperCase() == toysOption.value.toUpperCase()">Toys</option>
-    <option #foodOption value="food" [selected]="product.type.toUpperCase() == foodOption.value.toUpperCase()">Food</option>
-    <option #electronicsOption value="electronics" [selected]="product.type.toUpperCase() == electronicsOption.value.toUpperCase()">Electronics</option>
-    <option #furnitureOption value="furniture" [selected]="product.type.toUpperCase() == furnitureOption.value.toUpperCase()">Furniture</option>
-    <option #booksOption value="books" [selected]="product.type.toUpperCase() == booksOption.value.toUpperCase()">Books</option>
+    <option #toysOption value="toys" [selected]="product.type.toString().toUpperCase() == toysOption.value.toUpperCase()">Toys</option>
+    <option #foodOption value="food" [selected]="product.type.toString().toUpperCase() == foodOption.value.toUpperCase()">Food</option>
+    <option #electronicsOption value="electronics" [selected]="product.type.toString().toUpperCase() == electronicsOption.value.toUpperCase()">Electronics</option>
+    <option #furnitureOption value="furniture" [selected]="product.type.toString().toUpperCase() == furnitureOption.value.toUpperCase()">Furniture</option>
+    <option #booksOption value="books" [selected]="product.type.toString().toUpperCase() == booksOption.value.toUpperCase()">Books</option>
   </select>
 
   <label class="toggle-label" for="new-product-active">Product active: </label>
