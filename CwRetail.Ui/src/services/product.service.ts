@@ -32,9 +32,6 @@ export class ProductService {
 
   /** POST **/
   addProduct(product: Product) {
-
-    console.log(product);
-
     return this.http.post<Product>(this.urlPrefix + '/Create', JSON.stringify(product, (_, v) => typeof v === 'bigint' ? v.toString() : v), this.httpOptions).pipe(
       tap((newProduct: Product) => this.log(`added product w/ id=${newProduct.id}`)),
       catchError(this.handleError<Product>('addProduct'))
