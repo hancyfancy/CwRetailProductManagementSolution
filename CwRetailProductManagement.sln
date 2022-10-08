@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CwRetail.Data", "CwRetail.D
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "CwRetail.Ui", "CwRetail.Ui\CwRetail.Ui.esproj", "{71782B99-3F46-4B36-A683-F13CCF961F05}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CwRetail.Data.Test", "CwRetail.Data.Test\CwRetail.Data.Test.csproj", "{54AD18B5-8D39-4211-93E3-D55A1C4347FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{71782B99-3F46-4B36-A683-F13CCF961F05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71782B99-3F46-4B36-A683-F13CCF961F05}.Release|Any CPU.Build.0 = Release|Any CPU
 		{71782B99-3F46-4B36-A683-F13CCF961F05}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{54AD18B5-8D39-4211-93E3-D55A1C4347FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54AD18B5-8D39-4211-93E3-D55A1C4347FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54AD18B5-8D39-4211-93E3-D55A1C4347FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54AD18B5-8D39-4211-93E3-D55A1C4347FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

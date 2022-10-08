@@ -43,7 +43,7 @@ namespace CwRetail.Data.Repositories.Implementation
             }
             catch (Exception e)
             {
-                throw;
+                return new List<Product>();
             }
         }
 
@@ -81,7 +81,7 @@ namespace CwRetail.Data.Repositories.Implementation
             }
             catch (Exception e)
             {
-                throw;
+                return 0;
             }
         }
 
@@ -115,7 +115,7 @@ namespace CwRetail.Data.Repositories.Implementation
             }
             catch (Exception e)
             {
-                throw;
+                return 0;
             }
         }
 
@@ -140,7 +140,7 @@ namespace CwRetail.Data.Repositories.Implementation
             }
             catch (Exception e)
             {
-                throw;
+                return 0;
             }
         }
     }
