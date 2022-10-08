@@ -31,41 +31,43 @@ export class ProductDetailComponent implements OnInit {
     var active: boolean = (/true/i).test(activeAsString.toLowerCase());
     var type: number = typeAsString == 'books' ? 1 : typeAsString == 'electronics' ? 2 : typeAsString == 'food' ? 3 : typeAsString == 'furniture' ? 4 : typeAsString == 'toys' ? 5 : 0;
 
-    if (this.product.id > 0) {
+    var originalProduct: Product = this.decrypt(this.route.snapshot.paramMap.get('product')!);
+
+    if (originalProduct.id > 0) {
 
       var dynObj: any = {};
 
-      console.log(this.product.name);
+      console.log(originalProduct.name);
       console.log(name);
 
-      console.log(this.product.price);
+      console.log(originalProduct.price);
       console.log(price);
 
-      console.log(this.product.type.toString().toUpperCase());
+      console.log(originalProduct.type.toString().toUpperCase());
       console.log(typeAsString.toUpperCase());
 
-      console.log(this.product.active);
+      console.log(originalProduct.active);
       console.log(active);
 
       console.log(dynObj);
 
-      if (this.product.name != name) {
+      if (originalProduct.name != name) {
         dynObj.name = name;
       }
 
-      if (this.product.price != price) {
+      if (originalProduct.price != price) {
         dynObj.price = price;
       }
 
-      if (this.product.type.toString().toUpperCase() != typeAsString.toUpperCase()) {
+      if (originalProduct.type.toString().toUpperCase() != typeAsString.toUpperCase()) {
         dynObj.type = type;
       }
 
-      if (this.product.active != active) {
+      if (originalProduct.active != active) {
         dynObj.active = active;
       }
 
-      this.productService.updateProduct(this.product.id, dynObj)
+      this.productService.updateProduct(originalProduct.id, dynObj)
         .then(() => {
 
         })
