@@ -30,12 +30,12 @@ namespace CwRetail.Data.Extensions
                         output += ",";
                     }
 
-                    //if (string.Equals(kv[0].Replace("\"", "").Trim(), "Type") && (!kv[1].Replace("\"", "").Trim().All(Char.IsLetter)))
-                    //{
-                    //    int enumInt = int.Parse(kv[1]);
+                    if (string.Equals(kv[0].Replace("\"", "").Trim(), "Type", StringComparison.InvariantCultureIgnoreCase) && (!kv[1].Replace("\"", "").Trim().All(Char.IsLetter)))
+                    {
+                        int enumInt = int.Parse(kv[1]);
 
-                    //    kv[1] = "'" + ((ProductTypeEnum)enumInt).ToString() + "'";
-                    //}
+                        kv[1] = "'" + ((ProductTypeEnum)enumInt).ToString() + "'";
+                    }
 
                     output += kv[0].Replace("\"", "") + "=" + kv[1].Replace("\"", "'").Replace("true", "1").Replace("false", "0");
                 }
