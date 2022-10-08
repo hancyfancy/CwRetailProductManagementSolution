@@ -38,6 +38,17 @@ export class ProductDetailComponent implements OnInit {
       console.log(this.product.name);
       console.log(name);
 
+      console.log(this.product.price);
+      console.log(price);
+
+      console.log(this.product.type.toString().toUpperCase());
+      console.log(typeAsString.toUpperCase());
+
+      console.log(this.product.active);
+      console.log(active);
+
+      console.log(dynObj);
+
       if (this.product.name != name) {
         dynObj.name = name;
       }
@@ -46,7 +57,7 @@ export class ProductDetailComponent implements OnInit {
         dynObj.price = price;
       }
 
-      if (this.product.type != type) {
+      if (this.product.type.toString().toUpperCase() != typeAsString.toUpperCase()) {
         dynObj.type = type;
       }
 
@@ -54,7 +65,7 @@ export class ProductDetailComponent implements OnInit {
         dynObj.active = active;
       }
 
-      this.productService.updateProduct(dynObj)
+      this.productService.updateProduct(this.product.id, dynObj)
         .then(() => {
 
         })
