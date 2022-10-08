@@ -89,12 +89,19 @@ namespace CwRetail.Data.Repositories.Implementation
         {
             try
             {
+                string updateSql = product.AsUpdateSql();
+
+                if (string.IsNullOrWhiteSpace(updateSql))
+                {
+                    return 0;
+                }
+
                 _connection.Open();
 
                 string sql = $@"UPDATE
 	                                production.products
                                 SET
-	                                {product.AsUpdateSql()}
+	                                {updateSql}
                                 WHERE
                                     Id = @Id";
                 var result = _connection.Execute(sql, new

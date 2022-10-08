@@ -42,7 +42,7 @@
     <span class="slider round"></span>
   </label>
 
-  <button type="button" class="add-button" (click)="addOrEdit(productName.value, productPrice.value, productType.value, productActive.value)" *ngIf="(!(productName.invalid && (productName.dirty || productName.touched))) && (!(productPrice.invalid && (productPrice.dirty || productPrice.touched)))">
+  <button type="button" class="add-button" (click)="addOrEdit(productName.value, productPrice.value, productType.value, productActive.checked.toString())" *ngIf="(!(productName.invalid && (productName.dirty || productName.touched))) && (!(productPrice.invalid && (productPrice.dirty || productPrice.touched)))">
     {{actionText}} product
   </button>
 </div>
