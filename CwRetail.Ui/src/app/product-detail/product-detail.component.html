@@ -15,7 +15,17 @@
   </div>
 
   <label for="new-product-price">Product price: </label>
-  <input id="new-product-price" type="number" #productPrice value="{{product.id > 0 ? product.price.toString() : ''}}" />
+  <input id="new-product-price" type="number" required currencyValidator [(ngModel)]="product.price" #productPrice="ngModel" value="{{product.id > 0 ? product.price.toString() : ''}}" />
+
+  <div *ngIf="productPrice.invalid && (productPrice.dirty || productPrice.touched)"
+       class="alert">
+    <div *ngIf="productPrice.errors?.['required']">
+      Price is required.
+    </div>
+    <div *ngIf="productPrice.errors?.['currencyInvalid']">
+      Price may contain at most 2 decimal places.
+    </div>
+  </div>
 
   <label for="new-product-type">Product type: </label>
   <select id="new-product-type" #productType>

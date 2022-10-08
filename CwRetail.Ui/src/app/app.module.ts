@@ -18,6 +18,8 @@ import { ProductComponent } from './product/product.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AppComponent } from './app/app.component';
 
+import { CurrencyValidatorDirective } from '../validators/currency-validator.directive';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -38,7 +40,8 @@ import { AppComponent } from './app/app.component';
     ProductComponent,
     ProductDetailComponent,
     NotFoundComponent,
-    AppComponent
+    AppComponent,
+    CurrencyValidatorDirective
   ],
   bootstrap: [AppComponent]
 })

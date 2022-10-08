@@ -12,6 +12,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\models\" />
+    <Folder Include="src\validators\" />
     <Folder Include="src\services\" />
   </ItemGroup>
 </Project>
