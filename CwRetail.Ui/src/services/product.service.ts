@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -12,10 +12,6 @@ export class ProductService {
   private domain: string = 'http://localhost:5138';
   private urlPrefix: string = this.domain + '/api/Product';
   public secretKey: string = 'a2203d87ae1c7b2f07c6075347a8351afcb7401de5912cee90989b9f5c26957c';
-
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
 
   constructor(
     private http: HttpClient) { }
@@ -32,7 +28,10 @@ export class ProductService {
 
   /** POST **/
   addProduct(product: Product) {
-    return this.http.post<Product>(this.urlPrefix + '/Create', JSON.stringify(product, (_, v) => typeof v === 'bigint' ? v.toString() : v), this.httpOptions).pipe(
+    var addHttpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+    return this.http.post<Product>(this.urlPrefix + '/Create', JSON.stringify(product, (_, v) => typeof v === 'bigint' ? v.toString() : v), addHttpOptions).pipe(
       tap((newProduct: Product) => this.log(`added product w/ id=${newProduct.id}`)),
       catchError(this.handleError<Product>('addProduct'))
     ).toPromise();

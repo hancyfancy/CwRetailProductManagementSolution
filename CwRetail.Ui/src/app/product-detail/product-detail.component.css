@@ -18,9 +18,9 @@ input, select, button {
   cursor: pointer;
 }
 
-  .products li:hover {
-    left: .1em;
-  }
+.products li:hover {
+  left: .1em;
+}
 
 .products a {
   color: #333;
@@ -34,15 +34,15 @@ input, select, button {
   width: 100%;
 }
 
-  .products a:hover {
-    color: #2c3a41;
-    background-color: #e6e6e6;
-  }
+.products a:hover {
+  color: #2c3a41;
+  background-color: #e6e6e6;
+}
 
-  .products a:active {
-    background-color: #525252;
-    color: #fafafa;
-  }
+.products a:active {
+  background-color: #525252;
+  color: #fafafa;
+}
 
 .products .badge {
   display: inline-block;
@@ -67,10 +67,10 @@ input, select, button {
   margin-bottom: 2rem;
 }
 
-  .add-button:hover {
-    color: white;
-    background-color: #42545C;
-  }
+.add-button:hover {
+  color: white;
+  background-color: #42545C;
+}
 
 button.delete {
   position: absolute;
@@ -83,10 +83,10 @@ button.delete {
   padding: 1px 10px 3px 10px;
 }
 
-  button.delete:hover {
-    background-color: #525252;
-    color: white;
-  }
+button.delete:hover {
+  background-color: #525252;
+  color: white;
+}
 
 .switch {
   position: relative;
@@ -95,11 +95,11 @@ button.delete {
   height: 34px;
 }
 
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
 
 .slider {
   position: absolute;
@@ -113,17 +113,17 @@ button.delete {
   transition: .4s;
 }
 
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
-  }
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
 
 input:checked + .slider {
   background-color: #2196F3;
@@ -139,14 +139,13 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
-/* Rounded sliders */
 .slider.round {
   border-radius: 34px;
 }
 
-  .slider.round:before {
-    border-radius: 50%;
-  }
+.slider.round:before {
+  border-radius: 50%;
+}
 
 label.toggle-label {
   display: block;
