@@ -5,6 +5,7 @@ using CwRetail.Data.Repositories;
 using CwRetail.Data.Repositories.Implementation;
 using CwRetail.Data.Repositories.Interface;
 using CwRetail.Data.Test.Repositories.TestData;
+using CwRetail.Data.Test.Repositories.TestHelpers;
 using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions.Interfaces;
 using Moq;
 using Newtonsoft.Json;
@@ -40,11 +41,11 @@ namespace CwRetail.Data.Test.Repositories
             {
                 mock.Mock<IProductRepository>()
                     .Setup(x => x.Get())
-                    .Returns(GetSampleProducts());
+                    .Returns(ProductRepositoryTestHelper.GetSampleProducts());
 
                 var repo = mock.Create<IProductRepository>();
 
-                var expected = GetSampleProducts();
+                var expected = ProductRepositoryTestHelper.GetSampleProducts();
                 var actual = repo.Get().ToList();
 
                 Assert.True((actual != null) && (actual?.Count > 0));
@@ -53,28 +54,6 @@ namespace CwRetail.Data.Test.Repositories
 
                 Assert.Equal(JsonConvert.SerializeObject(expected), JsonConvert.SerializeObject(actual));
             }
-        }
-
-        private List<Product> GetSampleProducts()
-        {
-            return new List<Product>() { 
-                new Product()
-                { 
-                    Id = 3,
-                    Name = "34107476-E228-4AD1-9C04-46ECA69BDE92",
-                    Price = 1913.57M,
-                    Type = ProductTypeEnum.Food,
-                    Active = true,
-                },
-                new Product()
-                { 
-                    Id = 4,
-                    Name = "AE8D7304-DB95-4D25-B04F-D3D36570990A",
-                    Price = 1193.22M,
-                    Type = ProductTypeEnum.Furniture,
-                    Active = false,
-                }
-            };
         }
 
         [Theory]
@@ -87,12 +66,60 @@ namespace CwRetail.Data.Test.Repositories
         }
 
         [Theory]
+        [ClassData(typeof(ProductRepositoryInsertTestData))]
+        public void InsertMockTest(int expectedNumberOfProductsInserted, Product product)
+        {
+            using (var mock = AutoMock.GetLoose())
+            {
+                var mocked = mock.Mock<IProductRepository>();
+
+                mocked
+                    .Setup(x => x.Insert(product))
+                    .Returns(expectedNumberOfProductsInserted);
+
+                var repo = mock.Create<IProductRepository>();
+
+                var expected = expectedNumberOfProductsInserted;
+                var actual = repo.Insert(product);
+
+                mocked.Verify(x => x.Insert(product), Times.Exactly(1));
+
+                Assert.Equal(expected, actual);
+            }
+        }
+
+        [Theory]
         [ClassData(typeof(ProductRepositoryUpdateTestData))]
         public void UpdateTest(int expectedNumberOfProductsUpdated, long testId, dynamic product)
         {
             int numberOfProductsUpdated = _repo.Update(testId, JsonConvert.SerializeObject(product));
 
             Assert.Equal(expectedNumberOfProductsUpdated, numberOfProductsUpdated);
+        }
+
+        [Theory]
+        [ClassData(typeof(ProductRepositoryUpdateTestData))]
+        public void UpdateMockTest(int expectedNumberOfProductsUpdated, long testId, dynamic product)
+        {
+            using (var mock = AutoMock.GetLoose())
+            {
+                var mocked = mock.Mock<IProductRepository>();
+
+                string productAsString = JsonConvert.SerializeObject(product);
+
+                mocked
+                    .Setup(x => x.Update(testId, productAsString))
+                    .Returns(expectedNumberOfProductsUpdated);
+
+                var repo = mock.Create<IProductRepository>();
+
+                var expected = expectedNumberOfProductsUpdated;
+                var actual = repo.Update(testId, productAsString);
+
+                mocked.Verify(x => x.Update(testId, productAsString), Times.Exactly(1));
+
+                Assert.Equal(expected, actual);
+            }
         }
 
         [Theory]
