@@ -5,7 +5,7 @@ GO
 -- create tables
 CREATE TABLE production.products (
 	Id BIGINT IDENTITY (1, 1) PRIMARY KEY,
-	Name NVARCHAR (100) NOT NULL,
+	Name NVARCHAR (100) NOT NULL CHECK (LEN(Name) > 0),
 	Price DECIMAL (18,2) NOT NULL CHECK (Price > 0),
 	Type NVARCHAR (50) NOT NULL CHECK (Type = 'Toys' OR Type = 'Food' OR Type = 'Electronics' OR Type = 'Furniture' OR Type = 'Books'),
 	Active BIT NOT NULL

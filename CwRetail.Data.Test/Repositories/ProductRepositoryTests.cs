@@ -4,6 +4,7 @@ using CwRetail.Data.Repositories.Implementation;
 using CwRetail.Data.Repositories.Interface;
 using CwRetail.Data.Test.Repositories.TestData;
 using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions.Interfaces;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,15 @@ namespace CwRetail.Data.Test.Repositories
             int numberOfProductsInserted = _repo.Insert(product);
 
             Assert.Equal(expectedNumberOfProductsInserted, numberOfProductsInserted);
+        }
+
+        [Theory]
+        [ClassData(typeof(ProductRepositoryUpdateTestData))]
+        public void UpdateTest(int expectedNumberOfProductsUpdated, long testId, dynamic product)
+        {
+            int numberOfProductsUpdated = _repo.Update(testId, JsonConvert.SerializeObject(product));
+
+            Assert.Equal(expectedNumberOfProductsUpdated, numberOfProductsUpdated);
         }
     }
 }
