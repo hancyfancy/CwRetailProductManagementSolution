@@ -6,11 +6,15 @@ using CwRetail.Data.Repositories.Implementation;
 using CwRetail.Data.Repositories.Interface;
 using CwRetail.Data.Test.Repositories.TestData;
 using CwRetail.Data.Test.Repositories.TestHelpers;
+using Dapper;
 using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions.Interfaces;
 using Moq;
+using Moq.Dapper;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,13 +43,31 @@ namespace CwRetail.Data.Test.Repositories
         {
             using (var mock = AutoMock.GetLoose())
             {
-                mock.Mock<IProductRepository>()
-                    .Setup(x => x.Get())
+                string sql = $@"SELECT 
+                                        p.Id,
+	                                    p.Name, 
+	                                    p.Price, 
+	                                    p.Type, 
+	                                    p.Active
+                                    FROM 
+	                                    production.products p";
+
+                var mocked = mock.Mock<IDbConnection>();
+
+                mocked
+                    .Setup(x => x.Open());
+
+                mocked
+                    .SetupDapper(x => x.Query<Product>(sql, null, null, true, null, null))
                     .Returns(ProductRepositoryTestHelper.GetSampleProducts());
 
-                var repo = mock.Create<IProductRepository>();
+                mocked
+                    .Setup(x => x.Close());
+
+                var repo = mock.Create<ProductRepository>();
 
                 var expected = ProductRepositoryTestHelper.GetSampleProducts();
+
                 var actual = repo.Get().ToList();
 
                 Assert.True((actual != null) && (actual?.Count > 0));
