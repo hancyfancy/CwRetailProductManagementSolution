@@ -1,6 +1,8 @@
 using CwRetail.Data.Enumerations;
 using CwRetail.Data.Models;
 using CwRetail.Data.Repositories;
+using CwRetail.Data.Repositories.Implementation;
+using CwRetail.Data.Repositories.Interface;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -16,13 +18,12 @@ namespace CwRetail.Api.Controllers
     public class ProductController : ControllerBase
     {
         private readonly ILogger<ProductController> _logger;
-        private readonly DatabaseContext _context;
+        private readonly IProductRepository _repo;
 
-        public ProductController(ILogger<ProductController> logger)
+        public ProductController(ILogger<ProductController> logger, IProductRepository repo)
         {
             _logger = logger;
-            //Need to get valid connection string
-            _context = new DatabaseContext(ConnectionStrings.Test);
+            _repo = repo;
         }
 
         [HttpGet(Name = "Get")]
@@ -30,7 +31,7 @@ namespace CwRetail.Api.Controllers
         {
             try
             {
-                IEnumerable<Product> products = _context.Products.Get();
+                IEnumerable<Product> products = _repo.Get();
 
                 List<dynamic> productDyn = new List<dynamic>();
 
@@ -63,7 +64,7 @@ namespace CwRetail.Api.Controllers
         {
             try
             {
-                return _context.Products.Insert(product);
+                return _repo.Insert(product);
             }
             catch (Exception e)
             {
@@ -80,7 +81,7 @@ namespace CwRetail.Api.Controllers
             {
                 string json = product.GetRawText();
 
-                return _context.Products.Update(id, json);
+                return _repo.Update(id, json);
             }
             catch (Exception e)
             {
@@ -95,7 +96,7 @@ namespace CwRetail.Api.Controllers
         {
             try
             {
-                return _context.Products.Delete(id);
+                return _repo.Delete(id);
             }
             catch (Exception e)
             {

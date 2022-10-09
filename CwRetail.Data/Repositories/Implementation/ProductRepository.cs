@@ -16,9 +16,9 @@ namespace CwRetail.Data.Repositories.Implementation
     {
         private readonly SqlConnection _connection;
 
-        public ProductRepository(string connectionString)
+        public ProductRepository()
         {
-            _connection = new SqlConnection(connectionString);
+            _connection = new SqlConnection(ConnectionStrings.Test);
         }
 
         public IEnumerable<Product> Get()

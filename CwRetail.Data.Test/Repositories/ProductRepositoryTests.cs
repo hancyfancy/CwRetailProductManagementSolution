@@ -1,4 +1,5 @@
-﻿using Autofac.Extras.Moq;
+﻿using Autofac;
+using Autofac.Extras.Moq;
 using CwRetail.Data.Enumerations;
 using CwRetail.Data.Models;
 using CwRetail.Data.Repositories;
@@ -8,6 +9,7 @@ using CwRetail.Data.Test.Repositories.TestData;
 using CwRetail.Data.Test.Repositories.TestHelpers;
 using Dapper;
 using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions.Interfaces;
+using Microsoft.VisualStudio.TestPlatform.Utilities;
 using Moq;
 using Moq.Dapper;
 using Newtonsoft.Json;
@@ -24,10 +26,14 @@ namespace CwRetail.Data.Test.Repositories
     public class ProductRepositoryTests
     {
         private IProductRepository _repo;
+        private static IContainer _container;
 
         public ProductRepositoryTests()
         { 
-            _repo = new ProductRepository(ConnectionStrings.Test);
+            _repo = new ProductRepository();
+            var builder = new ContainerBuilder();
+            builder.RegisterType<ProductRepository>().As<IProductRepository>();
+            _container = builder.Build();
         }
 
         [Fact]
@@ -63,6 +69,8 @@ namespace CwRetail.Data.Test.Repositories
 
                 mocked
                     .Setup(x => x.Close());
+
+                //var repo = _container.Resolve<IProductRepository>();
 
                 var repo = mock.Create<ProductRepository>();
 
