@@ -49,34 +49,25 @@ namespace CwRetail.Data.Test.Repositories
         {
             using (var mock = AutoMock.GetLoose())
             {
-                string sql = $@"SELECT 
-                                        p.Id,
-	                                    p.Name, 
-	                                    p.Price, 
-	                                    p.Type, 
-	                                    p.Active
-                                    FROM 
-	                                    production.products p";
+                var sqlConnection = mock.Mock<IDbConnection>();
 
-                var mocked = mock.Mock<IDbConnection>();
-
-                mocked
+                sqlConnection
                     .Setup(x => x.Open());
 
-                mocked
-                    .SetupDapper(x => x.Query<Product>(sql, null, null, true, null, null))
+                sqlConnection
+                    .SetupDapper(x => x.Query<Product>(It.IsAny<string>(), null, null, true, null, null))
                     .Returns(ProductRepositoryTestHelper.GetSampleProducts());
-
-                mocked
+                    
+                sqlConnection
                     .Setup(x => x.Close());
 
                 //var repo = _container.Resolve<IProductRepository>();
 
-                var repo = mock.Create<ProductRepository>();
+                var repo = mock.Create<IDbConnection>();
 
                 var expected = ProductRepositoryTestHelper.GetSampleProducts();
 
-                var actual = repo.Get().ToList();
+                var actual = repo.Query<Product>(It.IsAny<string>(), null, null, true, null, null).ToList();
 
                 Assert.True((actual != null) && (actual?.Count > 0));
 
