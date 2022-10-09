@@ -17,10 +17,18 @@
 
 #### Application setup
 
-1. In Visual Studio, set [multiple start up](https://davecallan.com/running-multiple-projects-visual-studio/) projects, setting `CwRetail.Api` to start up first and `CwRetail.Ui` to start up last
+In Visual Studio:
+1. Set [multiple start up](https://davecallan.com/running-multiple-projects-visual-studio/) projects, setting `CwRetail.Api` to start up first and `CwRetail.Ui` to start up last
 
 ### Running the solution
 
-1. Highlight the solution in solution explorer
-2. Click `Start` to run the solution
+In Visual Studio:
+1. Highlight the `CwRetailProductManagement` solution in solution explorer
+2. Click `Start` to run the `CwRetailProductManagement` solution
+
+### Running the tests
+
+In Visual Studio:
+1. Navigate to the `Test` option in the toolbar
+2. Select `Run All Tests`
 
