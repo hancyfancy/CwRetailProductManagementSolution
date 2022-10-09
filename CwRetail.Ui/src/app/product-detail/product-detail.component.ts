@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as CryptoJS from 'crypto-js';
 
 import { Product } from '../../models/product';
@@ -14,7 +14,7 @@ export class ProductDetailComponent implements OnInit {
   protected product: Product = new Product();
   protected actionText: string = '';
 
-  constructor(private productService: ProductService, private route: ActivatedRoute) { }
+  constructor(private productService: ProductService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.product = this.decrypt(this.route.snapshot.paramMap.get('product')!);
@@ -55,7 +55,7 @@ export class ProductDetailComponent implements OnInit {
 
       this.productService.updateProduct(originalProduct.id, dynObj)
         .then(() => {
-
+          this.goToProducts();
         })
         .catch((error) => {
           console.log("Promise rejected with " + JSON.stringify(error));
@@ -65,12 +65,17 @@ export class ProductDetailComponent implements OnInit {
     {
       this.productService.addProduct(new Product(0n, name, price, type, active))
         .then(() => {
-          
+          this.goToProducts();
         })
         .catch((error) => {
           console.log("Promise rejected with " + JSON.stringify(error));
         });
     }
+  }
+
+  goToProducts(): void {
+    const navigationDetails: string[] = ['/products'];
+    this.router.navigate(navigationDetails);
   }
 
   decrypt(data : string) : Product {
