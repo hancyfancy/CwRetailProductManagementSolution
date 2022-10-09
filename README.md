@@ -15,10 +15,16 @@
 4. Run [create users](https://github.com/hancyfancy/CwRetailProductManagementSolution/blob/master/CwRetail.Data/Resources/Authentication/SampleDatabase-CreateUsers.sql) commands for the newly created `CwRetail` database
 5. Run [grant permissions](https://github.com/hancyfancy/CwRetailProductManagementSolution/blob/master/CwRetail.Data/Resources/Authentication/SampleDatabase-GrantPermissions.sql) commands for the newly created `CwRetail` database
 
+![Database](/assets/database.png)
+
+![Login](/assets/login.png)
+
 #### Application setup
 
 In Visual Studio:
 1. Set [multiple start up](https://davecallan.com/running-multiple-projects-visual-studio/) projects, setting `CwRetail.Api` to start up first and `CwRetail.Ui` to start up last
+
+![MultipleStartUpProjects](/assets/applicationMultipleStartupProjects.png)
 
 ### Running the solution
 
