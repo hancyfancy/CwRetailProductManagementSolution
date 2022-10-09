@@ -1,4 +1,4 @@
-# CwRetail.Api
+# CwRetail Product Management Solution
 
 ### PreRequisites
 - SQL Server
