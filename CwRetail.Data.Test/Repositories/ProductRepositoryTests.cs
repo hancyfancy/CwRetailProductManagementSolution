@@ -26,14 +26,10 @@ namespace CwRetail.Data.Test.Repositories
     public class ProductRepositoryTests
     {
         private IProductRepository _repo;
-        private static IContainer _container;
 
         public ProductRepositoryTests()
         { 
             _repo = new ProductRepository();
-            var builder = new ContainerBuilder();
-            builder.RegisterType<ProductRepository>().As<IProductRepository>();
-            _container = builder.Build();
         }
 
         [Fact]
@@ -60,8 +56,6 @@ namespace CwRetail.Data.Test.Repositories
                     
                 sqlConnection
                     .Setup(x => x.Close());
-
-                //var repo = _container.Resolve<IProductRepository>();
 
                 var repo = mock.Create<IDbConnection>();
 
