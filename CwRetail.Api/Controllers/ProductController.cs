@@ -20,10 +20,10 @@ namespace CwRetail.Api.Controllers
         private readonly ILogger<ProductController> _logger;
         private readonly IProductRepository _repo;
 
-        public ProductController(ILogger<ProductController> logger, IProductRepository repo)
+        public ProductController(ILogger<ProductController> logger)
         {
             _logger = logger;
-            _repo = repo;
+            _repo = new ProductRepository();
         }
 
         [HttpGet(Name = "Get")]
