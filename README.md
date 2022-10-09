@@ -32,25 +32,9 @@ In Visual Studio:
 1. Highlight the `CwRetailProductManagement` solution in solution explorer
 2. Click `Start` to run the `CwRetailProductManagement` solution
 
-Sorting:
+Demo:
 
-![Sorting](/assets/CwRetailUi-Sorting.gif)
-
-Pagination:
-
-![Pagination](/assets/CwRetailUi-PageNavigation.gif)
-
-Add product:
-
-![AddProduct](/assets/CwRetailUi-AddProduct.gif)
-
-Edit product:
-
-![EditProduct](/assets/CwRetailUi-EditProduct.gif)
-
-Delete product:
-
-![DeleteProduct](/assets/CwRetailUi-DeleteProduct.gif)
+[![Videos](https://img.youtube.com/vi/aiMErjpf4Ok/0.jpg)](https://www.youtube.com/playlist?list=PLVDeXGDdMhfZSX3dSLe3f9Y3zlMOzt5-Z)
 
 ### Running the tests
 
