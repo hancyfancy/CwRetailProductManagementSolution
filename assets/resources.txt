@@ -1,3 +1,8 @@
 applicationMultipleStartupProjects.png
 database.png
 login.png
+CwRetailUi-AddProduct.gif
+CwRetailUi-DeleteProduct.gif
+CwRetailUi-EditProduct.gif
+CwRetailUi-PageNavigation.gif
+CwRetailUi-Sorting.gif
