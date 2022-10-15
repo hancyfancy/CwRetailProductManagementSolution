@@ -15,7 +15,7 @@ GO
 -- create triggers
 CREATE TRIGGER production.products_tr
 ON CwRetail.production.products
-FOR INSERT, UPDATE, DELETE
+AFTER INSERT, UPDATE, DELETE
 AS
 BEGIN
 	DECLARE @EventData XML
@@ -30,5 +30,15 @@ BEGIN
 	@EventData.value('(/EVENT_INSTANCE/TSQLCommand)[1]', 'NVARCHAR (MAX)'),
 	GETDATE()
 	) 
+END
+GO
+
+CREATE TRIGGER production.products_tr_test
+ON CwRetail.production.products
+AFTER DELETE
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT Id, Name, Price, Type, Active from deleted
 END
 GO
