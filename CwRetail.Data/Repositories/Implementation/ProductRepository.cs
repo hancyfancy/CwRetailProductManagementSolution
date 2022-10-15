@@ -161,6 +161,7 @@ namespace CwRetail.Data.Repositories.Implementation
                     Console.WriteLine("Press a key to stop");
                     Console.ReadKey();
 
+                    tableDependency.OnChanged -= TableDependency_Changed;
                     tableDependency.Stop();
                 }
 
