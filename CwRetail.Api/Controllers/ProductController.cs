@@ -105,5 +105,22 @@ namespace CwRetail.Api.Controllers
                 throw;
             }
         }
+
+        [HttpGet(Name = "Subscribe")]
+        public Product Subscribe()
+        {
+            try
+            {
+                _repo.Subscribe();
+
+                return null;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "ProductController_Remove");
+
+                throw;
+            }
+        }
     }
 }

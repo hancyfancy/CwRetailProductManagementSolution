@@ -15,5 +15,7 @@ namespace CwRetail.Data.Repositories.Interface
         int Update(long id, string product);
 
         int Delete(long id);
+
+        void Subscribe();
     }
 }
