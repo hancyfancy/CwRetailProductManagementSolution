@@ -37,14 +37,14 @@ export class ProductService {
     ).toPromise();
   }
 
-  /** PUT **/
+  /** PATCH **/
   updateProduct(id: bigint, product: any) {
     var updateHttpOptions = {
       headers: new HttpHeaders()
         .set('Content-Type', 'application/json')
         .set('Id', id.toString())
     };
-    return this.http.put(this.urlPrefix + '/Edit', JSON.stringify(product, (_, v) => typeof v === 'bigint' ? v.toString() : v), updateHttpOptions).pipe(
+    return this.http.patch(this.urlPrefix + '/Edit', JSON.stringify(product, (_, v) => typeof v === 'bigint' ? v.toString() : v), updateHttpOptions).pipe(
       tap(_ => this.log(`updated product id=${id}`)),
       catchError(this.handleError<any>('updateProduct'))
     ).toPromise();

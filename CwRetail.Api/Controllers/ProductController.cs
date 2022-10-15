@@ -74,7 +74,7 @@ namespace CwRetail.Api.Controllers
             }
         }
 
-        [HttpPut(Name = "Edit")]
+        [HttpPatch(Name = "Edit")]
         public int Edit([FromHeader] long id, [FromBody] JsonElement product)
         {
             try
