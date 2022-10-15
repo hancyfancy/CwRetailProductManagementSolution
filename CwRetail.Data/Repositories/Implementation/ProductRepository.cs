@@ -4,11 +4,15 @@ using CwRetail.Data.Repositories.Interface;
 using Dapper;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
+using TableDependency.SqlClient;
+using TableDependency.SqlClient.Base.Enums;
+using TableDependency.SqlClient.Base.EventArgs;
 
 namespace CwRetail.Data.Repositories.Implementation
 {
@@ -141,6 +145,39 @@ namespace CwRetail.Data.Repositories.Implementation
             catch (Exception e)
             {
                 return 0;
+            }
+        }
+
+        public void Subscribe()
+        {
+            try
+            {
+                using (var tableDependency = new SqlTableDependency<Product>(ConnectionStrings.Test))
+                {
+                    tableDependency.OnChanged += TableDependency_Changed;
+                    tableDependency.Start();
+
+                    Console.WriteLine("Waiting for receiving notifications...");
+                    Console.WriteLine("Press a key to stop");
+                    Console.ReadKey();
+
+                    tableDependency.Stop();
+                }
+
+            }
+            catch (Exception e)
+            {
+            }
+        }
+
+        private void TableDependency_Changed(object sender, RecordChangedEventArgs<Product> e)
+        {
+            if (e.ChangeType != ChangeType.None)
+            {
+                var changedEntity = e.Entity;
+                Console.WriteLine("DML operation: " + e.ChangeType);
+                Console.WriteLine("ID: " + changedEntity.Id);
+                Console.WriteLine("Name: " + changedEntity.Name);
             }
         }
     }
