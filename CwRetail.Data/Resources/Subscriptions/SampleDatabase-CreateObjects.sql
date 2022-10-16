@@ -80,3 +80,52 @@ BEGIN
 	) 
 END
 GO
+
+CREATE TRIGGER production.products_tr_update
+ON CwRetail.production.products
+AFTER UPDATE
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	DECLARE @DeletedId BIGINT
+	SELECT @DeletedId = Id FROM deleted
+
+	DECLARE @DeletedName NVARCHAR(100)
+	SELECT @DeletedName = Name FROM deleted
+
+	DECLARE @DeletedPrice DECIMAL(18,2)
+	SELECT @DeletedPrice = Price FROM deleted
+
+	DECLARE @DeletedType NVARCHAR(50)
+	SELECT @DeletedType = Type FROM deleted
+
+	DECLARE @DeletedActive BIT
+	SELECT @DeletedActive = Active FROM deleted
+
+	DECLARE @InsertedId BIGINT
+	SELECT @InsertedId = Id FROM inserted
+
+	DECLARE @InsertedName NVARCHAR(100)
+	SELECT @InsertedName = Name FROM inserted
+
+	DECLARE @InsertedPrice DECIMAL(18,2)
+	SELECT @InsertedPrice = Price FROM inserted
+
+	DECLARE @InsertedType NVARCHAR(50)
+	SELECT @InsertedType = Type FROM inserted
+
+	DECLARE @InsertedActive BIT
+	SELECT @InsertedActive = Active FROM inserted
+
+	INSERT INTO CwRetail.audit.products 
+	(EventType, LoginName, ObjJson, AuditDateTime)
+	VALUES
+	(
+	'UPDATE',
+	CONVERT(NVARCHAR(250), CURRENT_USER),
+	'[{"Id" : ' + CAST(@DeletedId AS NVARCHAR(max)) + ', "Name" : "' + @DeletedName + '", "Price" : ' + CAST(@DeletedPrice AS NVARCHAR(max)) + ', "Type" : "' + @DeletedType + '", "Active" : ' + CAST(@DeletedActive AS NVARCHAR(max)) + ' },{ "Id" : ' + CAST(@InsertedId AS NVARCHAR(max)) + ', "Name" : "' + @InsertedName + '", "Price" : ' + CAST(@InsertedPrice AS NVARCHAR(max)) + ', "Type" : "' + @InsertedType + '", "Active" : ' + CAST(@InsertedActive AS NVARCHAR(max)) + ' }]',
+	GETDATE()
+	) 
+END
+GO
