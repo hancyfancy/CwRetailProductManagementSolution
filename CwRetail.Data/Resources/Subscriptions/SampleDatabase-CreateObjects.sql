@@ -13,26 +13,6 @@ CREATE TABLE audit.products (
 GO
 
 -- create triggers
-CREATE TRIGGER production.products_tr
-ON CwRetail.production.products
-AFTER INSERT, UPDATE, DELETE
-AS
-BEGIN
-	DECLARE @EventData XML
-	SELECT @EventData = EVENTDATA()
-
-	INSERT INTO CwRetail.audit.products 
-	(EventType, LoginName, ObjJson, AuditDateTime)
-	VALUES
-	(
-	@EventData.value('(/EVENT_INSTANCE/EventType)[1]', 'NVARCHAR (250)'),
-	@EventData.value('(/EVENT_INSTANCE/LoginName)[1]', 'NVARCHAR (250)'),
-	@EventData.value('(/EVENT_INSTANCE/TSQLCommand)[1]', 'NVARCHAR (MAX)'),
-	GETDATE()
-	) 
-END
-GO
-
 CREATE TRIGGER production.products_tr_delete
 ON CwRetail.production.products
 AFTER DELETE
@@ -40,20 +20,20 @@ AS
 BEGIN
 	SET NOCOUNT ON
 
-	DECLARE @DeleteId BIGINT
-	SELECT @DeleteId = Id from deleted
+	DECLARE @Id BIGINT
+	SELECT @Id = Id FROM deleted
 
-	DECLARE @DeleteName NVARCHAR(100)
-	SELECT @DeleteName = Name from deleted
+	DECLARE @Name NVARCHAR(100)
+	SELECT @Name = Name FROM deleted
 
-	DECLARE @DeletePrice DECIMAL(18,2)
-	SELECT @DeletePrice = Price from deleted
+	DECLARE @Price DECIMAL(18,2)
+	SELECT @Price = Price FROM deleted
 
-	DECLARE @DeleteType NVARCHAR(50)
-	SELECT @DeleteType = Type from deleted
+	DECLARE @Type NVARCHAR(50)
+	SELECT @Type = Type FROM deleted
 
-	DECLARE @DeleteActive BIT
-	SELECT @DeleteActive = Active from deleted
+	DECLARE @Active BIT
+	SELECT @Active = Active FROM deleted
 
 	INSERT INTO CwRetail.audit.products 
 	(EventType, LoginName, ObjJson, AuditDateTime)
@@ -61,7 +41,41 @@ BEGIN
 	(
 	'DELETE',
 	CONVERT(NVARCHAR(250), CURRENT_USER),
-	'{ "Id" : ' + CAST(@DeleteId AS VARCHAR(max)) + ', "Name" : "' + @DeleteName + '", "Price" : ' + CAST(@DeletePrice AS VARCHAR(max)) + ', "Type" : "' + @DeleteType + '", "Active" : ' + CAST(@DeleteActive AS VARCHAR(max)) + ' }',
+	'{ "Id" : ' + CAST(@Id AS NVARCHAR(max)) + ', "Name" : "' + @Name + '", "Price" : ' + CAST(@Price AS NVARCHAR(max)) + ', "Type" : "' + @Type + '", "Active" : ' + CAST(@Active AS NVARCHAR(max)) + ' }',
+	GETDATE()
+	) 
+END
+GO
+
+CREATE TRIGGER production.products_tr_insert
+ON CwRetail.production.products
+AFTER INSERT
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	DECLARE @Id BIGINT
+	SELECT @Id = Id FROM inserted
+
+	DECLARE @Name NVARCHAR(100)
+	SELECT @Name = Name FROM inserted
+
+	DECLARE @Price DECIMAL(18,2)
+	SELECT @Price = Price FROM inserted
+
+	DECLARE @Type NVARCHAR(50)
+	SELECT @Type = Type FROM inserted
+
+	DECLARE @Active BIT
+	SELECT @Active = Active FROM inserted
+
+	INSERT INTO CwRetail.audit.products 
+	(EventType, LoginName, ObjJson, AuditDateTime)
+	VALUES
+	(
+	'INSERT',
+	CONVERT(NVARCHAR(250), CURRENT_USER),
+	'{ "Id" : ' + CAST(@Id AS NVARCHAR(max)) + ', "Name" : "' + @Name + '", "Price" : ' + CAST(@Price AS NVARCHAR(max)) + ', "Type" : "' + @Type + '", "Active" : ' + CAST(@Active AS NVARCHAR(max)) + ' }',
 	GETDATE()
 	) 
 END
