@@ -46,3 +46,4 @@ In Visual Studio:
 1. Change controller api actions to return IActionResult [Done]
 2. Cater for invalid data in controller api actions [Done]
 3. Add authorisation for each controller api action
+4. Make controller api action async
