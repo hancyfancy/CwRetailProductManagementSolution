@@ -98,12 +98,15 @@ namespace CwRetail.Api.Controllers
 
                     if (propInfo is null)
                     {
-                        return BadRequest("Invalid data");
+                        return BadRequest($"Invalid property name: {propName}");
                     }
 
-                    if (Convert.ChangeType(prop.GetValue(obj).Value, propInfo.PropertyType) is null)
+                    string expectedType = propInfo.PropertyType.Name;
+                    string actualType = prop.GetValue(obj).Value.GetType().Name;
+
+                    if (!string.Equals(actualType, expectedType))
                     {
-                        return BadRequest("Invalid data");
+                        return BadRequest($"Invalid property type: {propName} should be {expectedType} instead of {actualType}");
                     }
                 }
 
