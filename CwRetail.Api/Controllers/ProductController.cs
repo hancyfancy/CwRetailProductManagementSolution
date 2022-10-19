@@ -79,6 +79,11 @@ namespace CwRetail.Api.Controllers
         {
             try
             {
+                if (id <= 0)
+                {
+                    return BadRequest("Invalid id");
+                }
+
                 string json = product.GetRawText();
 
                 return Ok(_repo.Update(id, json));
@@ -96,6 +101,11 @@ namespace CwRetail.Api.Controllers
         {
             try
             {
+                if (id <= 0)
+                {
+                    return BadRequest("Invalid id");
+                }
+
                 return Ok(_repo.Delete(id));
             }
             catch (Exception e)
