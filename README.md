@@ -47,3 +47,5 @@ In Visual Studio:
 2. Cater for invalid data in controller api actions [Done]
 3. Add authorisation for each controller api action
 4. Make controller api action async
+5. Show history of updates sql statements via audit.products table for a particular product id
+6. Check if mocked test cases need to be ammended
