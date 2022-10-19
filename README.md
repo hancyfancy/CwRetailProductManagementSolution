@@ -51,3 +51,4 @@ In Visual Studio:
 6. Check if mocked test cases need to be ammended
 7. Write another frontend using react typescript
 8. Move internal list of products to product service
+9. Change product id to string instead of long for better security
