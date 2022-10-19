@@ -42,3 +42,7 @@ In Visual Studio:
 1. Navigate to the `Test` option in the toolbar
 2. Select `Run All Tests`
 
+### Todo
+1. Change controller api actions to return IActionResult
+2. Cater for invalid data in controller api actions
+3. Add authorisation for each controller api action
