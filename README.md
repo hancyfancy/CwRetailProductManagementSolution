@@ -50,3 +50,4 @@ In Visual Studio:
 5. Show history of updates sql statements via audit.products table for a particular product id
 6. Check if mocked test cases need to be ammended
 7. Write another frontend using react typescript
+8. Move internal list of products to product service
