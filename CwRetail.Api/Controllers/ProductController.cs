@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.ComponentModel;
+using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -85,6 +87,25 @@ namespace CwRetail.Api.Controllers
                 }
 
                 string json = product.GetRawText();
+
+                var obj = JsonConvert.DeserializeObject<dynamic>(json);
+
+                foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(obj))
+                {
+                    var propName = prop.Name;
+
+                    var propInfo = typeof(Product).GetProperty(propName);
+
+                    if (propInfo is null)
+                    {
+                        return BadRequest("Invalid data");
+                    }
+
+                    if (Convert.ChangeType(prop.GetValue(obj).Value, propInfo.PropertyType) is null)
+                    {
+                        return BadRequest("Invalid data");
+                    }
+                }
 
                 return Ok(_repo.Update(id, json));
             }
