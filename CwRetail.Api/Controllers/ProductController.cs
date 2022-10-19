@@ -27,7 +27,7 @@ namespace CwRetail.Api.Controllers
         }
 
         [HttpGet(Name = "Get")]
-        public IEnumerable<dynamic> Get()
+        public IActionResult Get()
         {
             try
             {
@@ -49,7 +49,7 @@ namespace CwRetail.Api.Controllers
                     });
                 }
 
-                return productDyn;
+                return Ok(productDyn);
             }
             catch (Exception e)
             {
@@ -60,11 +60,11 @@ namespace CwRetail.Api.Controllers
         }
 
         [HttpPost(Name = "Create")]
-        public int Create([FromBody] Product product)
+        public IActionResult Create([FromBody] Product product)
         {
             try
             {
-                return _repo.Insert(product);
+                return Ok(_repo.Insert(product));
             }
             catch (Exception e)
             {
@@ -75,13 +75,13 @@ namespace CwRetail.Api.Controllers
         }
 
         [HttpPatch(Name = "Edit")]
-        public int Edit([FromHeader] long id, [FromBody] JsonElement product)
+        public IActionResult Edit([FromHeader] long id, [FromBody] JsonElement product)
         {
             try
             {
                 string json = product.GetRawText();
 
-                return _repo.Update(id, json);
+                return Ok(_repo.Update(id, json));
             }
             catch (Exception e)
             {
@@ -92,11 +92,11 @@ namespace CwRetail.Api.Controllers
         }
 
         [HttpDelete(Name = "Remove")]
-        public int Remove([FromHeader] long id)
+        public IActionResult Remove([FromHeader] long id)
         {
             try
             {
-                return _repo.Delete(id);
+                return Ok(_repo.Delete(id));
             }
             catch (Exception e)
             {
