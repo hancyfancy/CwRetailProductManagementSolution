@@ -49,3 +49,4 @@ In Visual Studio:
 4. Make controller api action async
 5. Show history of updates sql statements via audit.products table for a particular product id
 6. Check if mocked test cases need to be ammended
+7. Write another frontend using react typescript
