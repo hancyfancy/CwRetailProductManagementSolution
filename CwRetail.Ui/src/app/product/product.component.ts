@@ -15,7 +15,6 @@ import { ProductService } from '../../services/product.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductComponent implements OnInit, OnDestroy {
-  protected products: Product[] = [];
   protected displayedColumns: string[] = ['name', 'price', 'type', 'active', 'edit', 'delete'];
   protected dataSource: MatTableDataSource<Product> = new MatTableDataSource<Product>();
 
@@ -39,7 +38,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   getProducts(): void {
     this.productService.getProducts()
       .then((products) => {
-        this.products = this.dataSource.data = products!;
+        this.productService.products = this.dataSource.data = products!;
         this.changeDetectorRefs.detectChanges();
       })
       .catch((error) => {

@@ -12,9 +12,9 @@ export class ProductService {
   private domain: string = 'http://localhost:5138';
   private urlPrefix: string = this.domain + '/api/Product';
   public secretKey: string = 'a2203d87ae1c7b2f07c6075347a8351afcb7401de5912cee90989b9f5c26957c';
+  public products: Product[] = [];
 
-  constructor(
-    private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   /** GET **/
   getProducts() {
