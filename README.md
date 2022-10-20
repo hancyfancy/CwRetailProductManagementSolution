@@ -47,7 +47,7 @@ In Visual Studio:
 2. Cater for invalid data in controller api actions [Done]
 3. Add authorisation for each controller api action
 4. Make controller api action async
-5. Show history of updates sql statements via audit.products table for a particular product id
+5. Show history of updates sql statements via audit.products table for a particular product id [In Progress]
 6. Check if mocked test cases need to be ammended
 7. Write another frontend using react typescript
 8. Move internal list of products to product service [Done]
