@@ -4,11 +4,13 @@ GO
 
 -- create tables
 CREATE TABLE audit.products (
-	Id BIGINT IDENTITY (1, 1) PRIMARY KEY,
+	ProductAuditId BIGINT IDENTITY (1, 1) PRIMARY KEY,
+	ProductId BIGINT NOT NULL,
 	EventType NVARCHAR (250) NOT NULL CHECK (LEN(EventType) > 0),
 	LoginName NVARCHAR (250) NOT NULL CHECK (LEN(LoginName) > 0),
 	ObjJson NVARCHAR (MAX) NOT NULL CHECK (LEN(ObjJson) > 0),
-	AuditDateTime DATETIME NOT NULL CHECK(CONVERT(DATE, AuditDateTime) = CONVERT(DATE, getdate()))
+	AuditDateTime DATETIME NOT NULL CHECK(CONVERT(DATE, AuditDateTime) = CONVERT(DATE, getdate())),
+	CONSTRAINT FK_ProductAudit_Product FOREIGN KEY (ProductId) REFERENCES production.products(ProductId)
 )
 GO
 
@@ -21,7 +23,7 @@ BEGIN
 	SET NOCOUNT ON
 
 	DECLARE @Id BIGINT
-	SELECT @Id = Id FROM deleted
+	SELECT @Id = ProductId FROM deleted
 
 	DECLARE @Name NVARCHAR(100)
 	SELECT @Name = Name FROM deleted
@@ -36,12 +38,13 @@ BEGIN
 	SELECT @Active = Active FROM deleted
 
 	INSERT INTO CwRetail.audit.products 
-	(EventType, LoginName, ObjJson, AuditDateTime)
+	(ProductId, EventType, LoginName, ObjJson, AuditDateTime)
 	VALUES
 	(
+	@Id,
 	'DELETE',
 	CONVERT(NVARCHAR(250), CURRENT_USER),
-	'{ "Id" : ' + CAST(@Id AS NVARCHAR(max)) + ', "Name" : "' + @Name + '", "Price" : ' + CAST(@Price AS NVARCHAR(max)) + ', "Type" : "' + @Type + '", "Active" : ' + CAST(@Active AS NVARCHAR(max)) + ' }',
+	'{ "Name" : "' + @Name + '", "Price" : ' + CAST(@Price AS NVARCHAR(max)) + ', "Type" : "' + @Type + '", "Active" : ' + CAST(@Active AS NVARCHAR(max)) + ' }',
 	GETDATE()
 	) 
 END
@@ -55,7 +58,7 @@ BEGIN
 	SET NOCOUNT ON
 
 	DECLARE @Id BIGINT
-	SELECT @Id = Id FROM inserted
+	SELECT @Id = ProductId FROM inserted
 
 	DECLARE @Name NVARCHAR(100)
 	SELECT @Name = Name FROM inserted
@@ -70,12 +73,13 @@ BEGIN
 	SELECT @Active = Active FROM inserted
 
 	INSERT INTO CwRetail.audit.products 
-	(EventType, LoginName, ObjJson, AuditDateTime)
+	(ProductId, EventType, LoginName, ObjJson, AuditDateTime)
 	VALUES
 	(
+	@Id,
 	'INSERT',
 	CONVERT(NVARCHAR(250), CURRENT_USER),
-	'{ "Id" : ' + CAST(@Id AS NVARCHAR(max)) + ', "Name" : "' + @Name + '", "Price" : ' + CAST(@Price AS NVARCHAR(max)) + ', "Type" : "' + @Type + '", "Active" : ' + CAST(@Active AS NVARCHAR(max)) + ' }',
+	'{ "Name" : "' + @Name + '", "Price" : ' + CAST(@Price AS NVARCHAR(max)) + ', "Type" : "' + @Type + '", "Active" : ' + CAST(@Active AS NVARCHAR(max)) + ' }',
 	GETDATE()
 	) 
 END
@@ -89,7 +93,7 @@ BEGIN
 	SET NOCOUNT ON
 
 	DECLARE @DeletedId BIGINT
-	SELECT @DeletedId = Id FROM deleted
+	SELECT @DeletedId = ProductId FROM deleted
 
 	DECLARE @DeletedName NVARCHAR(100)
 	SELECT @DeletedName = Name FROM deleted
@@ -104,7 +108,7 @@ BEGIN
 	SELECT @DeletedActive = Active FROM deleted
 
 	DECLARE @InsertedId BIGINT
-	SELECT @InsertedId = Id FROM inserted
+	SELECT @InsertedId = ProductId FROM inserted
 
 	DECLARE @InsertedName NVARCHAR(100)
 	SELECT @InsertedName = Name FROM inserted
@@ -119,12 +123,13 @@ BEGIN
 	SELECT @InsertedActive = Active FROM inserted
 
 	INSERT INTO CwRetail.audit.products 
-	(EventType, LoginName, ObjJson, AuditDateTime)
+	(ProductId, EventType, LoginName, ObjJson, AuditDateTime)
 	VALUES
 	(
+	@InsertedId,
 	'UPDATE',
 	CONVERT(NVARCHAR(250), CURRENT_USER),
-	'[{"Id" : ' + CAST(@DeletedId AS NVARCHAR(max)) + ', "Name" : "' + @DeletedName + '", "Price" : ' + CAST(@DeletedPrice AS NVARCHAR(max)) + ', "Type" : "' + @DeletedType + '", "Active" : ' + CAST(@DeletedActive AS NVARCHAR(max)) + ' },{ "Id" : ' + CAST(@InsertedId AS NVARCHAR(max)) + ', "Name" : "' + @InsertedName + '", "Price" : ' + CAST(@InsertedPrice AS NVARCHAR(max)) + ', "Type" : "' + @InsertedType + '", "Active" : ' + CAST(@InsertedActive AS NVARCHAR(max)) + ' }]',
+	'[{ "Name" : "' + @DeletedName + '", "Price" : ' + CAST(@DeletedPrice AS NVARCHAR(max)) + ', "Type" : "' + @DeletedType + '", "Active" : ' + CAST(@DeletedActive AS NVARCHAR(max)) + ' },{ "Name" : "' + @InsertedName + '", "Price" : ' + CAST(@InsertedPrice AS NVARCHAR(max)) + ', "Type" : "' + @InsertedType + '", "Active" : ' + CAST(@InsertedActive AS NVARCHAR(max)) + ' }]',
 	GETDATE()
 	) 
 END

@@ -43,7 +43,7 @@ namespace CwRetail.Api.Controllers
 
                     productDyn.Add(new 
                     { 
-                        Id = product.Id, 
+                        Id = product.ProductId, 
                         Name = product.Name, 
                         Price = product.Price,
                         Type = product.Type.ToString(),
@@ -92,7 +92,7 @@ namespace CwRetail.Api.Controllers
 
                 foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(obj))
                 {
-                    var propName = prop.Name;
+                    var propName = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(prop.Name.ToLower());
 
                     var propInfo = typeof(Product).GetProperty(propName);
 
@@ -104,7 +104,7 @@ namespace CwRetail.Api.Controllers
                     string expectedType = propInfo.PropertyType.Name;
                     string actualType = prop.GetValue(obj).Value.GetType().Name;
 
-                    if (!string.Equals(actualType, expectedType))
+                    if ((!string.Equals(expectedType, "ProductTypeEnum")) && (!string.Equals(actualType, "Double")) && (!string.Equals(actualType, expectedType)))
                     {
                         return BadRequest($"Invalid property type: {propName} should be {expectedType} instead of {actualType}");
                     }

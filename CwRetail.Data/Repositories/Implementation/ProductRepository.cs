@@ -33,7 +33,7 @@ namespace CwRetail.Data.Repositories.Implementation
                 _connection.Open();
 
                 string sql = $@"SELECT 
-                                        p.Id,
+                                        p.ProductId,
 	                                    p.Name, 
 	                                    p.Price, 
 	                                    p.Type, 
@@ -108,7 +108,7 @@ namespace CwRetail.Data.Repositories.Implementation
                                 SET
 	                                {updateSql}
                                 WHERE
-                                    Id = @Id";
+                                    ProductId = @Id";
                 var result = _connection.Execute(sql, new
                 {
                     Id = id
@@ -133,7 +133,7 @@ namespace CwRetail.Data.Repositories.Implementation
                 string sql = $@"DELETE FROM
 	                                production.products
                                 WHERE
-	                                Id = @Id";
+	                                ProductId = @Id";
                 var result = _connection.Execute(sql, new
                 {
                     Id = id
