@@ -17,12 +17,12 @@ export class ProductService {
   constructor(private http: HttpClient) { }
 
   /** GET **/
-  getProducts() {
+  getProducts() : Observable<Product[]> {
     return this.http.get<Product[]>(this.urlPrefix + '/Get')
       .pipe(
         tap(_ => this.log('fetched products')),
         catchError(this.handleError<Product[]>('getProducts', []))
-      ).toPromise();
+      );
   }
 
 

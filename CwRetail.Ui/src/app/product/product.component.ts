@@ -37,12 +37,9 @@ export class ProductComponent implements OnInit, OnDestroy {
 
   getProducts(): void {
     this.productService.getProducts()
-      .then((products) => {
+      .subscribe((products) => {
         this.productService.products = this.dataSource.data = products!;
         this.changeDetectorRefs.detectChanges();
-      })
-      .catch((error) => {
-        console.log("Promise rejected with " + JSON.stringify(error));
       });
   }
 
