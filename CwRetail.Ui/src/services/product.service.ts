@@ -5,15 +5,16 @@ import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 import { Product } from '../models/product';
+import { Settings } from '../settings';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
-
-  private domain: string = 'http://localhost:5138';
-  private urlPrefix: string = this.domain + '/api/Product';
+  private urlPrefix: string = '';
   public products: Product[] = [];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private settings: Settings) {
+    this.urlPrefix = this.settings.domain + '/api/Product';
+  }
 
   /** GET **/
   getProducts() : Observable<Product[]> {
