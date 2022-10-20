@@ -11,8 +11,6 @@ namespace CwRetail.Data.Models
     {
         public long ProductAuditId { get; set; }
 
-        public ProductAuditEventTypeEnum EventType { get; set; }
-
         public string ObjJson { get; set; }
 
         public DateTime AuditDateTime { get; set; }

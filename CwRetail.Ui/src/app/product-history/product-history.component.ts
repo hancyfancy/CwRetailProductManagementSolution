@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../models/product';
-import { ProductService } from '../../services/product.service';
+import { ProductAuditService } from '../../services/product-audit.service';
+import { Settings } from '../../settings';
 
 @Component({
   selector: 'app-product-history',
@@ -10,7 +11,7 @@ import { ProductService } from '../../services/product.service';
 })
 export class ProductHistoryComponent implements OnInit {
 
-  constructor(private productService: ProductService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private productAuditService: ProductAuditService, private settings: Settings, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
   }
@@ -27,7 +28,7 @@ export class ProductHistoryComponent implements OnInit {
 
   decrypt(data: string): Product {
     try {
-      const bytes = CryptoJS.AES.decrypt(data, this.productService.secretKey);
+      const bytes = CryptoJS.AES.decrypt(data, this.settings.secretKey);
       return JSON.parse(bytes.toString(CryptoJS.enc.Utf8)) as Product;
     } catch (e) {
       console.log(e);

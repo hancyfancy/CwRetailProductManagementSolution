@@ -9,6 +9,6 @@ namespace CwRetail.Data.Repositories.Interface
 {
     public interface IProductAuditRepository
     {
-        IEnumerable<ProductAudit> GetUpdates();
+        IEnumerable<ProductAudit> GetUpdates(long productId);
     }
 }

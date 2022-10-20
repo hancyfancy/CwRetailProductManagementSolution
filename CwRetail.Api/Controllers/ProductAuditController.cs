@@ -20,11 +20,16 @@ namespace CwRetail.Api.Controllers
         }
 
         [HttpGet(Name = "GetUpdates")]
-        public IActionResult GetUpdates()
+        public IActionResult GetUpdates([FromHeader] long productId)
         {
             try
             {
-                IEnumerable<ProductAudit> productAudits = _repo.GetUpdates();
+                if (productId <= 0)
+                {
+                    return BadRequest("Invalid product id");
+                }
+
+                IEnumerable<ProductAudit> productAudits = _repo.GetUpdates(productId);
 
                 List<dynamic> productAuditDyn = new List<dynamic>();
 

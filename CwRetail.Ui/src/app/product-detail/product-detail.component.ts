@@ -4,6 +4,7 @@ import * as CryptoJS from 'crypto-js';
 
 import { Product } from '../../models/product';
 import { ProductService } from '../../services/product.service';
+import { Settings } from '../../settings';
 
 @Component({
   selector: 'app-product-detail',
@@ -14,7 +15,7 @@ export class ProductDetailComponent implements OnInit {
   protected product: Product = new Product();
   protected actionText: string = '';
 
-  constructor(private productService: ProductService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private productService: ProductService, private settings: Settings, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.product = this.decrypt(this.route.snapshot.paramMap.get('product')!);
@@ -80,7 +81,7 @@ export class ProductDetailComponent implements OnInit {
 
   decrypt(data : string) : Product {
     try {
-      const bytes = CryptoJS.AES.decrypt(data, this.productService.secretKey);
+      const bytes = CryptoJS.AES.decrypt(data, this.settings.secretKey);
       return JSON.parse(bytes.toString(CryptoJS.enc.Utf8)) as Product;
     } catch (e) {
       console.log(e);

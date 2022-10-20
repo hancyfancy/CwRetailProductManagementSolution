@@ -19,7 +19,7 @@ namespace CwRetail.Data.Repositories.Implementation
             _connection = new SqlConnection(ConnectionStrings.Test);
         }
 
-        public IEnumerable<ProductAudit> GetUpdates()
+        public IEnumerable<ProductAudit> GetUpdates(long productId)
         {
             try
             {
@@ -32,8 +32,14 @@ namespace CwRetail.Data.Repositories.Implementation
                                 FROM 
 	                                audit.products p
                                 WHERE
-	                                p.EventType = 'UPDATE'";
-                var result = _connection.Query<ProductAudit>(sql);
+	                                p.EventType = 'UPDATE'
+									AND p.ProductId = @ProductId
+								ORDER BY 
+									p.AuditDateTime";
+                var result = _connection.Query<ProductAudit>(sql, new
+                {
+                    ProductId = productId
+                });
 
                 _connection.Close();
 

@@ -7,6 +7,7 @@ import * as CryptoJS from 'crypto-js';
 
 import { Product } from '../../models/product';
 import { ProductService } from '../../services/product.service';
+import { Settings } from '../../settings';
 
 @Component({
   selector: 'app-product',
@@ -21,7 +22,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, { static: true }) protected paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
   @ViewChild(MatSort, { static: true }) protected sort: MatSort = new MatSort();
 
-  constructor(private productService: ProductService, private router: Router, private changeDetectorRefs: ChangeDetectorRef) { }
+  constructor(private productService: ProductService, private settings: Settings, private router: Router, private changeDetectorRefs: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.paginator.pageSizeOptions = [5, 10, 20, 50, 100];
@@ -67,7 +68,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
   encrypt(data: Product) : string {
     try {
-      return CryptoJS.AES.encrypt(JSON.stringify(data, (_, v) => typeof v === 'bigint' ? v.toString() : v), this.productService.secretKey).toString();
+      return CryptoJS.AES.encrypt(JSON.stringify(data, (_, v) => typeof v === 'bigint' ? v.toString() : v), this.settings.secretKey).toString();
     } catch (e) {
       console.log(e);
       throw (e);
