@@ -148,39 +148,5 @@ namespace CwRetail.Data.Repositories.Implementation
                 return 0;
             }
         }
-
-        public void Subscribe()
-        {
-            try
-            {
-                using (var tableDependency = new SqlTableDependency<Product>(ConnectionStrings.Test))
-                {
-                    tableDependency.OnChanged += TableDependency_Changed;
-                    tableDependency.Start();
-
-                    Console.WriteLine("Waiting for receiving notifications...");
-                    Console.WriteLine("Press a key to stop");
-                    Console.ReadKey();
-
-                    tableDependency.OnChanged -= TableDependency_Changed;
-                    tableDependency.Stop();
-                }
-
-            }
-            catch (Exception e)
-            {
-            }
-        }
-
-        private void TableDependency_Changed(object sender, RecordChangedEventArgs<Product> e)
-        {
-            if (e.ChangeType != ChangeType.None)
-            {
-                var changedEntity = e.Entity;
-                Console.WriteLine("DML operation: " + e.ChangeType);
-                Console.WriteLine("ID: " + changedEntity.Id);
-                Console.WriteLine("Name: " + changedEntity.Name);
-            }
-        }
     }
 }
