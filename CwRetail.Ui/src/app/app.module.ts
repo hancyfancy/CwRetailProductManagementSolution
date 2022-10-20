@@ -13,13 +13,14 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 
+import { CurrencyValidatorDirective } from '../validators/currency-validator.directive';
+import { LengthValidatorDirective } from '../validators/length-validator.directive';
+
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductComponent } from './product/product.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AppComponent } from './app/app.component';
-
-import { CurrencyValidatorDirective } from '../validators/currency-validator.directive';
-import { LengthValidatorDirective } from '../validators/length-validator.directive';
+import { ProductHistoryComponent } from './product-history/product-history.component';
 
 @NgModule({
   imports: [
@@ -43,7 +44,8 @@ import { LengthValidatorDirective } from '../validators/length-validator.directi
     NotFoundComponent,
     AppComponent,
     CurrencyValidatorDirective,
-    LengthValidatorDirective
+    LengthValidatorDirective,
+    ProductHistoryComponent
   ],
   bootstrap: [AppComponent]
 })

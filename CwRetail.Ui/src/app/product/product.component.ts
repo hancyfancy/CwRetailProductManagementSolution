@@ -15,7 +15,7 @@ import { ProductService } from '../../services/product.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductComponent implements OnInit, OnDestroy {
-  protected displayedColumns: string[] = ['name', 'price', 'type', 'active', 'edit', 'delete'];
+  protected displayedColumns: string[] = ['name', 'price', 'type', 'active', 'history', 'edit', 'delete'];
   protected dataSource: MatTableDataSource<Product> = new MatTableDataSource<Product>();
 
   @ViewChild(MatPaginator, { static: true }) protected paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
@@ -60,6 +60,11 @@ export class ProductComponent implements OnInit, OnDestroy {
 
   goToDetails(product: Product = new Product()): void {
     const navigationDetails: string[] = ['/details', this.encrypt(product)];
+    this.router.navigate(navigationDetails);
+  }
+
+  goToHistory(product: Product = new Product()): void {
+    const navigationDetails: string[] = ['/history', this.encrypt(product)];
     this.router.navigate(navigationDetails);
   }
 

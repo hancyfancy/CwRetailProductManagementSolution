@@ -1,6 +1,7 @@
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductComponent } from './product/product.component';
+import { ProductHistoryComponent } from './product-history/product-history.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app/app.component';
@@ -9,6 +10,7 @@ const routes: Routes = [
   { path: '', component: AppComponent },
   { path: 'products', component: ProductComponent },
   { path: 'details/:product', component: ProductDetailComponent },
+  { path: 'history/:product', component: ProductHistoryComponent },
   { path: '**', component: NotFoundComponent }
 ];
 

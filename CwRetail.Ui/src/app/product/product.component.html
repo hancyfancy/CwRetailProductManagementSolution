@@ -26,6 +26,11 @@
       <td mat-cell *matCellDef="let element"> {{element.active}} </td>
     </ng-container>
 
+    <ng-container matColumnDef="history">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element"><button type="button" (click)="goToHistory(element)"><i class="material-icons">history</i></button></td>
+    </ng-container>
+
     <ng-container matColumnDef="edit">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element"><button type="button" (click)="goToDetails(element)"><i class="material-icons">edit</i></button></td>
