@@ -9,8 +9,7 @@ CREATE TABLE audit.products (
 	EventType NVARCHAR (250) NOT NULL CHECK (LEN(EventType) > 0),
 	LoginName NVARCHAR (250) NOT NULL CHECK (LEN(LoginName) > 0),
 	ObjJson NVARCHAR (MAX) NOT NULL CHECK (LEN(ObjJson) > 0),
-	AuditDateTime DATETIME NOT NULL CHECK(CONVERT(DATE, AuditDateTime) = CONVERT(DATE, getdate())),
-	CONSTRAINT FK_ProductAudit_Product FOREIGN KEY (ProductId) REFERENCES production.products(ProductId)
+	AuditDateTime DATETIME NOT NULL CHECK(CONVERT(DATE, AuditDateTime) = CONVERT(DATE, getdate()))
 )
 GO
 
