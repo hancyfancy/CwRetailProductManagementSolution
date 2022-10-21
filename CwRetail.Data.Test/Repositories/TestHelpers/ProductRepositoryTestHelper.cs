@@ -15,7 +15,7 @@ namespace CwRetail.Data.Test.Repositories.TestHelpers
             return new List<Product>() {
                 new Product()
                 {
-                    Id = 3,
+                    ProductId = 3,
                     Name = "34107476-E228-4AD1-9C04-46ECA69BDE92",
                     Price = 1913.57M,
                     Type = ProductTypeEnum.Food,
@@ -23,7 +23,7 @@ namespace CwRetail.Data.Test.Repositories.TestHelpers
                 },
                 new Product()
                 {
-                    Id = 4,
+                    ProductId = 4,
                     Name = "AE8D7304-DB95-4D25-B04F-D3D36570990A",
                     Price = 1193.22M,
                     Type = ProductTypeEnum.Furniture,

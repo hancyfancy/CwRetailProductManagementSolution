@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../models/product';
 import { ProductAudit } from '../../models/product-audit';
-import { ProductHistory } from '../../models/product-history';
 import { ProductAuditService } from '../../services/product-audit.service';
 import { Settings } from '../../settings';
 
