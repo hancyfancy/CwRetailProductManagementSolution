@@ -1,20 +1,23 @@
 <h2>Product History</h2>
 
 <div *ngFor="let item of history">
-  <div class="date-time">
-    {{ item.lastUpdated }}
-  </div>
-  <div class="product-property">
-    {{ item.name | uppercase }}
-  </div>
-  <div class="product-property">
-    {{ item.price }}
-  </div>
-  <div class="product-property">
-    {{ item.type.toString() | titlecase }}
-  </div>
-  <div class="product-property">
-    {{ item.active }}
+  <div class="spaced rounded">
+    <div class="date-time padded">
+      {{ item.lastUpdated }}
+    </div>
+    <div class="product-property padded">
+      <span>Name:</span>
+      <span>{{ item.name | uppercase }}</span>
+    </div>
+    <div class="product-property padded">
+      {{ item.price }}
+    </div>
+    <div class="product-property padded">
+      {{ item.type.toString() | titlecase }}
+    </div>
+    <div class="product-property padded">
+      {{ item.active }}
+    </div>
   </div>
 </div>
 

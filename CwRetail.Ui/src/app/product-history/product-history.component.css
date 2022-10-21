@@ -16,3 +16,17 @@
 .product-property {
   background-color: #b3e6ff;
 }
+
+.rounded {
+  border-radius: 50px;
+}
+
+.spaced {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.padded {
+  padding-left: 5px;
+  padding-right: 5px;
+}
