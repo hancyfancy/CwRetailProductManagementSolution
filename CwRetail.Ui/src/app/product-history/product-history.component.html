@@ -5,18 +5,21 @@
     <div class="date-time padded rounded-top font-normal width-limited">
       {{ item.lastUpdated }}
     </div>
-    <div class="product-property padded width-limited">
-      <span class="font-normal">Name:</span>
-      <span class="font-normal">{{ item.name | uppercase }}</span>
+    <div class="product-property width-limited">
+      <span class="font-normal labelled padded rounded-bottom-right">Name</span>
+      <span class="font-normal padded">{{ item.name | uppercase }}</span>
     </div>
-    <div class="product-property padded font-normal width-limited">
-      {{ item.price }}
+    <div class="product-property width-limited">
+      <span class="font-normal labelled padded rounded-right">Price</span>
+      <span class="font-normal padded">${{ item.price }}</span>
     </div>
-    <div class="product-property padded font-normal width-limited">
-      {{ item.type.toString() | titlecase }}
+    <div class="product-property width-limited">
+      <span class="font-normal labelled padded rounded-right">Type</span>
+      <span class="font-normal padded">{{ item.type.toString() | titlecase }}</span>
     </div>
-    <div class="product-property padded rounded-bottom font-normal width-limited">
-      {{ item.active == true ? 'True' : 'False' }}
+    <div class="product-property rounded-bottom width-limited">
+      <span class="font-normal labelled padded rounded-top-right">Active</span>
+      <span class="font-normal padded">{{ item.active == true ? 'True' : 'False' }}</span>
     </div>
   </div>
 </div>

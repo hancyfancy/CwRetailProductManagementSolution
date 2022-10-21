@@ -29,6 +29,19 @@
   border-bottom-right-radius: 10px;
 }
 
+.rounded-right {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.rounded-top-right {
+  border-top-right-radius: 10px;
+}
+
+.rounded-bottom-right {
+  border-bottom-right-radius: 10px;
+}
+
 .spaced {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -53,4 +66,11 @@
 .inline {
   display: block;
   float: left;
+}
+
+.labelled {
+  color: white;
+  background-color: cornflowerblue;
+  min-width: 75px;
+  display:inline-block;
 }
