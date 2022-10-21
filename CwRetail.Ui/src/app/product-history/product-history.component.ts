@@ -43,14 +43,14 @@ export class ProductHistoryComponent implements OnInit {
     var firstAuditJsonString: string = firstAudit.json;
     var firstAuditProducts: Product[] = JSON.parse(firstAuditJsonString) as Product[];
     this.history.push(new ProductHistory(firstAuditProducts[0], 'Original'));
-    this.history.push(new ProductHistory(firstAuditProducts[1], firstAudit.dateTime.toUTCString()));
+    this.history.push(new ProductHistory(firstAuditProducts[1], firstAudit.dateTime.toString()));
 
     if (this.productAuditService.productAudits.length > 1) {
       for (let i = 1; i < this.productAuditService.productAudits.length; i++) {
         var element: ProductAudit = this.productAuditService.productAudits[i];
         var jsonString: string = element.json;
         var products: Product[] = JSON.parse(jsonString) as Product[];
-        this.history.push(new ProductHistory(products[1], element.dateTime.toUTCString()));
+        this.history.push(new ProductHistory(products[1], element.dateTime.toString()));
       }
     }
   }
