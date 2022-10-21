@@ -19,16 +19,19 @@ export class ProductHistoryComponent implements OnInit {
   constructor(private productAuditService: ProductAuditService, private settings: Settings, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.getHistory();
-    this.loadHistory();
+    this.getHistory();    
   }
 
   getHistory(): void {
     var originalProduct: Product = this.decrypt(this.route.snapshot.paramMap.get('product')!);
     this.productAuditService.getProductAuditUpdates(originalProduct.id)
-      .subscribe((productAudits) => {
+      .then((productAudits) => {
         this.productAuditService.productAudits = productAudits!;
-      });
+        this.loadHistory();
+      })
+      .catch((error) => {
+        console.log("Promise rejected with " + JSON.stringify(error));
+      })
   }
 
   loadHistory(): void {

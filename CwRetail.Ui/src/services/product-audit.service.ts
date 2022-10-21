@@ -17,7 +17,7 @@ export class ProductAuditService {
   }
 
   /** GET **/
-  getProductAuditUpdates(productId: bigint): Observable<ProductAudit[]> {
+  getProductAuditUpdates(productId: bigint) {
     var getHttpOptions = {
       headers: new HttpHeaders()
         .set('Content-Type', 'application/json')
@@ -27,7 +27,7 @@ export class ProductAuditService {
       .pipe(
         tap(_ => this.log('fetched product audits')),
         catchError(this.handleError<ProductAudit[]>('getProductAuditUpdates', []))
-      );
+      ).toPromise();
   }
 
   /**
