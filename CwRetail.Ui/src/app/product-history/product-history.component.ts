@@ -47,7 +47,7 @@ export class ProductHistoryComponent implements OnInit {
     originalProduct.lastUpdated = 'Original';
 
     var modifiedProduct: Product = firstAuditProducts[1];
-    modifiedProduct.lastUpdated = firstAudit.dateTime.toString();
+    modifiedProduct.lastUpdated = 'Modified at ' + firstAudit.dateTime.toString();
 
     this.history.push(originalProduct);
     this.history.push(modifiedProduct);
@@ -58,7 +58,7 @@ export class ProductHistoryComponent implements OnInit {
         var jsonString: string = element.json.toLowerCase();
         var products: Product[] = JSON.parse(jsonString) as Product[];
         var currentModifiedProduct: Product = products[1];
-        currentModifiedProduct.lastUpdated = element.dateTime.toString();
+        currentModifiedProduct.lastUpdated = 'Modified at ' + element.dateTime.toString();
         this.history.push(currentModifiedProduct);
       }
     }
