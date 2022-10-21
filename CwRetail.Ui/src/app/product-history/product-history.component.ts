@@ -14,7 +14,7 @@ import * as CryptoJS from 'crypto-js';
   styleUrls: ['./product-history.component.css']
 })
 export class ProductHistoryComponent implements OnInit {
-  protected history: ProductHistory[] = [];
+  protected history: Product[] = [];
 
   constructor(private productAuditService: ProductAuditService, private settings: Settings, private router: Router, private route: ActivatedRoute) { }
 
@@ -40,17 +40,26 @@ export class ProductHistoryComponent implements OnInit {
     }
 
     var firstAudit: ProductAudit = this.productAuditService.productAudits[0];
-    var firstAuditJsonString: string = firstAudit.json;
+    var firstAuditJsonString: string = firstAudit.json.toLowerCase();
     var firstAuditProducts: Product[] = JSON.parse(firstAuditJsonString) as Product[];
-    this.history.push(new ProductHistory(firstAuditProducts[0], 'Original'));
-    this.history.push(new ProductHistory(firstAuditProducts[1], firstAudit.dateTime.toString()));
+
+    var originalProduct: Product = new Product(firstAuditProducts[0].id, firstAuditProducts[0].name, firstAuditProducts[0].price, firstAuditProducts[0].type, firstAuditProducts[0].active);
+    originalProduct.lastUpdated = 'Original';
+
+    var modifiedProduct: Product = new Product(firstAuditProducts[1].id, firstAuditProducts[1].name, firstAuditProducts[1].price, firstAuditProducts[1].type, firstAuditProducts[1].active);
+    modifiedProduct.lastUpdated = firstAudit.dateTime.toString();
+
+    this.history.push(originalProduct);
+    this.history.push(modifiedProduct);
 
     if (this.productAuditService.productAudits.length > 1) {
       for (let i = 1; i < this.productAuditService.productAudits.length; i++) {
         var element: ProductAudit = this.productAuditService.productAudits[i];
         var jsonString: string = element.json;
         var products: Product[] = JSON.parse(jsonString) as Product[];
-        this.history.push(new ProductHistory(products[1], element.dateTime.toString()));
+        var currentModifiedProduct: Product = new Product(products[1].id, products[1].name, products[1].price, products[1].type, products[1].active);
+        currentModifiedProduct.lastUpdated = element.dateTime.toString();
+        this.history.push(currentModifiedProduct);
       }
     }
   }
