@@ -5,13 +5,13 @@
     {{ item.lastUpdated }}
   </div>
   <div class="product-property">
-    {{ item.name.toUpperCase() }}
+    {{ item.name | uppercase }}
   </div>
   <div class="product-property">
     {{ item.price }}
   </div>
   <div class="product-property">
-    {{ item.type }}
+    {{ item.type.toString() | titlecase }}
   </div>
   <div class="product-property">
     {{ item.active }}
