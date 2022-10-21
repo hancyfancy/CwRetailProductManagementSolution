@@ -1,22 +1,22 @@
 <h2>Product History</h2>
 
-<div *ngFor="let item of history">
-  <div class="spaced">
-    <div class="date-time padded rounded-top font-normal">
+<div *ngFor="let item of history" class="flex">
+  <div class="spaced inline">
+    <div class="date-time padded rounded-top font-normal width-limited">
       {{ item.lastUpdated }}
     </div>
-    <div class="product-property padded">
+    <div class="product-property padded width-limited">
       <span class="font-normal">Name:</span>
       <span class="font-normal">{{ item.name | uppercase }}</span>
     </div>
-    <div class="product-property padded font-normal">
+    <div class="product-property padded font-normal width-limited">
       {{ item.price }}
     </div>
-    <div class="product-property padded font-normal">
+    <div class="product-property padded font-normal width-limited">
       {{ item.type.toString() | titlecase }}
     </div>
-    <div class="product-property padded rounded-bottom font-normal">
-      {{ item.active }}
+    <div class="product-property padded rounded-bottom font-normal width-limited">
+      {{ item.active == true ? 'True' : 'False' }}
     </div>
   </div>
 </div>
