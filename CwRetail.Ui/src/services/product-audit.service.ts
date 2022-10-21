@@ -25,7 +25,7 @@ export class ProductAuditService {
     };
     return this.http.get<ProductAudit[]>(this.urlPrefix + '/GetUpdates', getHttpOptions)
       .pipe(
-        tap(_ => this.log('fetched products')),
+        tap(_ => this.log('fetched product audits')),
         catchError(this.handleError<ProductAudit[]>('getProductAuditUpdates', []))
       );
   }
@@ -49,6 +49,6 @@ export class ProductAuditService {
   }
 
   private log(message: string) {
-    console.log(`ProductService: ${message}`);
+    console.log(`ProductAuditService: ${message}`);
   }
 }
