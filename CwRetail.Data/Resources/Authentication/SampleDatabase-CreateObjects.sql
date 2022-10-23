@@ -33,3 +33,11 @@ CREATE TABLE auth.users (
 	LastActive DATETIME NOT NULL CHECK (LastActive < GETDATE())
 )
 GO
+
+CREATE TABLE auth.userverification (
+	UserVerificationId BIGINT IDENTITY (1, 1) PRIMARY KEY,
+	UserId BIGINT NOT NULL FOREIGN KEY REFERENCES auth.users(UserId) ON DELETE CASCADE,
+	EmailVerified BIT NOT NULL,
+    PhoneVerified BIT NOT NULL
+)
+GO
