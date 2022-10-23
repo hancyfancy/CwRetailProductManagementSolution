@@ -46,11 +46,11 @@ In Visual Studio:
 1. Change controller api actions to return IActionResult [Done]
 2. Cater for invalid data in controller api actions [Done]
 3. Add authorisation for each controller api action [In progress]
-  A. Need to create AuthenticationController action method Create which would consume UserRepository and UserVerificationRepository
-  B. Need to create angular component Register to hook in to  AuthenticationController.Create action method
-  C. After inserting data into auth.users and auth.userverification need to send email to registered email address, need to send text message to registered phone
-  D. User must verify both via link in email and text message
-  E. As long as either Email or Phone is verified, user may continue using the application
+    1. Need to create AuthenticationController action method Create which would consume UserRepository and UserVerificationRepository
+    2. Need to create angular component Register to hook in to  AuthenticationController.Create action method
+    3. After inserting data into auth.users and auth.userverification need to send email to registered email address, need to send text message to registered phone
+    4. User must verify both via link in email and text message
+    5. As long as either Email or Phone is verified, user may continue using the application
 4. Make controller api action async
 5. Show history of updates sql statements via audit.products table for a particular product id [Done]
 6. Check if mocked test cases need to be ammended
