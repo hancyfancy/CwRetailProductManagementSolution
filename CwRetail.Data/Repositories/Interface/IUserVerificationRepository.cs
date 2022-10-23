@@ -10,5 +10,9 @@ namespace CwRetail.Data.Repositories.Interface
     public interface IUserVerificationRepository
     {
         int Insert(UserVerification userVerification);
+
+        int UpdateEmailVerified(long userId);
+
+        int UpdatePhoneVerified(long userId);
     }
 }

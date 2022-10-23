@@ -57,5 +57,33 @@ namespace CwRetail.Data.Repositories.Implementation
                 return 0;
             }
         }
+
+        public int UpdateLastActive(long userId)
+        {
+            try
+            {
+                _connection.Open();
+
+                string sql = $@"UPDATE
+	                                auth.users
+                                SET
+	                                LastActive = @LastActive
+                                WHERE
+                                    UserId = @UserId";
+                var result = _connection.Execute(sql, new
+                {
+                    UserId = userId,
+                    LastActive = DateTime.UtcNow
+                });
+
+                _connection.Close();
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
+        }
     }
 }

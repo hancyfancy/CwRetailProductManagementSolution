@@ -1,4 +1,5 @@
-﻿using CwRetail.Data.Models;
+﻿using CwRetail.Data.Extensions;
+using CwRetail.Data.Models;
 using CwRetail.Data.Repositories.Interface;
 using Dapper;
 using System;
@@ -43,6 +44,60 @@ namespace CwRetail.Data.Repositories.Implementation
                     UserId = userVerification.UserId,
                     EmailVerified = userVerification.EmailVerified,
                     PhoneVerified = userVerification.PhoneVerified,
+                });
+
+                _connection.Close();
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
+        }
+
+        public int UpdateEmailVerified(long userId)
+        {
+            try
+            {
+                _connection.Open();
+
+                string sql = $@"UPDATE
+	                                auth.userverification
+                                SET
+	                                EmailVerified = true
+                                WHERE
+                                    UserId = @UserId";
+                var result = _connection.Execute(sql, new
+                {
+                    UserId = userId,
+                });
+
+                _connection.Close();
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
+        }
+
+        public int UpdatePhoneVerified(long userId)
+        {
+            try
+            {
+                _connection.Open();
+
+                string sql = $@"UPDATE
+	                                auth.userverification
+                                SET
+	                                PhoneVerified = true
+                                WHERE
+                                    UserId = @UserId";
+                var result = _connection.Execute(sql, new
+                {
+                    UserId = userId,
                 });
 
                 _connection.Close();
