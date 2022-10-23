@@ -52,3 +52,4 @@ In Visual Studio:
 7. Write another frontend using react typescript
 8. Move internal list of products to product service [Done]
 9. Change product id to string instead of long for better security
+10. Use async/await instead of then/catch in angular
