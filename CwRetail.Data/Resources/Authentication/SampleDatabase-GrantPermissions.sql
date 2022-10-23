@@ -20,3 +20,14 @@ TO
 	TestUser
 GO
 
+GRANT 
+	SELECT, 
+	INSERT, 
+	UPDATE,  
+	DELETE
+ON 
+	auth.users 
+TO 
+	TestUser
+GO
+
