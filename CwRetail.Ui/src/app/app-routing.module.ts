@@ -5,9 +5,11 @@ import { ProductHistoryComponent } from './product-history/product-history.compo
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app/app.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   { path: '', component: AppComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'products', component: ProductComponent },
   { path: 'details/:product', component: ProductDetailComponent },
   { path: 'history/:product', component: ProductHistoryComponent },

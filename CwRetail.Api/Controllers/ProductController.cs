@@ -29,7 +29,7 @@ namespace CwRetail.Api.Controllers
         }
 
         [HttpGet(Name = "Get")]
-        public IActionResult Get()
+        public IActionResult Get([FromHeader] string authorization)
         {
             try
             {

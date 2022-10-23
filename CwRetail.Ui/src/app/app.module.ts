@@ -21,6 +21,7 @@ import { ProductComponent } from './product/product.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AppComponent } from './app/app.component';
 import { ProductHistoryComponent } from './product-history/product-history.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   imports: [
@@ -45,7 +46,8 @@ import { ProductHistoryComponent } from './product-history/product-history.compo
     AppComponent,
     CurrencyValidatorDirective,
     LengthValidatorDirective,
-    ProductHistoryComponent
+    ProductHistoryComponent,
+    LoginComponent
   ],
   bootstrap: [AppComponent]
 })
