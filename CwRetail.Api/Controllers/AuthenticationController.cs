@@ -58,7 +58,16 @@ namespace CwRetail.Api.Controllers
 
             requestedUser.Username = user.Username;
 
-            return Ok(userVerificationResult);
+            //JWT token can only be created after at least email or phone have been verified
+            //If email has not been verified and phone has not been verified then JWT token cannot be generated
+            //Send verification email and/or sms for user to complete verification
+
+            //Need to return JWT token created from requestedUser object
+            //The JWT token would then be available to the front end
+            //Then pass the JWT token to the controller action methods
+            //Controller action methods are responsible for determining if the user retrieved from the JWT token has access to the particular action
+            //If the user does not have access to the action, redirect or throw error message accordingly
+            return Ok();
         }
     }
 }
