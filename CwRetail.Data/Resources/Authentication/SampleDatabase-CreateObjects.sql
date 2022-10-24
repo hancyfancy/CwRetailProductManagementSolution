@@ -24,10 +24,26 @@ BEGIN
 END 
 GO
 
+CREATE FUNCTION auth.users_checkvalidusername (@Username VARCHAR(100)) RETURNS BIT AS
+BEGIN     
+  DECLARE @bitUsernameVal AS BIT
+  DECLARE @UsernameText VARCHAR(100)
+
+  SET @UsernameText=LTRIM(RTRIM(ISNULL(@Username,'')))
+
+  SET @bitUsernameVal = CASE WHEN @UsernameText = '' THEN 0
+							 WHEN @UsernameText IN (SELECT DISTINCT Username FROM auth.users) THEN 0
+							 WHEN LEN(@UsernameText) < 5 THEN 0
+							 ELSE 1
+						END
+  RETURN @bitUsernameVal
+END 
+GO
+
 -- create tables
 CREATE TABLE auth.users (
 	UserId BIGINT IDENTITY (1, 1) PRIMARY KEY,
-	Username NVARCHAR (100) NOT NULL CHECK (LEN(Username) > 4),
+	Username NVARCHAR (100) NOT NULL CHECK (auth.users_checkvalidusername(Username) = 1),
 	Email NVARCHAR (100) NOT NULL CHECK (auth.users_checkvalidemail(Email) = 1),
     Phone NVARCHAR (20) NOT NULL,
 	LastActive DATETIME NOT NULL CHECK (LastActive < GETDATE())
