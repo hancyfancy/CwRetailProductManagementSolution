@@ -14,5 +14,7 @@ namespace CwRetail.Data.Repositories.Interface
         int UpdateEmailVerified(long userId);
 
         int UpdatePhoneVerified(long userId);
+
+        UserVerification Get(string username);
     }
 }

@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace CwRetail.Data.Models
 {
-    public class UserVerification
+    public class UserVerification : User
     {
         public long UserVerificationId { get; set; }
-
-        public long UserId { get; set; }
 
         public bool EmailVerified { get; set; }
 

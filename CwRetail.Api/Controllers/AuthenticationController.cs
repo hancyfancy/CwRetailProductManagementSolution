@@ -49,18 +49,29 @@ namespace CwRetail.Api.Controllers
         [HttpPost(Name = "GetUser")]
         public IActionResult GetUser([FromBody] User user)
         {
-            User requestedUser = _userRepo.Get(user.Username);
+            UserVerification userVerification = _userVerificationRepo.Get(user.Username);
 
-            if (requestedUser is null)
+            if (userVerification is null)
             {
                 return BadRequest("User not found");
             }
 
-            requestedUser.Username = user.Username;
+            userVerification.Username = user.Username;
 
-            //JWT token can only be created after at least email or phone have been verified
-            //If email has not been verified and phone has not been verified then JWT token cannot be generated
-            //Send verification email and/or sms for user to complete verification
+            if (!userVerification.EmailVerified)
+            {
+                userVerification.SendEmail(null, null, 0, null);
+            }
+
+            if (!userVerification.PhoneVerified)
+            {
+                //Send out an sms
+            }
+
+            if (!(userVerification.EmailVerified || userVerification.PhoneVerified))
+            {
+                return BadRequest("Either email or phone needs to be verified to access content");
+            }
 
             //Need to return JWT token created from requestedUser object
             //The JWT token would then be available to the front end

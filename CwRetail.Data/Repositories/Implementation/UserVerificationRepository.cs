@@ -109,5 +109,39 @@ namespace CwRetail.Data.Repositories.Implementation
                 return 0;
             }
         }
+
+        public UserVerification Get(string username)
+        {
+            try
+            {
+                _connection.Open();
+
+                string sql = $@"SELECT 
+                                        v.UserVerificationId,
+										u.UserId,
+										v.EmailVerified,
+										v.PhoneVerified,
+										u.Email,
+										u.Phone,
+										u.LastActive
+                                    FROM 
+	                                    auth.users u
+										INNER JOIN auth.userverification v on v.UserId = u.UserId
+									WHERE 
+										u.Username = @Username";
+                var result = _connection.Query<UserVerification>(sql, new
+                {
+                    Username = username
+                });
+
+                _connection.Close();
+
+                return result.FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                return default;
+            }
+        }
     }
 }
