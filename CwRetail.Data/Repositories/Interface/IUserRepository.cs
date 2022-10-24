@@ -12,5 +12,7 @@ namespace CwRetail.Data.Repositories.Interface
         int Insert(User user);
 
         int UpdateLastActive(long userId);
+
+        User Get(string username);
     }
 }

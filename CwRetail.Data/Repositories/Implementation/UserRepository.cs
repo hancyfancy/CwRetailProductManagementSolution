@@ -86,5 +86,33 @@ namespace CwRetail.Data.Repositories.Implementation
                 return 0;
             }
         }
+
+        public User Get(string username)
+        {
+            try
+            {
+                _connection.Open();
+
+                string sql = $@"SELECT 
+                                        u.UserId,
+	                                    u.LastActive
+                                    FROM 
+	                                    auth.users u
+									WHERE 
+										u.Username = @Username";
+                var result = _connection.Query<User>(sql, new
+                {
+                    Username = username
+                });
+
+                _connection.Close();
+
+                return result.FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                return default;
+            }
+        }
     }
 }

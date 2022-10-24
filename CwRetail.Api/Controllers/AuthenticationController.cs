@@ -49,14 +49,14 @@ namespace CwRetail.Api.Controllers
         [HttpPost(Name = "GetUser")]
         public IActionResult GetUser([FromBody] User user)
         {
-            long userId = _userRepo.Insert(user);
+            User requestedUser = _userRepo.Get(user.Username);
 
-            var userVerificationResult = _userVerificationRepo.Insert(new UserVerification()
+            if (requestedUser is null)
             {
-                UserId = userId,
-                EmailVerified = false,
-                PhoneVerified = false
-            });
+                return BadRequest("User not found");
+            }
+
+            requestedUser.Username = user.Username;
 
             return Ok(userVerificationResult);
         }
