@@ -58,3 +58,4 @@ In Visual Studio:
 8. Move internal list of products to product service [Done]
 9. Change product id to string instead of long for better security
 10. Use async/await instead of then/catch in angular
+11. Use streaming to push notifications to app, such as an insert or delete notification
