@@ -1,4 +1,5 @@
 -- drop tables
+DROP TABLE IF EXISTS auth.userverification
 DROP TABLE IF EXISTS auth.users
 
 -- drop stored procedures

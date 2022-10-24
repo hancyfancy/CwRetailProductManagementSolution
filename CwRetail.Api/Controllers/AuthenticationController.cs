@@ -45,5 +45,20 @@ namespace CwRetail.Api.Controllers
 
             return Ok(userVerificationResult);
         }
+
+        [HttpPost(Name = "GetUser")]
+        public IActionResult GetUser([FromBody] User user)
+        {
+            long userId = _userRepo.Insert(user);
+
+            var userVerificationResult = _userVerificationRepo.Insert(new UserVerification()
+            {
+                UserId = userId,
+                EmailVerified = false,
+                PhoneVerified = false
+            });
+
+            return Ok(userVerificationResult);
+        }
     }
 }
