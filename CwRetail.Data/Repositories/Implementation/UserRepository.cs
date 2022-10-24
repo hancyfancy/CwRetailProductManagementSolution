@@ -33,6 +33,7 @@ namespace CwRetail.Data.Repositories.Implementation
 	                                    Phone,
 	                                    LastActive
                                     )
+                                    OUTPUT inserted.UserId 
                                     VALUES 
                                     ( 
 	                                    @Username,
