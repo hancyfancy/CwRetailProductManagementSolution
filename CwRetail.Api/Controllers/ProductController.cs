@@ -1,3 +1,5 @@
+using CwRetail.Api.Helpers;
+using CwRetail.Data.Constants;
 using CwRetail.Data.Enumerations;
 using CwRetail.Data.Models;
 using CwRetail.Data.Repositories;
@@ -21,11 +23,13 @@ namespace CwRetail.Api.Controllers
     {
         private readonly ILogger<ProductController> _logger;
         private readonly IProductRepository _repo;
+        private readonly string _publicRsaKey;
 
         public ProductController(ILogger<ProductController> logger)
         {
             _logger = logger;
             _repo = new ProductRepository();
+            _publicRsaKey = "";
         }
 
         [HttpGet(Name = "Get")]
@@ -33,6 +37,26 @@ namespace CwRetail.Api.Controllers
         {
             try
             {
+                User user = _publicRsaKey.DecodeToken(authorization.Replace("Bearer", "").Trim());
+
+                if (user is null)
+                {
+                    return BadRequest("Invalid user");
+                }
+
+                if (
+                    !(string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.StandardUser.ToUpperInvariant())
+                    || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.StandardSpecialist.ToUpperInvariant())
+                    || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.StandardAdmin.ToUpperInvariant())
+                    || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.BronzeUser.ToUpperInvariant())
+                    || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.SilverUser.ToUpperInvariant())
+                    || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.GoldUser.ToUpperInvariant())
+                    || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.PlatinumUser.ToUpperInvariant()))
+                    )
+                {
+                    return BadRequest("Unauthorised");
+                }
+
                 IEnumerable<Product> products = _repo.Get();
 
                 List<dynamic> productDyn = new List<dynamic>();

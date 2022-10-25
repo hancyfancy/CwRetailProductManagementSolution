@@ -1,8 +1,10 @@
 ﻿using CwRetail.Api.Helpers;
+using CwRetail.Data.Constants;
 using CwRetail.Data.Models;
 using CwRetail.Data.Repositories.Implementation;
 using CwRetail.Data.Repositories.Interface;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Asn1.Cms;
 
 namespace CwRetail.Api.Controllers
 {
@@ -28,6 +30,24 @@ namespace CwRetail.Api.Controllers
             try
             {
                 User user =  _publicRsaKey.DecodeToken(authorization.Replace("Bearer", "").Trim());
+
+                if (user is null)
+                {
+                    return BadRequest("Invalid user");
+                }
+
+                if (
+                    !(string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.StandardUser.ToUpperInvariant())
+                    || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.StandardSpecialist.ToUpperInvariant())
+                    || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.StandardAdmin.ToUpperInvariant())
+                    || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.BronzeUser.ToUpperInvariant())
+                    || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.SilverUser.ToUpperInvariant())
+                    || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.GoldUser.ToUpperInvariant())
+                    || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.PlatinumUser.ToUpperInvariant()))
+                    )
+                {
+                    return BadRequest("Unauthorised");
+                }
 
                 //Check role, if user does not belong to allowed roles, return bad request
 
