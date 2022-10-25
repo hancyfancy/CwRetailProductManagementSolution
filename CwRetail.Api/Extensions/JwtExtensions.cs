@@ -1,4 +1,5 @@
-﻿using CwRetail.Data.Models;
+﻿using CwRetail.Api.Extensions;
+using CwRetail.Data.Models;
 using Newtonsoft.Json.Linq;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Parameters;
@@ -9,7 +10,7 @@ using System.Security.Cryptography;
 
 namespace CwRetail.Api.Helpers
 {
-    public static class JwtHelper
+    public static class JwtExtensions
     {
         public static string CreateToken(this string privateRsaKey, UserVerification userVerification)
         {
@@ -28,12 +29,12 @@ namespace CwRetail.Api.Helpers
             using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
             {
                 rsa.ImportParameters(rsaParams);
-                Dictionary<string, object?> payload = userVerification.GetType().GetProperties().ToDictionary(property => property.Name, property => property.GetValue(userVerification));
+                Dictionary<string, object?> payload = userVerification.AsDictionary();
                 return Jose.JWT.Encode(payload, rsa, Jose.JwsAlgorithm.RS256);
             }
         }
 
-        public static string DecodeToken(this string publicRsaKey, string token)
+        public static User DecodeToken(this string publicRsaKey, string token)
         {
             RSAParameters rsaParams;
 
@@ -50,7 +51,7 @@ namespace CwRetail.Api.Helpers
             using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
             {
                 rsa.ImportParameters(rsaParams);
-                return Jose.JWT.Decode(token, rsa, Jose.JwsAlgorithm.RS256);
+                return Jose.JWT.Decode<Dictionary<string, object?>>(token, rsa, Jose.JwsAlgorithm.RS256).ToObject<User>();
             }
         }
     }

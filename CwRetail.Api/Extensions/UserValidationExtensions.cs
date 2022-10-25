@@ -2,7 +2,7 @@
 
 namespace CwRetail.Api.Helpers
 {
-    public static class UserValidationHelper
+    public static class UserValidationExtensions
     {
         public static bool IsValidEmail(this string email)
         {

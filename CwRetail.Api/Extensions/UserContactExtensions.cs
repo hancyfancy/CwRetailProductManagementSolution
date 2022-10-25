@@ -5,11 +5,11 @@ using System.Net.NetworkInformation;
 
 namespace CwRetail.Api.Helpers
 {
-    public static class UserContactHelper
+    public static class UserContactExtensions
     {
         private static readonly SmtpClient _smtp;
 
-        static UserContactHelper()
+        static UserContactExtensions()
         {
             _smtp = new SmtpClient();
         }

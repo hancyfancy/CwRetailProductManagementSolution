@@ -3,7 +3,7 @@ using System.Text;
 
 namespace CwRetail.Api.Helpers
 {
-    public static class CryptoHelper
+    public static class CryptoExtensions
     {
         public static string Encrypt(this string key, string input)
         {

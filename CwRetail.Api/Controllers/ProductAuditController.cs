@@ -1,4 +1,5 @@
-﻿using CwRetail.Data.Models;
+﻿using CwRetail.Api.Helpers;
+using CwRetail.Data.Models;
 using CwRetail.Data.Repositories.Implementation;
 using CwRetail.Data.Repositories.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -12,18 +13,24 @@ namespace CwRetail.Api.Controllers
     {
         private readonly ILogger<ProductAuditController> _logger;
         private readonly IProductAuditRepository _repo;
+        private readonly string _publicRsaKey;
 
         public ProductAuditController(ILogger<ProductAuditController> logger)
         {
             _logger = logger;
             _repo = new ProductAuditRepository();
+            _publicRsaKey = "";
         }
 
         [HttpGet(Name = "GetUpdates")]
-        public IActionResult GetUpdates([FromHeader] long productId)
+        public IActionResult GetUpdates([FromHeader] string authorization, [FromHeader] long productId)
         {
             try
             {
+                User user =  _publicRsaKey.DecodeToken(authorization.Replace("Bearer", "").Trim());
+
+                //Check role, if user does not belong to allowed roles, return bad request
+
                 if (productId <= 0)
                 {
                     return BadRequest("Invalid product id");
