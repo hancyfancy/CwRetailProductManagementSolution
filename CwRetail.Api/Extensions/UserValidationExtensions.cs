@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace CwRetail.Api.Helpers
+namespace CwRetail.Api.Extensions
 {
     public static class UserValidationExtensions
     {

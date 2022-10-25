@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace CwRetail.Api.Helpers
+namespace CwRetail.Api.Extensions
 {
     public static class CryptoExtensions
     {

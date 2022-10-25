@@ -1,4 +1,4 @@
-﻿using CwRetail.Api.Helpers;
+﻿using CwRetail.Api.Extensions;
 using CwRetail.Data.Enumerations;
 using CwRetail.Data.Models;
 using CwRetail.Data.Repositories.Implementation;

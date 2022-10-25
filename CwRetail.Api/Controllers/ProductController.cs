@@ -1,4 +1,4 @@
-using CwRetail.Api.Helpers;
+using CwRetail.Api.Extensions;
 using CwRetail.Data.Constants;
 using CwRetail.Data.Enumerations;
 using CwRetail.Data.Models;

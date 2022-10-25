@@ -3,7 +3,7 @@ using System.Net;
 using CwRetail.Data.Models;
 using System.Net.NetworkInformation;
 
-namespace CwRetail.Api.Helpers
+namespace CwRetail.Api.Extensions
 {
     public static class UserContactExtensions
     {

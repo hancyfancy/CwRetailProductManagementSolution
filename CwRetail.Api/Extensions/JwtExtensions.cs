@@ -8,7 +8,7 @@ using Org.BouncyCastle.Security;
 using System.Security.Claims;
 using System.Security.Cryptography;
 
-namespace CwRetail.Api.Helpers
+namespace CwRetail.Api.Extensions
 {
     public static class JwtExtensions
     {
