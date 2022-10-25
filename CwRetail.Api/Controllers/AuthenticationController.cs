@@ -1,8 +1,10 @@
 ﻿using CwRetail.Api.Helpers;
+using CwRetail.Data.Enumerations;
 using CwRetail.Data.Models;
 using CwRetail.Data.Repositories.Implementation;
 using CwRetail.Data.Repositories.Interface;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace CwRetail.Api.Controllers
 {
@@ -14,12 +16,14 @@ namespace CwRetail.Api.Controllers
         private readonly ILogger<ProductAuditController> _logger;
         private readonly IUserRepository _userRepo;
         private readonly IUserVerificationRepository _userVerificationRepo;
+        private readonly string _cryptoKey;
 
         public AuthenticationController(ILogger<ProductAuditController> logger)
         {
             _logger = logger;
             _userRepo = new UserRepository();
             _userVerificationRepo = new UserVerificationRepository();
+            _cryptoKey = "7kZZdpRXYDFRrPzxrk6HlrGTMq7LTDOQ";
         }
 
         [HttpPost(Name = "CreateUser")]
@@ -58,14 +62,16 @@ namespace CwRetail.Api.Controllers
 
             userVerification.Username = user.Username;
 
+            string userVerificationJson = JsonConvert.SerializeObject(userVerification);
+
             if (!userVerification.EmailVerified)
             {
-                userVerification.SendEmail(null, null, 0, null);
+                userVerification.SendEmail("Verification required", $"Please verify email at https://localhost:7138/api/Authentication/Verify?mode=email&user={_cryptoKey.Encrypt(userVerificationJson)}.", null, 0, null);
             }
 
             if (!userVerification.PhoneVerified)
             {
-                //Send out an sms
+                userVerification.SendSms("Verification required", $"Please verify phone number at https://localhost:7138/api/Authentication/Verify?mode=phone&user={_cryptoKey.Encrypt(userVerificationJson)}.");
             }
 
             if (!(userVerification.EmailVerified || userVerification.PhoneVerified))
@@ -78,6 +84,28 @@ namespace CwRetail.Api.Controllers
             //Then pass the JWT token to the controller action methods
             //Controller action methods are responsible for determining if the user retrieved from the JWT token has access to the particular action
             //If the user does not have access to the action, redirect or throw error message accordingly
+            return Ok();
+        }
+
+        [HttpGet(Name = "Verify")]
+        public IActionResult Verify(UserContactTypeEnum mode, string user)
+        {
+            User retrievedUser = JsonConvert.DeserializeObject<User>(_cryptoKey.Decrypt(user));
+
+            if (retrievedUser is null)
+            {
+                return BadRequest("Invalid user");
+            }
+
+            if (mode == UserContactTypeEnum.Email)
+            {
+                _userVerificationRepo.UpdateEmailVerified(retrievedUser.UserId);
+            }
+            else if (mode == UserContactTypeEnum.Phone)
+            {
+                _userVerificationRepo.UpdatePhoneVerified(retrievedUser.UserId);            
+            }
+
             return Ok();
         }
     }
