@@ -1,3 +1,7 @@
+-- drop triggers
+DROP TRIGGER IF EXISTS auth.users_tr_delete
+DROP TRIGGER IF EXISTS auth.roles_tr_delete
+
 -- drop tables
 DROP TABLE IF EXISTS auth.roles
 DROP TABLE IF EXISTS auth.userroles

@@ -72,3 +72,38 @@ CREATE TABLE auth.roles (
 	SubRole NVARCHAR (100) NOT NULL CHECK (SubRole = 'Bronze' OR SubRole = 'Silver' OR SubRole = 'Gold' OR SubRole = 'Platinum')
 )
 GO
+
+-- create triggers
+CREATE TRIGGER auth.roles_tr_delete
+ON CwRetail.auth.roles
+AFTER DELETE
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	DECLARE @Id BIGINT
+	SELECT @Id = RoleId FROM deleted
+
+	DELETE FROM 
+		CwRetail.auth.userroles
+	WHERE
+		RoleId = @Id
+END
+GO
+
+CREATE TRIGGER auth.users_tr_delete
+ON CwRetail.auth.users
+AFTER DELETE
+AS
+BEGIN
+	SET NOCOUNT ON
+
+	DECLARE @Id BIGINT
+	SELECT @Id = UserId FROM deleted
+
+	DELETE FROM 
+		CwRetail.auth.userroles
+	WHERE
+		UserId = @Id
+END
+GO
