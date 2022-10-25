@@ -40,10 +40,7 @@ namespace CwRetail.Api.Controllers
                     !(string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.StandardAdmin.ToUpperInvariant())
                     || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.StandardSpecialist.ToUpperInvariant())
                     || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.PlatinumUser.ToUpperInvariant())
-                    || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.GoldUser.ToUpperInvariant())
-                    || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.SilverUser.ToUpperInvariant())
-                    || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.BronzeUser.ToUpperInvariant())
-                    || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.StandardUser.ToUpperInvariant()))
+                    || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.GoldUser.ToUpperInvariant()))
                     )
                 {
                     return BadRequest("Unauthorised");

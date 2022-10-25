@@ -86,10 +86,28 @@ namespace CwRetail.Api.Controllers
         }
 
         [HttpPost(Name = "Create")]
-        public IActionResult Create([FromBody] Product product)
+        public IActionResult Create([FromHeader] string authorization, [FromBody] Product product)
         {
             try
             {
+                User user = _publicRsaKey.DecodeToken(authorization.Replace("Bearer", "").Trim());
+
+                if (user is null)
+                {
+                    return BadRequest("Invalid user");
+                }
+
+                if (
+                    !(string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.StandardAdmin.ToUpperInvariant())
+                    || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.StandardSpecialist.ToUpperInvariant())
+                    || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.PlatinumUser.ToUpperInvariant())
+                    || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.GoldUser.ToUpperInvariant())
+                    || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.SilverUser.ToUpperInvariant()))
+                    )
+                {
+                    return BadRequest("Unauthorised");
+                }
+
                 return Ok(_repo.Insert(product));
             }
             catch (Exception e)
@@ -101,10 +119,29 @@ namespace CwRetail.Api.Controllers
         }
 
         [HttpPatch(Name = "Edit")]
-        public IActionResult Edit([FromHeader] long id, [FromBody] JsonElement product)
+        public IActionResult Edit([FromHeader] string authorization, [FromHeader] long id, [FromBody] JsonElement product)
         {
             try
             {
+                User user = _publicRsaKey.DecodeToken(authorization.Replace("Bearer", "").Trim());
+
+                if (user is null)
+                {
+                    return BadRequest("Invalid user");
+                }
+
+                if (
+                    !(string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.StandardAdmin.ToUpperInvariant())
+                    || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.StandardSpecialist.ToUpperInvariant())
+                    || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.PlatinumUser.ToUpperInvariant())
+                    || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.GoldUser.ToUpperInvariant())
+                    || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.SilverUser.ToUpperInvariant())
+                    || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.BronzeUser.ToUpperInvariant()))
+                    )
+                {
+                    return BadRequest("Unauthorised");
+                }
+
                 if (id <= 0)
                 {
                     return BadRequest("Invalid id");
@@ -145,10 +182,25 @@ namespace CwRetail.Api.Controllers
         }
 
         [HttpDelete(Name = "Remove")]
-        public IActionResult Remove([FromHeader] long id)
+        public IActionResult Remove([FromHeader] string authorization, [FromHeader] long id)
         {
             try
             {
+                User user = _publicRsaKey.DecodeToken(authorization.Replace("Bearer", "").Trim());
+
+                if (user is null)
+                {
+                    return BadRequest("Invalid user");
+                }
+
+                if (
+                    !(string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.StandardAdmin.ToUpperInvariant())
+                    || string.Equals(user.Role.ToUpperInvariant(), UserRoleConstant.StandardSpecialist.ToUpperInvariant()))
+                    )
+                {
+                    return BadRequest("Unauthorised");
+                }
+
                 if (id <= 0)
                 {
                     return BadRequest("Invalid id");
