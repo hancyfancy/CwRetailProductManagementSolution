@@ -16,6 +16,7 @@ namespace CwRetail.Api.Controllers
         private readonly ILogger<ProductAuditController> _logger;
         private readonly IUserRepository _userRepo;
         private readonly IUserVerificationRepository _userVerificationRepo;
+        private readonly IUserRolesRepository _userRolesRepo;
         private readonly string _cryptoKey;
         private readonly string _privateRsaKey;
 
@@ -24,6 +25,7 @@ namespace CwRetail.Api.Controllers
             _logger = logger;
             _userRepo = new UserRepository();
             _userVerificationRepo = new UserVerificationRepository();
+            _userRolesRepo = new UserRolesRepository();
             _cryptoKey = "7kZZdpRXYDFRrPzxrk6HlrGTMq7LTDOQ";
             _privateRsaKey = "";
         }
@@ -49,7 +51,9 @@ namespace CwRetail.Api.Controllers
                 PhoneVerified = false
             });
 
-            return Ok(userVerificationResult);
+            var userRolesResult = _userRolesRepo.Insert(userId);
+
+            return Ok();
         }
 
         [HttpPost(Name = "GetUser")]
