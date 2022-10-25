@@ -60,7 +60,14 @@ GO
 
 CREATE TABLE auth.userroles (
 	UserRoleId BIGINT IDENTITY (1, 1) PRIMARY KEY,
-	UserId BIGINT NOT NULL FOREIGN KEY REFERENCES auth.users(UserId) ON DELETE CASCADE,
+	UserId BIGINT NOT NULL FOREIGN KEY REFERENCES auth.users(UserId) ON DELETE NO ACTION,
+	RoleId BIGINT NOT NULL FOREIGN KEY REFERENCES auth.users(UserId) ON DELETE NO ACTION,
+	UNIQUE (UserId, RoleId)
+)
+GO
+
+CREATE TABLE auth.roles (
+	RoleId BIGINT IDENTITY (1, 1) PRIMARY KEY,
 	Role NVARCHAR (100) NOT NULL CHECK (Role = 'User' OR Role = 'Specialist' OR Role = 'Admin'),
 	SubRole NVARCHAR (100) NOT NULL CHECK (SubRole = 'Bronze' OR SubRole = 'Silver' OR SubRole = 'Gold' OR SubRole = 'Platinum')
 )
