@@ -69,7 +69,7 @@ GO
 CREATE TABLE auth.roles (
 	RoleId BIGINT IDENTITY (1, 1) PRIMARY KEY,
 	Role NVARCHAR (100) NOT NULL CHECK (Role = 'User' OR Role = 'Specialist' OR Role = 'Admin'),
-	SubRole NVARCHAR (100) NOT NULL CHECK (SubRole = 'Bronze' OR SubRole = 'Silver' OR SubRole = 'Gold' OR SubRole = 'Platinum')
+	SubRole NVARCHAR (100) NOT NULL CHECK (SubRole = 'Standard' OR SubRole = 'Bronze' OR SubRole = 'Silver' OR SubRole = 'Gold' OR SubRole = 'Platinum')
 )
 GO
 
