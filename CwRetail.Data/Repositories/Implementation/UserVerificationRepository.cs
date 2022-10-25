@@ -123,10 +123,12 @@ namespace CwRetail.Data.Repositories.Implementation
 										v.PhoneVerified,
 										u.Email,
 										u.Phone,
+										(SELECT CONCAT(SubRole + ' ', Role) FROM auth.userroles WHERE RoleId = r.RoleId) AS Role,
 										u.LastActive
                                     FROM 
 	                                    auth.users u
 										INNER JOIN auth.userverification v on v.UserId = u.UserId
+										INNER JOIN auth.userroles r on r.UserId = u.UserId
 									WHERE 
 										u.Username = @Username";
                 var result = _connection.Query<UserVerification>(sql, new

@@ -16,6 +16,8 @@ namespace CwRetail.Data.Models
 
         public string Phone { get; set; }
 
+        public string Role { get; set; }
+
         public DateTime LastActive { get; set; }
     }
 }
