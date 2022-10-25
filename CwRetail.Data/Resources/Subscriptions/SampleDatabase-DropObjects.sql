@@ -1,4 +1,4 @@
--- drop stored procedures
+-- drop triggers
 DROP TRIGGER IF EXISTS production.products_tr_delete
 DROP TRIGGER IF EXISTS production.products_tr_insert
 DROP TRIGGER IF EXISTS production.products_tr_update
