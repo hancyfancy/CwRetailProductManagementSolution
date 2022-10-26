@@ -67,6 +67,16 @@ CREATE TABLE auth.userroles (
 )
 GO
 
+CREATE TABLE auth.usertokens (
+	UserTokenId BIGINT IDENTITY (1, 1) PRIMARY KEY,
+	UserId BIGINT NOT NULL FOREIGN KEY REFERENCES auth.users(UserId) ON DELETE CASCADE,
+	Token NVARCHAR (200) NOT NULL CHECK (LEN(Token) = 200),
+	RefreshAt DATETIME NOT NULL CHECK (RefreshAt > GETDATE()),
+	UNIQUE (UserId),
+	UNIQUE (Token)
+)
+GO
+
 CREATE TABLE auth.roles (
 	RoleId BIGINT IDENTITY (1, 1) PRIMARY KEY,
 	Role NVARCHAR (100) NOT NULL CHECK (Role = 'User' OR Role = 'Specialist' OR Role = 'Admin'),
