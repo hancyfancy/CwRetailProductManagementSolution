@@ -20,7 +20,7 @@ namespace CwRetail.Data.Repositories.Implementation
             _connection = new SqlConnection(ConnectionStrings.Test);
         }
 
-        public int Insert(User user)
+        public long Insert(User user)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace CwRetail.Data.Repositories.Implementation
 	                                    @Phone,
 	                                    @LastActive
                                     )";
-                var result = _connection.Execute(sql, new
+                var result = _connection.ExecuteScalar<long>(sql, new
                 {
                     Username = user.Username,
                     Email = user.Email,

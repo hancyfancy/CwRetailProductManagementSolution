@@ -8,6 +8,6 @@ namespace CwRetail.Data.Repositories.Interface
 {
     public interface IUserTokensRepository
     {
-        int InsertOrUpdate(long userId, string token);
+        string InsertOrUpdate(long userId, string token);
     }
 }

@@ -17,6 +17,7 @@ namespace CwRetail.Api.Controllers
         private readonly IUserRepository _userRepo;
         private readonly IUserVerificationRepository _userVerificationRepo;
         private readonly IUserRolesRepository _userRolesRepo;
+        private readonly IUserTokensRepository _userTokensRepository;
         private readonly string _cryptoKey;
         private readonly string _privateRsaKey;
 
@@ -26,6 +27,7 @@ namespace CwRetail.Api.Controllers
             _userRepo = new UserRepository();
             _userVerificationRepo = new UserVerificationRepository();
             _userRolesRepo = new UserRolesRepository();
+            _userTokensRepository = new UserTokensRepository();
             _cryptoKey = "7kZZdpRXYDFRrPzxrk6HlrGTMq7LTDOQ";
             _privateRsaKey = "";
         }
@@ -86,6 +88,8 @@ namespace CwRetail.Api.Controllers
             {
                 return BadRequest("Either email or phone needs to be verified to access content");
             }
+
+            _userTokensRepository.InsertOrUpdate(userVerification.UserId, "");
 
             return Ok(_privateRsaKey.CreateToken(userVerification));
         }

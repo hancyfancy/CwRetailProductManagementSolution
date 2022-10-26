@@ -20,7 +20,7 @@ namespace CwRetail.Data.Repositories.Implementation
             _connection = new SqlConnection(ConnectionStrings.Test);
         }
 
-        public int InsertOrUpdate(long userId, string token)
+        public string InsertOrUpdate(long userId, string token)
         {
             try
             {
@@ -35,6 +35,7 @@ namespace CwRetail.Data.Repositories.Implementation
 		                                SET	
 			                                Token = @Token,
 			                                RefreshAt = @RefreshAt
+                                        OUTPUT inserted.Token
 		                                WHERE
 			                                UserId = @UserId
 	                                END
@@ -45,7 +46,7 @@ namespace CwRetail.Data.Repositories.Implementation
 									OUTPUT inserted.Token 
 	                                VALUES (@UserId, @Token, @RefreshAt)
                                 END";
-                var result = _connection.Execute(sql, new
+                var result = _connection.ExecuteScalar<string>(sql, new
                 {
                     UserId = userId,
                     Token = token,
@@ -58,7 +59,7 @@ namespace CwRetail.Data.Repositories.Implementation
             }
             catch (Exception e)
             {
-                return 0;
+                return default;
             }
         }
     }
