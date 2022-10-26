@@ -1,4 +1,5 @@
-﻿using CwRetail.Data.Models;
+﻿using CwRetail.Data.Extensions;
+using CwRetail.Data.Models;
 using CwRetail.Data.Repositories.Interface;
 using Dapper;
 using System;
@@ -39,6 +40,35 @@ namespace CwRetail.Data.Repositories.Implementation
                 var result = _connection.Execute(sql, new
                 {
                     UserId = userId
+                });
+
+                _connection.Close();
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
+        }
+
+        public int Update(long userId, string role, string subRole)
+        {
+            try
+            {
+                _connection.Open();
+
+                string sql = $@"UPDATE
+	                                auth.userroles
+                                SET
+	                                RoleId = (SELECT RoleId FROM auth.roles WHERE Role = @Role AND SubRole = @SubRole)
+                                WHERE
+                                    UserId = @UserId";
+                var result = _connection.Execute(sql, new
+                {
+                    UserId = userId,
+                    Role = role,
+                    SubRole = subRole
                 });
 
                 _connection.Close();
