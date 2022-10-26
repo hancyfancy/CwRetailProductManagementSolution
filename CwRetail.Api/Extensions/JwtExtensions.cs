@@ -12,7 +12,7 @@ namespace CwRetail.Api.Extensions
 {
     public static class JwtExtensions
     {
-        public static string CreateToken(this string privateRsaKey, UserVerification userVerification)
+        public static string CreateToken(this string privateRsaKey, User user)
         {
             RSAParameters rsaParams;
             using (var tr = new StringReader(privateRsaKey))
@@ -29,7 +29,7 @@ namespace CwRetail.Api.Extensions
             using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
             {
                 rsa.ImportParameters(rsaParams);
-                Dictionary<string, object?> payload = userVerification.AsDictionary();
+                Dictionary<string, object?> payload = user.AsDictionary();
                 return Jose.JWT.Encode(payload, rsa, Jose.JwsAlgorithm.RS256);
             }
         }

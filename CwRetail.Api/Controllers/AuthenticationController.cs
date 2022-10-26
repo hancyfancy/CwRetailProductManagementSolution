@@ -45,15 +45,17 @@ namespace CwRetail.Api.Controllers
 
             long userId = _userRepo.Insert(user);
 
-            var userVerificationResult = _userVerificationRepo.Insert(new UserVerification() { 
+            _userVerificationRepo.Insert(new UserVerification() { 
                 UserId = userId,
                 EmailVerified = false,
                 PhoneVerified = false
             });
 
-            var userRolesResult = _userRolesRepo.Insert(userId);
+            _userRolesRepo.Insert(userId);
 
-            return Ok();
+            user.UserId = userId;
+
+            return Ok(_privateRsaKey.CreateToken(user));
         }
 
         [HttpPost(Name = "GetUser")]
@@ -85,17 +87,7 @@ namespace CwRetail.Api.Controllers
                 return BadRequest("Either email or phone needs to be verified to access content");
             }
 
-            //Need to return JWT token created from requestedUser object
-            //The JWT token would then be available to the front end
-            //Then pass the JWT token to the controller action methods
-            //Controller action methods are responsible for determining if the user retrieved from the JWT token has access to the particular action
-            //If the user does not have access to the action, redirect or throw error message accordingly
-
-            //Need to introduce roles for users
-
-            _privateRsaKey.CreateToken(userVerification);
-
-            return Ok();
+            return Ok(_privateRsaKey.CreateToken(userVerification));
         }
 
         [HttpGet(Name = "Verify")]
