@@ -20,7 +20,7 @@ namespace CwRetail.Data.Repositories.Implementation
             _connection = new SqlConnection(ConnectionStrings.Test);
         }
 
-        public string InsertOrUpdate(long userId, string token)
+        public string InsertOrUpdate(long userId, string token, DateTime refreshAt)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace CwRetail.Data.Repositories.Implementation
                 {
                     UserId = userId,
                     Token = token,
-                    RefreshAt = DateTime.UtcNow.AddDays(1)
+                    RefreshAt = refreshAt
                 });
 
                 _connection.Close();

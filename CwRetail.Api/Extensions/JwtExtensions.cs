@@ -34,7 +34,7 @@ namespace CwRetail.Api.Extensions
             }
         }
 
-        public static User DecodeToken(this string publicRsaKey, string token)
+        public static UserVerification DecodeToken(this string publicRsaKey, string token)
         {
             RSAParameters rsaParams;
 
@@ -51,7 +51,7 @@ namespace CwRetail.Api.Extensions
             using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
             {
                 rsa.ImportParameters(rsaParams);
-                return Jose.JWT.Decode<Dictionary<string, object?>>(token, rsa, Jose.JwsAlgorithm.RS256).ToObject<User>();
+                return Jose.JWT.Decode<Dictionary<string, object?>>(token, rsa, Jose.JwsAlgorithm.RS256).ToObject<UserVerification>();
             }
         }
     }
