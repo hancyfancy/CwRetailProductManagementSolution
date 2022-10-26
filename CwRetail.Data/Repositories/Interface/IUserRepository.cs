@@ -9,7 +9,7 @@ namespace CwRetail.Data.Repositories.Interface
 {
     public interface IUserRepository
     {
-        int Insert(User user);
+        long Insert(User user);
 
         int UpdateLastActive(long userId);
     }

@@ -42,6 +42,7 @@ namespace CwRetail.Data.Repositories.Implementation
                                 ELSE
                                 BEGIN
                                     INSERT INTO auth.usertokens (UserId, Token, RefreshAt)
+									OUTPUT inserted.Token 
 	                                VALUES (@UserId, @Token, @RefreshAt)
                                 END";
                 var result = _connection.Execute(sql, new
