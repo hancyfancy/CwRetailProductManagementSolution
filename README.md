@@ -47,7 +47,8 @@ In Visual Studio:
 2. Cater for invalid data in controller api actions [Done]
 3. Add authorisation for each controller api action [In progress]
     1. Need to create update user roles repository method to upgrade the role assigned to a user
-    2. Need to test built functionality
+    2. Need to generate private and public rsa keys
+    3. Need to test built functionality
 4. Make controller api action async
 5. Show history of updates sql statements via audit.products table for a particular product id [Done]
 6. Check if mocked test cases need to be ammended
