@@ -6,10 +6,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app/app.component';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   { path: '', component: AppComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'validate/:token', component: RegisterComponent },
   { path: 'products', component: ProductComponent },
   { path: 'details/:product', component: ProductDetailComponent },
   { path: 'history/:product', component: ProductHistoryComponent },

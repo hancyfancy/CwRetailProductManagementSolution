@@ -105,7 +105,7 @@ namespace CwRetail.Api.Controllers
                 userVerification.SendSms("Validate login attempt", validationMessage);
             }
 
-            return Ok(_privateRsaKey.CreateToken(userVerification));
+            return Ok(token);
         }
 
         [HttpGet(Name = "Verify")]

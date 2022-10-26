@@ -1,4 +1,4 @@
-<h2>Add User</h2>
+<h2>Register</h2>
 
 <div>
   <label for="new-user-username">Username: </label>
@@ -41,6 +41,6 @@
   </div>
 
   <button type="button" class="add-button" (click)="add(userUsername.value, userEmail.value, userPhone.value)" *ngIf="(!(userUsername.invalid && (userUsername.dirty || userUsername.touched))) && (!(userEmail.invalid && (userEmail.dirty || userEmail.touched))) && (!(userPhone.invalid && (userPhone.dirty || userPhone.touched)))">
-    Add User
+    Register
   </button>
 </div>
