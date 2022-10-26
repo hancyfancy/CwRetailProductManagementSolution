@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { User } from '../models/user';
+import { UserToken } from '../models/user-token';
 import { Settings } from '../settings';
 
 @Injectable({
@@ -34,6 +35,16 @@ export class AuthenticationService {
     };
     return this.http.post<string>(this.urlPrefix + '/GetUser', JSON.stringify(user, (_, v) => typeof v === 'bigint' ? v.toString() : v), addHttpOptions).pipe(
       catchError(this.handleError<string>('getUser'))
+    ).toPromise();
+  }
+
+  /** POST **/
+  validateUser(userToken: UserToken) {
+    var addHttpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+    return this.http.post<string>(this.urlPrefix + '/Validate', JSON.stringify(userToken, (_, v) => typeof v === 'bigint' ? v.toString() : v), addHttpOptions).pipe(
+      catchError(this.handleError<string>('validateUser'))
     ).toPromise();
   }
 

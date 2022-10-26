@@ -20,6 +20,7 @@ namespace CwRetail.Data.Models
 
         public string Token { get; set; }
 
+        public DateTime Expiry { get; set; }
         public DateTime LastActive { get; set; }
     }
 }

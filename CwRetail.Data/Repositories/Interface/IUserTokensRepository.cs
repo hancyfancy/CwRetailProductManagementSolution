@@ -12,5 +12,7 @@ namespace CwRetail.Data.Repositories.Interface
         string InsertOrUpdate(long userId, string token);
 
         UserToken Get(long userId);
+
+        User GetUser(string token);
     }
 }

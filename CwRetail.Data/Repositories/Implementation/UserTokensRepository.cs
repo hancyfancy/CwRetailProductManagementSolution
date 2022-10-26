@@ -92,5 +92,38 @@ namespace CwRetail.Data.Repositories.Implementation
                 return default;
             }
         }
+
+        public User GetUser(string token)
+        {
+            try
+            {
+                _connection.Open();
+
+                string sql = $@"SELECT 
+                                        u.UserId,
+										u.Username,
+										u.Email,
+										u.Phone,
+										u.LastActive,
+										t.RefreshAt AS Expiry
+                                    FROM 
+	                                    auth.usertokens t
+										INNER JOIN auth.users u on u.UserId = t.UserId
+									WHERE
+										t.Token = @Token";
+                var result = _connection.Query<User>(sql, new
+                {
+                    Token = token
+                });
+
+                _connection.Close();
+
+                return result.FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                return default;
+            }
+        }
     }
 }

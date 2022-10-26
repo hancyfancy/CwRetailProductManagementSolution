@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: '', component: AppComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'validate/:token', component: ValidateComponent },
+  { path: 'validate', component: ValidateComponent },
   { path: 'products', component: ProductComponent },
   { path: 'details/:product', component: ProductDetailComponent },
   { path: 'history/:product', component: ProductHistoryComponent },

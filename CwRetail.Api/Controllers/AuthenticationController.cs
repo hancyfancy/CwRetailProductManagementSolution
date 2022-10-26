@@ -18,7 +18,7 @@ namespace CwRetail.Api.Controllers
         private readonly IUserRepository _userRepo;
         private readonly IUserVerificationRepository _userVerificationRepo;
         private readonly IUserRolesRepository _userRolesRepo;
-        private readonly IUserTokensRepository _userTokensRepository;
+        private readonly IUserTokensRepository _userTokensRepo;
         private readonly string _cryptoKey;
         private readonly string _privateRsaKey;
 
@@ -28,7 +28,7 @@ namespace CwRetail.Api.Controllers
             _userRepo = new UserRepository();
             _userVerificationRepo = new UserVerificationRepository();
             _userRolesRepo = new UserRolesRepository();
-            _userTokensRepository = new UserTokensRepository();
+            _userTokensRepo = new UserTokensRepository();
             _cryptoKey = "7kZZdpRXYDFRrPzxrk6HlrGTMq7LTDOQ";
             _privateRsaKey = "";
         }
@@ -92,9 +92,9 @@ namespace CwRetail.Api.Controllers
 
             string token = userVerification.Token = TokenExtensions.GetUniqueKey();
 
-            _userTokensRepository.InsertOrUpdate(userVerification.UserId, token);
+            _userTokensRepo.InsertOrUpdate(userVerification.UserId, token);
 
-            string validationMessage = $"Please validate login attempt at https://localhost:7138/api/Authentication/Validate?user={_cryptoKey.Encrypt(userVerificationJson)}.";
+            string validationMessage = $"Please use the following token, which expires in 24 hours, to login: {userVerification.Token}";
 
             if (userVerification.EmailVerified)
             {
@@ -130,29 +130,22 @@ namespace CwRetail.Api.Controllers
             return Ok();
         }
 
-        [HttpGet(Name = "Validate")]
-        public IActionResult Validate(string user)
+        [HttpPost(Name = "Validate")]
+        public IActionResult Validate([FromBody] UserToken uiUserToken)
         {
-            User retrievedUser = JsonConvert.DeserializeObject<User>(_cryptoKey.Decrypt(user));
+            User retrievedUser = _userTokensRepo.GetUser(uiUserToken.Token);
 
             if (retrievedUser is null)
             {
                 return BadRequest("Invalid user");
             }
 
-            UserToken userToken = _userTokensRepository.Get(retrievedUser.UserId);
-
-            if (!string.Equals(retrievedUser.Token, userToken.Token))
-            {
-                return BadRequest("Invalid token");
-            }
-
-            if (DateTime.UtcNow > userToken.RefreshAt)
+            if (DateTime.UtcNow > retrievedUser.Expiry)
             {
                 return BadRequest("Token expired");
             }
 
-            return Ok();
+            return Ok(_privateRsaKey.CreateToken(retrievedUser));
         }
     }
 }

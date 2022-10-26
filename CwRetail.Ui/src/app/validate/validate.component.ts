@@ -18,13 +18,19 @@ export class ValidateComponent implements OnInit {
     this.userToken = new UserToken();
   }
 
-  decrypt(data: string): string {
-    try {
-      const bytes = CryptoJS.AES.decrypt(data, this.settings.secretKey);
-      return JSON.parse(bytes.toString(CryptoJS.enc.Utf8)) as string;
-    } catch (e) {
-      console.log(e);
-      throw (e);
-    }
+  validate(token: string): void {
+    this.authenticationService.validateUser(new UserToken(0n, token))
+      .then((jwtToken) => {
+        this.settings.jwtToken = jwtToken!;
+        this.goToProducts();
+      })
+      .catch((error) => {
+        console.log("Promise rejected with " + JSON.stringify(error));
+      });
+  }
+
+  goToProducts(): void {
+    const navigationDetails: string[] = ['/products'];
+    this.router.navigate(navigationDetails);
   }
 }
