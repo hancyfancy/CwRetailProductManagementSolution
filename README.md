@@ -57,3 +57,4 @@ In Visual Studio:
 9. Change product id to string instead of long for better security
 10. Use async/await instead of then/catch in angular
 11. Use streaming to push notifications to app, such as an insert or delete notification
+12. Inject repositories as dependencies to controllers instead of creating new repository instances
