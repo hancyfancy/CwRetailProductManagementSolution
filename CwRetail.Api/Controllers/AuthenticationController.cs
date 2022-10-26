@@ -92,9 +92,7 @@ namespace CwRetail.Api.Controllers
 
             string token = userVerification.Token = TokenExtensions.GetUniqueKey();
 
-            DateTime refreshAt = userVerification.RefreshAt = DateTime.UtcNow.AddDays(1);
-
-            _userTokensRepository.InsertOrUpdate(userVerification.UserId, token, refreshAt);
+            _userTokensRepository.InsertOrUpdate(userVerification.UserId, token);
 
             string validationMessage = $"Please validate login attempt at https://localhost:7138/api/Authentication/Validate?user={_cryptoKey.Encrypt(userVerificationJson)}.";
 
@@ -142,7 +140,14 @@ namespace CwRetail.Api.Controllers
                 return BadRequest("Invalid user");
             }
 
-            if (DateTime.UtcNow > retrievedUser.RefreshAt)
+            UserToken userToken = _userTokensRepository.Get(retrievedUser.UserId);
+
+            if (!string.Equals(retrievedUser.Token, userToken.Token))
+            {
+                return BadRequest("Invalid token");
+            }
+
+            if (DateTime.UtcNow > userToken.RefreshAt)
             {
                 return BadRequest("Token expired");
             }

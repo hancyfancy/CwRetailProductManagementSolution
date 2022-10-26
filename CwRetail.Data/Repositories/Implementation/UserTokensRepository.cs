@@ -3,6 +3,7 @@ using CwRetail.Data.Repositories.Interface;
 using Dapper;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace CwRetail.Data.Repositories.Implementation
             _connection = new SqlConnection(ConnectionStrings.Test);
         }
 
-        public string InsertOrUpdate(long userId, string token, DateTime refreshAt)
+        public string InsertOrUpdate(long userId, string token)
         {
             try
             {
@@ -50,12 +51,41 @@ namespace CwRetail.Data.Repositories.Implementation
                 {
                     UserId = userId,
                     Token = token,
-                    RefreshAt = refreshAt
+                    RefreshAt = DateTime.UtcNow.AddDays(1)
                 });
 
                 _connection.Close();
 
                 return result;
+            }
+            catch (Exception e)
+            {
+                return default;
+            }
+        }
+
+        public UserToken Get(long userId)
+        {
+            try
+            {
+                _connection.Open();
+
+                string sql = $@"SELECT 
+                                        t.UserTokenId,
+										t.Token,
+										t.RefreshAt
+                                    FROM 
+	                                    auth.usertokens t
+									WHERE
+										t.UserId = @UserId";
+                var result = _connection.Query<UserToken>(sql, new
+                {
+                    UserId = userId
+                });
+
+                _connection.Close();
+
+                return result.FirstOrDefault();
             }
             catch (Exception e)
             {
