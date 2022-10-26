@@ -23,6 +23,7 @@ import { AppComponent } from './app/app.component';
 import { ProductHistoryComponent } from './product-history/product-history.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { ValidateComponent } from './validate/validate.component';
 
 @NgModule({
   imports: [
@@ -49,7 +50,8 @@ import { RegisterComponent } from './register/register.component';
     LengthValidatorDirective,
     ProductHistoryComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ValidateComponent
   ],
   bootstrap: [AppComponent]
 })
