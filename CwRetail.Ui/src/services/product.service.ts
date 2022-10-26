@@ -17,8 +17,13 @@ export class ProductService {
   }
 
   /** GET **/
-  getProducts() : Observable<Product[]> {
-    return this.http.get<Product[]>(this.urlPrefix + '/Get')
+  getProducts(): Observable<Product[]> {
+    var httpOptions = {
+      headers: new HttpHeaders()
+        .set('Content-Type', 'application/json')
+        .set('Authorization', 'Bearer ' + this.settings.jwtToken)
+    };
+    return this.http.get<Product[]>(this.urlPrefix + '/Get', httpOptions)
       .pipe(
         tap(_ => this.log('fetched products')),
         catchError(this.handleError<Product[]>('getProducts', []))
@@ -28,10 +33,12 @@ export class ProductService {
 
   /** POST **/
   addProduct(product: Product) {
-    var addHttpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    var httpOptions = {
+      headers: new HttpHeaders()
+        .set('Content-Type', 'application/json')
+        .set('Authorization', 'Bearer ' + this.settings.jwtToken)
     };
-    return this.http.post<Product>(this.urlPrefix + '/Create', JSON.stringify(product, (_, v) => typeof v === 'bigint' ? v.toString() : v), addHttpOptions).pipe(
+    return this.http.post<Product>(this.urlPrefix + '/Create', JSON.stringify(product, (_, v) => typeof v === 'bigint' ? v.toString() : v), httpOptions).pipe(
       tap((newProduct: Product) => this.log(`added product w/ id=${newProduct.id}`)),
       catchError(this.handleError<Product>('addProduct'))
     ).toPromise();
@@ -39,12 +46,13 @@ export class ProductService {
 
   /** PATCH **/
   updateProduct(id: bigint, product: any) {
-    var updateHttpOptions = {
+    var httpOptions = {
       headers: new HttpHeaders()
         .set('Content-Type', 'application/json')
         .set('Id', id.toString())
+        .set('Authorization', 'Bearer ' + this.settings.jwtToken)
     };
-    return this.http.patch(this.urlPrefix + '/Edit', JSON.stringify(product, (_, v) => typeof v === 'bigint' ? v.toString() : v), updateHttpOptions).pipe(
+    return this.http.patch(this.urlPrefix + '/Edit', JSON.stringify(product, (_, v) => typeof v === 'bigint' ? v.toString() : v), httpOptions).pipe(
       tap(_ => this.log(`updated product id=${id}`)),
       catchError(this.handleError<any>('updateProduct'))
     ).toPromise();
@@ -52,12 +60,13 @@ export class ProductService {
 
   /** DELETE **/
   deleteProduct(id: bigint) {
-    var deleteHttpOptions = {
+    var httpOptions = {
       headers: new HttpHeaders()
         .set('Content-Type', 'application/json')
         .set('Id', id.toString())
+        .set('Authorization', 'Bearer ' + this.settings.jwtToken)
     };
-    return this.http.delete<Product>(this.urlPrefix + '/Remove', deleteHttpOptions).pipe(
+    return this.http.delete<Product>(this.urlPrefix + '/Remove', httpOptions).pipe(
       tap(_ => this.log(`deleted product id=${id}`)),
       catchError(this.handleError<Product>('deleteProduct'))
     ).toPromise();

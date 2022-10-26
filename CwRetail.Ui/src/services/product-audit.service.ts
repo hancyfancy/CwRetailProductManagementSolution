@@ -18,12 +18,13 @@ export class ProductAuditService {
 
   /** GET **/
   getProductAuditUpdates(productId: bigint) {
-    var getHttpOptions = {
+    var httpOptions = {
       headers: new HttpHeaders()
         .set('Content-Type', 'application/json')
         .set('ProductId', productId.toString())
+        .set('Authorization', 'Bearer ' + this.settings.jwtToken)
     };
-    return this.http.get<ProductAudit[]>(this.urlPrefix + '/GetUpdates', getHttpOptions)
+    return this.http.get<ProductAudit[]>(this.urlPrefix + '/GetUpdates', httpOptions)
       .pipe(
         tap(_ => this.log('fetched product audits')),
         catchError(this.handleError<ProductAudit[]>('getProductAuditUpdates', []))
