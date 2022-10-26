@@ -7,12 +7,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app/app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { ValidateComponent } from './validate/validate.component';
 
 const routes: Routes = [
   { path: '', component: AppComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'validate/:token', component: RegisterComponent },
+  { path: 'validate/:token', component: ValidateComponent },
   { path: 'products', component: ProductComponent },
   { path: 'details/:product', component: ProductDetailComponent },
   { path: 'history/:product', component: ProductHistoryComponent },

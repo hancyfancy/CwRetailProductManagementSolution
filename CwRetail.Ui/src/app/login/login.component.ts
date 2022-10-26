@@ -20,25 +20,16 @@ export class LoginComponent implements OnInit {
 
   get(username: string): void {
     this.authenticationService.getUser(new User(0n, username))
-      .then((token) => {
-        this.goToValidate(token!);
+      .then(() => {
+        this.goToValidate();
       })
       .catch((error) => {
         console.log("Promise rejected with " + JSON.stringify(error));
       });
   }
 
-  goToValidate(token : string): void {
-    const navigationDetails: string[] = ['/validate', this.encrypt(token)];
+  goToValidate(): void {
+    const navigationDetails: string[] = ['/validate'];
     this.router.navigate(navigationDetails);
-  }
-
-  encrypt(data: string): string {
-    try {
-      return CryptoJS.AES.encrypt(data, this.settings.secretKey).toString();
-    } catch (e) {
-      console.log(e);
-      throw (e);
-    }
   }
 }
