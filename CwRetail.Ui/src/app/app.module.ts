@@ -15,6 +15,7 @@ import { MatSortModule } from '@angular/material/sort';
 
 import { CurrencyValidatorDirective } from '../validators/currency-validator.directive';
 import { LengthValidatorDirective } from '../validators/length-validator.directive';
+import { TokenLengthValidatorDirective } from '../validators/token-length-validator.directive';
 
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductComponent } from './product/product.component';
@@ -51,7 +52,8 @@ import { ValidateComponent } from './validate/validate.component';
     ProductHistoryComponent,
     LoginComponent,
     RegisterComponent,
-    ValidateComponent
+    ValidateComponent,
+    TokenLengthValidatorDirective
   ],
   bootstrap: [AppComponent]
 })

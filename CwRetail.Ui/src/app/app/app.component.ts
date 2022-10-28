@@ -12,11 +12,11 @@ export class AppComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-    this.goToProducts();
+    this.goToLogin();
   }
 
-  goToProducts(): void {
-    const navigationDetails: string[] = ['/products'];
+  goToLogin(): void {
+    const navigationDetails: string[] = ['/login'];
     this.router.navigate(navigationDetails);
   }
 }
