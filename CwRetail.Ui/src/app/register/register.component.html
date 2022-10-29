@@ -27,7 +27,7 @@
     </div>
   </div>
 
-  <label for="new-user-phone">Email: </label>
+  <label for="new-user-phone">Phone: </label>
   <input id="new-user-phone" type="text" required lengthValidator [(ngModel)]="user.phone" #userPhone="ngModel" value="" />
 
   <div *ngIf="userPhone.invalid && (userPhone.dirty || userPhone.touched)"
