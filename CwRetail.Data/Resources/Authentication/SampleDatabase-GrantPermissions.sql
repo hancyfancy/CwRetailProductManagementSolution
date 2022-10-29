@@ -42,3 +42,25 @@ TO
 	TestUser
 GO
 
+GRANT 
+	SELECT, 
+	INSERT, 
+	UPDATE,  
+	DELETE
+ON 
+	auth.usertokens 
+TO 
+	TestUser
+GO
+
+GRANT 
+	SELECT, 
+	INSERT, 
+	UPDATE,  
+	DELETE
+ON 
+	auth.userroles 
+TO 
+	TestUser
+GO
+
