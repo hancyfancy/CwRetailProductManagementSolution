@@ -23,7 +23,7 @@ export class ProductHistoryComponent implements OnInit {
 
   getHistory(): void {
     var originalProduct: Product = this.decrypt(this.route.snapshot.paramMap.get('product')!);
-    this.productAuditService.getProductAuditUpdates(originalProduct.id)
+    this.productAuditService.getProductAuditUpdates(originalProduct.productId)
       .then((productAudits) => {
         this.productAuditService.productAudits = productAudits!;
         this.loadHistory();

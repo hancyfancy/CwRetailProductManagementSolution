@@ -2,7 +2,7 @@
 
 <div>
   <label for="new-product-name">Product name: </label>
-  <input id="new-product-name" type="text" required lengthValidator [(ngModel)]="product.name" #productName="ngModel" value="{{product.id > 0 ? product.name : ''}}" />
+  <input id="new-product-name" type="text" required lengthValidator [(ngModel)]="product.name" #productName="ngModel" value="{{product.productId > 0 ? product.name : ''}}" />
 
   <div *ngIf="productName.invalid && (productName.dirty || productName.touched)"
        class="alert">
@@ -15,7 +15,7 @@
   </div>
 
   <label for="new-product-price">Product price: </label>
-  <input id="new-product-price" type="number" required currencyValidator [(ngModel)]="product.price" #productPrice="ngModel" value="{{product.id > 0 ? product.price.toString() : ''}}" />
+  <input id="new-product-price" type="number" required currencyValidator [(ngModel)]="product.price" #productPrice="ngModel" value="{{product.productId > 0 ? product.price.toString() : ''}}" />
 
   <div *ngIf="productPrice.invalid && (productPrice.dirty || productPrice.touched)"
        class="alert">

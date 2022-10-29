@@ -39,7 +39,7 @@ export class ProductService {
         .set('Authorization', 'Bearer ' + this.settings.jwtToken)
     };
     return this.http.post<Product>(this.urlPrefix + '/Create', JSON.stringify(product, (_, v) => typeof v === 'bigint' ? v.toString() : v), httpOptions).pipe(
-      tap((newProduct: Product) => this.log(`added product w/ id=${newProduct.id}`)),
+      tap((newProduct: Product) => this.log(`added product w/ id=${newProduct.productId}`)),
       catchError(this.handleError<Product>('addProduct'))
     ).toPromise();
   }

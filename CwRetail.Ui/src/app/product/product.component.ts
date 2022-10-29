@@ -46,7 +46,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
   delete(product: Product): void {
     if (confirm("Delete product " + product.name + "?")) {
-      this.productService.deleteProduct(product.id)
+      this.productService.deleteProduct(product.productId)
         .then(() => {
           this.getProducts();
         })
