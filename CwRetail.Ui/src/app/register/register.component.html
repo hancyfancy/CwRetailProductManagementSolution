@@ -2,7 +2,7 @@
 
 <div>
   <label for="new-user-username">Username: </label>
-  <input id="new-user-username" type="text" required lengthValidator [(ngModel)]="user.username" #productName="ngModel" value="" />
+  <input id="new-user-username" type="text" required lengthValidator [(ngModel)]="user.username" #userUsername="ngModel" value="" />
 
   <div *ngIf="userUsername.invalid && (userUsername.dirty || userUsername.touched)"
        class="alert">
@@ -15,7 +15,7 @@
   </div>
 
   <label for="new-user-email">Email: </label>
-  <input id="new-user-email" type="text" required lengthValidator [(ngModel)]="user.email" #productPrice="ngModel" value="" />
+  <input id="new-user-email" type="text" required lengthValidator [(ngModel)]="user.email" #userEmail="ngModel" value="" />
 
   <div *ngIf="userEmail.invalid && (userEmail.dirty || userEmail.touched)"
        class="alert">
@@ -28,7 +28,7 @@
   </div>
 
   <label for="new-user-phone">Email: </label>
-  <input id="new-user-phone" type="text" required lengthValidator [(ngModel)]="user.phone" #productPrice="ngModel" value="" />
+  <input id="new-user-phone" type="text" required lengthValidator [(ngModel)]="user.phone" #userPhone="ngModel" value="" />
 
   <div *ngIf="userPhone.invalid && (userPhone.dirty || userPhone.touched)"
        class="alert">

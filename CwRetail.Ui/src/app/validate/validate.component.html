@@ -2,7 +2,7 @@
 
 <div>
   <label for="new-usertoken-token">Username: </label>
-  <input id="new-usertoken-token" type="text" required tokenLengthValidator [(ngModel)]="usertoken.token" #productName="ngModel" value="" />
+  <input id="new-usertoken-token" type="text" required tokenLengthValidator [(ngModel)]="usertoken.token" #usertokenToken="ngModel" value="" />
 
   <div *ngIf="usertokenToken.invalid && (usertokenToken.dirty || usertokenToken.touched)"
        class="alert">

@@ -2,7 +2,7 @@
 
 <div>
   <label for="new-user-username">Username: </label>
-  <input id="new-user-username" type="text" required lengthValidator [(ngModel)]="user.username" #productName="ngModel" value="" />
+  <input id="new-user-username" type="text" required lengthValidator [(ngModel)]="user.username" #userUsername="ngModel" value="" />
 
   <div *ngIf="userUsername.invalid && (userUsername.dirty || userUsername.touched)"
        class="alert">
