@@ -19,7 +19,7 @@ export class ProductDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.product = this.decrypt(this.route.snapshot.paramMap.get('product')!);
-    this.actionText = this.product.id > 0 ? 'Edit' : 'Add';
+    this.actionText = this.product.productId > 0 ? 'Edit' : 'Add';
   }
 
   addOrEdit(name: string, price: number, typeAsString: string, activeAsString: string): void {
@@ -34,7 +34,7 @@ export class ProductDetailComponent implements OnInit {
 
     var originalProduct: Product = this.decrypt(this.route.snapshot.paramMap.get('product')!);
 
-    if (originalProduct.id > 0) {
+    if (originalProduct.productId > 0) {
 
       var dynObj: any = {};
 
@@ -54,7 +54,7 @@ export class ProductDetailComponent implements OnInit {
         dynObj.active = active;
       }
 
-      this.productService.updateProduct(originalProduct.id, dynObj)
+      this.productService.updateProduct(originalProduct.productId, dynObj)
         .then(() => {
           this.goToProducts();
         })
