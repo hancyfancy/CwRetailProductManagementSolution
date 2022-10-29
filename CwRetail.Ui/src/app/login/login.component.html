@@ -17,4 +17,8 @@
   <button type="button" class="get-button" (click)="get(userUsername.value)" *ngIf="(!(userUsername.invalid && (userUsername.dirty || userUsername.touched)))">
     Login
   </button>
+
+  <button type="button" class="register-button" (click)="goToRegister()">
+    Register
+  </button>
 </div>

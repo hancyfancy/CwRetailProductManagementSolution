@@ -32,4 +32,9 @@ export class LoginComponent implements OnInit {
     const navigationDetails: string[] = ['/validate'];
     this.router.navigate(navigationDetails);
   }
+
+  goToRegister(): void {
+    const navigationDetails: string[] = ['/register'];
+    this.router.navigate(navigationDetails);
+  }
 }
