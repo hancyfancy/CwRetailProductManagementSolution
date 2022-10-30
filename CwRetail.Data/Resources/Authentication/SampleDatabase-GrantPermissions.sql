@@ -64,3 +64,11 @@ TO
 	TestUser
 GO
 
+GRANT 
+	SELECT
+ON 
+	auth.roles 
+TO 
+	TestUser
+GO
+
