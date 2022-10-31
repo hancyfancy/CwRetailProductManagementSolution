@@ -45,6 +45,10 @@ namespace CwRetail.Data.Repositories.Implementation
 			                                @LastActive
 		                                )
                                    END
+								   ELSE
+								   BEGIN
+										SELECT UserId FROM auth.users WHERE Username = @Username 
+								   END
                                 END";
                 var result = _connection.ExecuteScalar<long>(sql, new
                 {
