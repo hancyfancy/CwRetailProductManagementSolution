@@ -73,14 +73,14 @@ namespace CwRetail.Api.Controllers
 
             if (userVerificationJson.IsEmpty())
             {
-                return BadRequest("User can not be verified");
+                return BadRequest("User could not be verified");
             }
 
             string encryptedUserVerificationJson = userVerificationJson.Encrypt();
 
             if (encryptedUserVerificationJson.IsEmpty())
             {
-                return BadRequest("Could not process user verification");
+                return BadRequest("User verification could not be processed");
             }
 
             if (!userVerification.EmailVerified)
@@ -169,7 +169,7 @@ namespace CwRetail.Api.Controllers
 
             if (retrievedUserJson.IsEmpty())
             {
-                return BadRequest("User was unsuccessfully retrieved");
+                return BadRequest("Retrieved user could not be verified");
             }
 
             string encryptedRetrievedUserJson = retrievedUserJson.Encrypt();
