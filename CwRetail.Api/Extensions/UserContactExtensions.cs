@@ -31,7 +31,7 @@ namespace CwRetail.Api.Extensions
                 }
                 else if (userContactTypeEnum == UserContactTypeEnum.Phone)
                 {
-                    message.To.Add(new MailAddress($"{userVerification.Phone}@txt.att.net"));
+                    message.To.Add(new MailAddress($"{userVerification.Phone.Replace("+", "")}@txt.att.net"));
                     message.IsBodyHtml = false;
                 }
 
