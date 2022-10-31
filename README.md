@@ -46,8 +46,10 @@ In Visual Studio:
 1. Change controller api actions to return IActionResult [Done]
 2. Cater for invalid data in controller api actions [Done]
 3. Add authorisation for each controller api action [In progress]
-    1. Need to generate private and public rsa keys
-    2. Need to test built functionality
+    1. Need to test built functionality
+    2. Need to ensure sms is being received on mobile
+    3. Need to request six digit numeric code for sms to validate login unlike 200 character alphanumeric token for email
+    4. Need to ensure encrypted user is retrieved properly in ProductController and ProductAuditController
 4. Make controller api action async
 5. Show history of updates sql statements via audit.products table for a particular product id [Done]
 6. Check if mocked test cases need to be ammended
