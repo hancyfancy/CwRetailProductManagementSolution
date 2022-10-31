@@ -20,30 +20,30 @@ export class AuthenticationService {
 
   /** POST **/
   addUser(user: User) {
-    var addHttpOptions = {
+    var httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
-    return this.http.post<string>(this.urlPrefix + '/CreateUser', JSON.stringify(user, (_, v) => typeof v === 'bigint' ? v.toString() : v), addHttpOptions).pipe(
+    return this.http.post<string>(this.urlPrefix + '/CreateUser', JSON.stringify(user, (_, v) => typeof v === 'bigint' ? v.toString() : v), httpOptions).pipe(
       catchError(this.handleError<string>('addUser'))
     ).toPromise();
   }
 
   /** POST **/
   getUser(user: User) {
-    var addHttpOptions = {
+    var httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
-    return this.http.post<string>(this.urlPrefix + '/GetUser', JSON.stringify(user, (_, v) => typeof v === 'bigint' ? v.toString() : v), addHttpOptions).pipe(
+    return this.http.post<string>(this.urlPrefix + '/GetUser', JSON.stringify(user, (_, v) => typeof v === 'bigint' ? v.toString() : v), httpOptions).pipe(
       catchError(this.handleError<string>('getUser'))
     ).toPromise();
   }
 
   /** POST **/
   validateUser(userToken: UserToken) {
-    var addHttpOptions = {
+    var httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
-    return this.http.post<string>(this.urlPrefix + '/Validate', JSON.stringify(userToken, (_, v) => typeof v === 'bigint' ? v.toString() : v), addHttpOptions).pipe(
+    return this.http.post<string>(this.urlPrefix + '/Validate', JSON.stringify(userToken, (_, v) => typeof v === 'bigint' ? v.toString() : v), httpOptions).pipe(
       catchError(this.handleError<string>('validateUser'))
     ).toPromise();
   }
