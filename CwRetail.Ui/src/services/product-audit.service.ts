@@ -45,6 +45,8 @@ export class ProductAuditService {
 
       this.log(`${operation} failed: ${error.message}`);
 
+      confirm("No changes made, please check input values");
+
       return of(result as T);
     };
   }
