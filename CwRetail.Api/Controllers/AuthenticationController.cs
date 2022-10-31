@@ -69,7 +69,7 @@ namespace CwRetail.Api.Controllers
 
             userVerification.Username = user.Username;
 
-            string userVerificationJson = JsonConvert.SerializeObject(userVerification);
+            string userVerificationJson = userVerification.ToJson();
 
             if (!userVerification.EmailVerified)
             {
@@ -107,7 +107,7 @@ namespace CwRetail.Api.Controllers
         [HttpGet(Name = "Verify")]
         public IActionResult Verify(UserContactTypeEnum mode, string user)
         {
-            User retrievedUser = JsonConvert.DeserializeObject<User>(user.Decrypt());
+            User retrievedUser = user.Decrypt().ToObj<User>();
 
             if (retrievedUser is null)
             {
@@ -141,7 +141,7 @@ namespace CwRetail.Api.Controllers
                 return BadRequest("Token expired");
             }
 
-            return Ok(_privateRsaKey.CreateToken(retrievedUser));
+            return Ok(retrievedUser.ToJson().Encrypt());
         }
     }
 }

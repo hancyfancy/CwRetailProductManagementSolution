@@ -23,13 +23,11 @@ namespace CwRetail.Api.Controllers
     {
         private readonly ILogger<ProductController> _logger;
         private readonly IProductRepository _repo;
-        private readonly string _publicRsaKey;
 
         public ProductController(ILogger<ProductController> logger)
         {
             _logger = logger;
             _repo = new ProductRepository();
-            _publicRsaKey = "";
         }
 
         [HttpGet(Name = "Get")]
@@ -37,7 +35,7 @@ namespace CwRetail.Api.Controllers
         {
             try
             {
-                User user = _publicRsaKey.DecodeToken(authorization.Replace("Bearer", "").Trim());
+                User user = authorization.Replace("Bearer", "").Trim().Decrypt().ToObj<User>();
 
                 if (user is null)
                 {
@@ -90,7 +88,7 @@ namespace CwRetail.Api.Controllers
         {
             try
             {
-                User user = _publicRsaKey.DecodeToken(authorization.Replace("Bearer", "").Trim());
+                User user = authorization.Replace("Bearer", "").Trim().Decrypt().ToObj<User>();
 
                 if (user is null)
                 {
@@ -123,7 +121,7 @@ namespace CwRetail.Api.Controllers
         {
             try
             {
-                User user = _publicRsaKey.DecodeToken(authorization.Replace("Bearer", "").Trim());
+                User user = authorization.Replace("Bearer", "").Trim().Decrypt().ToObj<User>();
 
                 if (user is null)
                 {
@@ -186,7 +184,7 @@ namespace CwRetail.Api.Controllers
         {
             try
             {
-                User user = _publicRsaKey.DecodeToken(authorization.Replace("Bearer", "").Trim());
+                User user = authorization.Replace("Bearer", "").Trim().Decrypt().ToObj<User>();
 
                 if (user is null)
                 {

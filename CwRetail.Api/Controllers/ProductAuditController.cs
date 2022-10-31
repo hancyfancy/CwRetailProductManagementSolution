@@ -15,13 +15,11 @@ namespace CwRetail.Api.Controllers
     {
         private readonly ILogger<ProductAuditController> _logger;
         private readonly IProductAuditRepository _repo;
-        private readonly string _publicRsaKey;
 
         public ProductAuditController(ILogger<ProductAuditController> logger)
         {
             _logger = logger;
             _repo = new ProductAuditRepository();
-            _publicRsaKey = "";
         }
 
         [HttpGet(Name = "GetUpdates")]
@@ -29,7 +27,7 @@ namespace CwRetail.Api.Controllers
         {
             try
             {
-                User user =  _publicRsaKey.DecodeToken(authorization.Replace("Bearer", "").Trim());
+                User user = authorization.Replace("Bearer", "").Trim().Decrypt().ToObj<User>();
 
                 if (user is null)
                 {
