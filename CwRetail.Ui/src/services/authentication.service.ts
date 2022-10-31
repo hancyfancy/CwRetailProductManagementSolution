@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { User } from '../models/user';
 import { UserToken } from '../models/user-token';
@@ -62,7 +62,7 @@ export class AuthenticationService {
 
       this.log(`${operation} failed: ${error.message}`);
 
-      return of(result as T);
+      return throwError(error);
     };
   }
 
