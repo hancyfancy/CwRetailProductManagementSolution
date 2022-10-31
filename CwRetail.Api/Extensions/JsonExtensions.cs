@@ -6,12 +6,26 @@ namespace CwRetail.Api.Extensions
     {
         public static string ToJson<T>(this T obj)
         {
-            return JsonConvert.SerializeObject(obj);
+            try
+            {
+                return JsonConvert.SerializeObject(obj);
+            }
+            catch (Exception e)
+            {
+                return default;
+            }
         }
 
         public static T ToObj<T>(this string json)
         {
-            return JsonConvert.DeserializeObject<T>(json);
+            try
+            {
+                return JsonConvert.DeserializeObject<T>(json);
+            }
+            catch (Exception e)
+            {
+                return default;
+            }
         }
     }
 }
