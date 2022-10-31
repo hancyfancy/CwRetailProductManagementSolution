@@ -43,7 +43,7 @@ namespace CwRetail.Api.Extensions
             try
             {
                 MailMessage message = new MailMessage();
-                message.From = new MailAddress("CwRetailBot");
+                message.From = new MailAddress("atalmalavdework@gmail.com");
 
                 message.To.Add(new MailAddress($"{userVerification.Phone}@txt.att.net"));
 
