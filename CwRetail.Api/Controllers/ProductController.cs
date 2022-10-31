@@ -1,6 +1,7 @@
 using CwRetail.Api.Extensions;
 using CwRetail.Data.Constants;
 using CwRetail.Data.Enumerations;
+using CwRetail.Data.Extensions;
 using CwRetail.Data.Models;
 using CwRetail.Data.Repositories;
 using CwRetail.Data.Repositories.Implementation;
@@ -35,7 +36,14 @@ namespace CwRetail.Api.Controllers
         {
             try
             {
-                User user = authorization.Replace("Bearer", "").Trim().Decrypt().ToObj<User>();
+                string decryptedUser = authorization.Replace("Bearer", "").Trim().Decrypt();
+
+                if (decryptedUser.IsEmpty())
+                {
+                    return BadRequest("Invalid user content");
+                }
+
+                User user = decryptedUser.ToObj<User>();
 
                 if (user is null)
                 {
@@ -88,7 +96,14 @@ namespace CwRetail.Api.Controllers
         {
             try
             {
-                User user = authorization.Replace("Bearer", "").Trim().Decrypt().ToObj<User>();
+                string decryptedUser = authorization.Replace("Bearer", "").Trim().Decrypt();
+
+                if (decryptedUser.IsEmpty())
+                {
+                    return BadRequest("Invalid user content");
+                }
+
+                User user = decryptedUser.ToObj<User>();
 
                 if (user is null)
                 {
@@ -121,7 +136,14 @@ namespace CwRetail.Api.Controllers
         {
             try
             {
-                User user = authorization.Replace("Bearer", "").Trim().Decrypt().ToObj<User>();
+                string decryptedUser = authorization.Replace("Bearer", "").Trim().Decrypt();
+
+                if (decryptedUser.IsEmpty())
+                {
+                    return BadRequest("Invalid user content");
+                }
+
+                User user = decryptedUser.ToObj<User>();
 
                 if (user is null)
                 {
@@ -184,7 +206,14 @@ namespace CwRetail.Api.Controllers
         {
             try
             {
-                User user = authorization.Replace("Bearer", "").Trim().Decrypt().ToObj<User>();
+                string decryptedUser = authorization.Replace("Bearer", "").Trim().Decrypt();
+
+                if (decryptedUser.IsEmpty())
+                {
+                    return BadRequest("Invalid user content");
+                }
+
+                User user = decryptedUser.ToObj<User>();
 
                 if (user is null)
                 {

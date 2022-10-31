@@ -71,14 +71,26 @@ namespace CwRetail.Api.Controllers
 
             string userVerificationJson = userVerification.ToJson();
 
+            if (userVerificationJson.IsEmpty())
+            {
+                return BadRequest("User can not be verified");
+            }
+
+            string encryptedUserVerificationJson = userVerificationJson.Encrypt();
+
+            if (encryptedUserVerificationJson.IsEmpty())
+            {
+                return BadRequest("Could not process user verification");
+            }
+
             if (!userVerification.EmailVerified)
             {
-                userVerification.Send(UserContactTypeEnum.Email, Settings.SmtpHost, Settings.SmtpPort, Settings.SmtpUseSsl, Settings.SmtpSender, Settings.SmtpPassword, "Verification required", $"Please verify email at https://localhost:7138/api/Authentication/Verify?mode=email&user={userVerificationJson.Encrypt()}");
+                userVerification.Send(UserContactTypeEnum.Email, Settings.SmtpHost, Settings.SmtpPort, Settings.SmtpUseSsl, Settings.SmtpSender, Settings.SmtpPassword, "Verification required", $"Please verify email at https://localhost:7138/api/Authentication/Verify?mode=email&user={encryptedUserVerificationJson}");
             }
 
             if (!userVerification.PhoneVerified)
             {
-                userVerification.Send(UserContactTypeEnum.Phone, Settings.SmtpHost, Settings.SmtpPort, Settings.SmtpUseSsl, Settings.SmtpSender, Settings.SmtpPassword, "Verification required", $"Please verify phone number at https://localhost:7138/api/Authentication/Verify?mode=phone&user={userVerificationJson.Encrypt()}");
+                userVerification.Send(UserContactTypeEnum.Phone, Settings.SmtpHost, Settings.SmtpPort, Settings.SmtpUseSsl, Settings.SmtpSender, Settings.SmtpPassword, "Verification required", $"Please verify phone number at https://localhost:7138/api/Authentication/Verify?mode=phone&user={encryptedUserVerificationJson}");
             }
 
             if (!(userVerification.EmailVerified || userVerification.PhoneVerified))
@@ -87,6 +99,11 @@ namespace CwRetail.Api.Controllers
             }
 
             string token = userVerification.Token = TokenExtensions.GetUniqueKey();
+
+            if (token.IsEmpty())
+            {
+                return BadRequest("Error while generating token");
+            }
 
             _userTokensRepo.InsertOrUpdate(userVerification.UserId, token);
 
@@ -107,7 +124,14 @@ namespace CwRetail.Api.Controllers
         [HttpGet(Name = "Verify")]
         public IActionResult Verify(UserContactTypeEnum mode, string user)
         {
-            User retrievedUser = user.Decrypt().ToObj<User>();
+            string decryptedUser = user.Decrypt();
+
+            if (decryptedUser.IsEmpty())
+            {
+                return BadRequest("Invalid user content");
+            }
+
+            User retrievedUser = decryptedUser.ToObj<User>();
 
             if (retrievedUser is null)
             {
@@ -141,7 +165,21 @@ namespace CwRetail.Api.Controllers
                 return BadRequest("Token expired");
             }
 
-            return Ok(retrievedUser.ToJson().Encrypt());
+            string retrievedUserJson = retrievedUser.ToJson();
+
+            if (retrievedUserJson.IsEmpty())
+            {
+                return BadRequest("User was unsuccessfully retrieved");
+            }
+
+            string encryptedRetrievedUserJson = retrievedUserJson.Encrypt();
+
+            if (encryptedRetrievedUserJson.IsEmpty())
+            {
+                return BadRequest("User could not be processed");
+            }
+
+            return Ok(encryptedRetrievedUserJson);
         }
     }
 }
