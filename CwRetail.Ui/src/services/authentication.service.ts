@@ -62,6 +62,8 @@ export class AuthenticationService {
 
       this.log(`${operation} failed: ${error.message}`);
 
+      confirm("Please verify either email or phone to login");
+
       return throwError(error);
     };
   }
