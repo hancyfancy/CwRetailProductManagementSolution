@@ -76,10 +76,10 @@ namespace CwRetail.Api.Controllers
                 userVerification.Send(UserContactTypeEnum.Email, Settings.SmtpHost, Settings.SmtpPort, Settings.SmtpUseSsl, Settings.SmtpSender, Settings.SmtpPassword, "Verification required", $"Please verify email at https://localhost:7138/api/Authentication/Verify?mode=email&user={userVerificationJson.Encrypt()}");
             }
 
-            if (!userVerification.PhoneVerified)
-            {
-                userVerification.Send(UserContactTypeEnum.Phone, Settings.SmtpHost, Settings.SmtpPort, Settings.SmtpUseSsl, Settings.SmtpSender, Settings.SmtpPassword, "Verification required", $"Please verify phone number at https://localhost:7138/api/Authentication/Verify?mode=phone&user={userVerificationJson.Encrypt()}");
-            }
+            //if (!userVerification.PhoneVerified)
+            //{
+            //    userVerification.Send(UserContactTypeEnum.Phone, Settings.SmtpHost, Settings.SmtpPort, Settings.SmtpUseSsl, Settings.SmtpSender, Settings.SmtpPassword, "Verification required", $"Please verify phone number at https://localhost:7138/api/Authentication/Verify?mode=phone&user={userVerificationJson.Encrypt()}");
+            //}
 
             if (!(userVerification.EmailVerified || userVerification.PhoneVerified))
             {

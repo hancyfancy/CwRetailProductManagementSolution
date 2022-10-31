@@ -22,7 +22,7 @@ namespace CwRetail.Api.Extensions
         }
         public static string Decrypt(this string input)
         {
-            byte[] inputArray = Convert.FromBase64String(input);
+            byte[] inputArray = Convert.FromBase64String(input.Replace(" ", "+"));
             TripleDESCryptoServiceProvider tripleDES = new TripleDESCryptoServiceProvider();
             tripleDES.Key = _cryptoKey;
             tripleDES.Mode = CipherMode.ECB;

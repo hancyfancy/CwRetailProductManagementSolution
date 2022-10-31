@@ -73,7 +73,7 @@ namespace CwRetail.Data.Repositories.Implementation
                                         UPDATE
 			                                auth.userverification
 		                                SET
-			                                EmailVerified = true
+			                                EmailVerified = 1
 		                                WHERE
 			                                UserId = @UserId
                                    END
@@ -105,7 +105,7 @@ namespace CwRetail.Data.Repositories.Implementation
                                         UPDATE
 			                                auth.userverification
 		                                SET
-			                                PhoneVerified = true
+			                                PhoneVerified = 1
 		                                WHERE
 			                                UserId = @UserId
                                    END
