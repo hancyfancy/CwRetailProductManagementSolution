@@ -19,7 +19,6 @@ namespace CwRetail.Api.Controllers
         private readonly IUserVerificationRepository _userVerificationRepo;
         private readonly IUserRolesRepository _userRolesRepo;
         private readonly IUserTokensRepository _userTokensRepo;
-        private readonly string _cryptoKey;
         private readonly string _privateRsaKey;
 
         public AuthenticationController(ILogger<ProductAuditController> logger)
@@ -29,7 +28,6 @@ namespace CwRetail.Api.Controllers
             _userVerificationRepo = new UserVerificationRepository();
             _userRolesRepo = new UserRolesRepository();
             _userTokensRepo = new UserTokensRepository();
-            _cryptoKey = "7kZZdpRXYDFRrPzxrk6HlrGTMq7LTDOQ";
             _privateRsaKey = "";
         }
 
@@ -73,14 +71,15 @@ namespace CwRetail.Api.Controllers
 
             string userVerificationJson = JsonConvert.SerializeObject(userVerification);
 
+            userVerification.EmailVerified = true;
             if (!userVerification.EmailVerified)
             {
-                userVerification.SendEmail("Verification required", $"Please verify email at https://localhost:7138/api/Authentication/Verify?mode=email&user={_cryptoKey.Encrypt(userVerificationJson)}.", null, 0, null);
+                userVerification.SendEmail("Verification required", $"Please verify email at https://localhost:7138/api/Authentication/Verify?mode=email&user={userVerificationJson.Encrypt()}.", null, 0, null);
             }
 
             if (!userVerification.PhoneVerified)
             {
-                userVerification.SendSms("Verification required", $"Please verify phone number at https://localhost:7138/api/Authentication/Verify?mode=phone&user={_cryptoKey.Encrypt(userVerificationJson)}.");
+                userVerification.SendSms("Verification required", $"Please verify phone number at https://localhost:7138/api/Authentication/Verify?mode=phone&user={userVerificationJson.Encrypt()}.");
             }
 
             if (!(userVerification.EmailVerified || userVerification.PhoneVerified))
@@ -94,6 +93,7 @@ namespace CwRetail.Api.Controllers
 
             string validationMessage = $"Please use the following token, which expires in 24 hours, to login: {userVerification.Token}";
 
+            userVerification.EmailVerified = false;
             if (userVerification.EmailVerified)
             {
                 userVerification.SendEmail("Validate login attempt", validationMessage, null, 0, null);
@@ -109,7 +109,7 @@ namespace CwRetail.Api.Controllers
         [HttpGet(Name = "Verify")]
         public IActionResult Verify(UserContactTypeEnum mode, string user)
         {
-            User retrievedUser = JsonConvert.DeserializeObject<User>(_cryptoKey.Decrypt(user));
+            User retrievedUser = JsonConvert.DeserializeObject<User>(user.Decrypt());
 
             if (retrievedUser is null)
             {
