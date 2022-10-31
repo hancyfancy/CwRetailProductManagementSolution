@@ -74,12 +74,12 @@ namespace CwRetail.Api.Controllers
             userVerification.EmailVerified = true;
             if (!userVerification.EmailVerified)
             {
-                userVerification.SendEmail("Verification required", $"Please verify email at https://localhost:7138/api/Authentication/Verify?mode=email&user={userVerificationJson.Encrypt()}.", null, 0, null);
+                userVerification.Send(UserContactTypeEnum.Email, Settings.SmtpHost, Settings.SmtpPort, Settings.SmtpUseSsl, Settings.SmtpSender, Settings.SmtpPassword, "Verification required", $"Please verify email at https://localhost:7138/api/Authentication/Verify?mode=email&user={userVerificationJson.Encrypt()}");
             }
 
             if (!userVerification.PhoneVerified)
             {
-                userVerification.SendSms("Verification required", $"Please verify phone number at https://localhost:7138/api/Authentication/Verify?mode=phone&user={userVerificationJson.Encrypt()}.");
+                userVerification.Send(UserContactTypeEnum.Phone, Settings.SmtpHost, Settings.SmtpPort, Settings.SmtpUseSsl, Settings.SmtpSender, Settings.SmtpPassword, "Verification required", $"Please verify phone number at https://localhost:7138/api/Authentication/Verify?mode=phone&user={userVerificationJson.Encrypt()}");
             }
 
             if (!(userVerification.EmailVerified || userVerification.PhoneVerified))
@@ -96,11 +96,11 @@ namespace CwRetail.Api.Controllers
             userVerification.EmailVerified = false;
             if (userVerification.EmailVerified)
             {
-                userVerification.SendEmail("Validate login attempt", validationMessage, null, 0, null);
+                userVerification.Send(UserContactTypeEnum.Email, Settings.SmtpHost, Settings.SmtpPort, Settings.SmtpUseSsl, Settings.SmtpSender, Settings.SmtpPassword, "Validate login attempt", validationMessage);
             }
             else if (userVerification.PhoneVerified)
             {
-                userVerification.SendSms("Validate login attempt", validationMessage);
+                userVerification.Send(UserContactTypeEnum.Phone, Settings.SmtpHost, Settings.SmtpPort, Settings.SmtpUseSsl, Settings.SmtpSender, Settings.SmtpPassword, "Validate login attempt", validationMessage);
             }
 
             return Ok(token);
