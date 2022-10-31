@@ -27,18 +27,23 @@ namespace CwRetail.Data.Repositories.Implementation
             {
                 _connection.Open();
 
-                string sql = $@"INSERT INTO auth.userverification
-                                (                    
-	                                UserId,
-	                                EmailVerified,
-	                                PhoneVerified
-                                )
-                                VALUES 
-                                ( 
-	                                @UserId,
-	                                @EmailVerified,
-	                                @PhoneVerified
-                                )";
+                string sql = $@"BEGIN
+                                   IF (@UserId > 0) AND (NOT EXISTS (SELECT UserVerificationId FROM auth.userverification WHERE UserId = @UserId))
+                                   BEGIN
+                                        INSERT INTO auth.userverification
+		                                (                    
+			                                UserId,
+			                                EmailVerified,
+			                                PhoneVerified
+		                                )
+		                                VALUES 
+		                                ( 
+			                                @UserId,
+			                                @EmailVerified,
+			                                @PhoneVerified
+		                                )
+                                   END
+                                END";
                 var result = _connection.Execute(sql, new
                 {
                     UserId = userVerification.UserId,
@@ -62,12 +67,17 @@ namespace CwRetail.Data.Repositories.Implementation
             {
                 _connection.Open();
 
-                string sql = $@"UPDATE
-	                                auth.userverification
-                                SET
-	                                EmailVerified = true
-                                WHERE
-                                    UserId = @UserId";
+                string sql = $@"BEGIN
+                                   IF EXISTS (SELECT UserVerificationId FROM auth.userverification WHERE UserId = @UserId)
+                                   BEGIN
+                                        UPDATE
+			                                auth.userverification
+		                                SET
+			                                EmailVerified = true
+		                                WHERE
+			                                UserId = @UserId
+                                   END
+                                END";
                 var result = _connection.Execute(sql, new
                 {
                     UserId = userId,
@@ -89,12 +99,17 @@ namespace CwRetail.Data.Repositories.Implementation
             {
                 _connection.Open();
 
-                string sql = $@"UPDATE
-	                                auth.userverification
-                                SET
-	                                PhoneVerified = true
-                                WHERE
-                                    UserId = @UserId";
+                string sql = $@"BEGIN
+                                   IF EXISTS (SELECT UserVerificationId FROM auth.userverification WHERE UserId = @UserId)
+                                   BEGIN
+                                        UPDATE
+			                                auth.userverification
+		                                SET
+			                                PhoneVerified = true
+		                                WHERE
+			                                UserId = @UserId
+                                   END
+                                END";
                 var result = _connection.Execute(sql, new
                 {
                     UserId = userId,

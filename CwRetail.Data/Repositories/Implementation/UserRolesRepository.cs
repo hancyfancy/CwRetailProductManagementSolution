@@ -27,16 +27,21 @@ namespace CwRetail.Data.Repositories.Implementation
             {
                 _connection.Open();
 
-                string sql = $@"INSERT INTO auth.userroles
-                                (                    
-	                                UserId,
-									RoleId
-                                )
-                                VALUES 
-                                ( 
-	                                @UserId,
-									(SELECT RoleId FROM auth.roles WHERE Role = 'User' AND SubRole = 'Standard')
-                                )";
+                string sql = $@"BEGIN
+                                   IF (@UserId > 0) AND (NOT EXISTS (SELECT UserRoleId FROM auth.userroles WHERE UserId = @UserId))
+                                   BEGIN
+                                        INSERT INTO auth.userroles
+		                                (                    
+			                                UserId,
+			                                RoleId
+		                                )
+		                                VALUES 
+		                                ( 
+			                                @UserId,
+			                                (SELECT RoleId FROM auth.roles WHERE Role = 'User' AND SubRole = 'Standard')
+		                                )
+                                   END
+                                END";
                 var result = _connection.Execute(sql, new
                 {
                     UserId = userId

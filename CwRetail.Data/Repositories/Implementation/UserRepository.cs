@@ -26,21 +26,26 @@ namespace CwRetail.Data.Repositories.Implementation
             {
                 _connection.Open();
 
-                string sql = $@"INSERT INTO auth.users
-                                    (                    
-	                                    Username,
-	                                    Email,
-	                                    Phone,
-	                                    LastActive
-                                    )
-                                    OUTPUT inserted.UserId 
-                                    VALUES 
-                                    ( 
-	                                    @Username,
-	                                    @Email,
-	                                    @Phone,
-	                                    @LastActive
-                                    )";
+                string sql = $@"BEGIN
+                                   IF NOT EXISTS (SELECT UserId FROM auth.users WHERE Username = @Username)
+                                   BEGIN
+                                        INSERT INTO auth.users
+		                                (                    
+			                                Username,
+			                                Email,
+			                                Phone,
+			                                LastActive
+		                                )
+		                                OUTPUT inserted.UserId 
+		                                VALUES 
+		                                ( 
+			                                @Username,
+			                                @Email,
+			                                @Phone,
+			                                @LastActive
+		                                )
+                                   END
+                                END";
                 var result = _connection.ExecuteScalar<long>(sql, new
                 {
                     Username = user.Username,

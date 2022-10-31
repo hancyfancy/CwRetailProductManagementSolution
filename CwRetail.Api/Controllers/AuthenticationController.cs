@@ -56,9 +56,7 @@ namespace CwRetail.Api.Controllers
 
             _userRolesRepo.Insert(userId);
 
-            user.UserId = userId;
-
-            return Ok(_privateRsaKey.CreateToken(user));
+            return Ok();
         }
 
         [HttpPost(Name = "GetUser")]
