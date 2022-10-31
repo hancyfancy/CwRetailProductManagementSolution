@@ -40,7 +40,6 @@ namespace CwRetail.Api.Extensions
                 _smtp.EnableSsl = useSsl;
                 _smtp.UseDefaultCredentials = false;
                 _smtp.Credentials = new NetworkCredential(username, password);
-                _smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                 _smtp.Send(message);
             }
             catch (Exception e) 

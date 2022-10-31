@@ -71,7 +71,6 @@ namespace CwRetail.Api.Controllers
 
             string userVerificationJson = JsonConvert.SerializeObject(userVerification);
 
-            userVerification.EmailVerified = true;
             if (!userVerification.EmailVerified)
             {
                 userVerification.Send(UserContactTypeEnum.Email, Settings.SmtpHost, Settings.SmtpPort, Settings.SmtpUseSsl, Settings.SmtpSender, Settings.SmtpPassword, "Verification required", $"Please verify email at https://localhost:7138/api/Authentication/Verify?mode=email&user={userVerificationJson.Encrypt()}");
@@ -93,7 +92,6 @@ namespace CwRetail.Api.Controllers
 
             string validationMessage = $"Please use the following token, which expires in 24 hours, to login: {userVerification.Token}";
 
-            userVerification.EmailVerified = false;
             if (userVerification.EmailVerified)
             {
                 userVerification.Send(UserContactTypeEnum.Email, Settings.SmtpHost, Settings.SmtpPort, Settings.SmtpUseSsl, Settings.SmtpSender, Settings.SmtpPassword, "Validate login attempt", validationMessage);
