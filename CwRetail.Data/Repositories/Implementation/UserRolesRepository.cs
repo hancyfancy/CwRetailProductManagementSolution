@@ -28,7 +28,7 @@ namespace CwRetail.Data.Repositories.Implementation
                 _connection.Open();
 
                 string sql = $@"BEGIN
-                                   IF (@UserId > 0) AND (NOT EXISTS (SELECT UserRoleId FROM auth.userroles WHERE UserId = @UserId))
+                                   IF NOT EXISTS (SELECT UserRoleId FROM auth.userroles WHERE UserId = @UserId)
                                    BEGIN
                                         INSERT INTO auth.userroles
 		                                (                    

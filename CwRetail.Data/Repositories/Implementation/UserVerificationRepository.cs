@@ -28,7 +28,7 @@ namespace CwRetail.Data.Repositories.Implementation
                 _connection.Open();
 
                 string sql = $@"BEGIN
-                                   IF (@UserId > 0) AND (NOT EXISTS (SELECT UserVerificationId FROM auth.userverification WHERE UserId = @UserId))
+                                   IF NOT EXISTS (SELECT UserVerificationId FROM auth.userverification WHERE UserId = @UserId)
                                    BEGIN
                                         INSERT INTO auth.userverification
 		                                (                    
