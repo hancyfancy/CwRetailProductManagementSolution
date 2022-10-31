@@ -18,21 +18,28 @@ namespace CwRetail.Data.Extensions
 
         public static string GetUniqueKey(int size = 200)
         {
-            byte[] data = new byte[4 * size];
-            using (var crypto = RandomNumberGenerator.Create())
+            try
             {
-                crypto.GetBytes(data);
+                byte[] data = new byte[4 * size];
+                using (var crypto = RandomNumberGenerator.Create())
+                {
+                    crypto.GetBytes(data);
+                }
+                StringBuilder result = new StringBuilder(size);
+                for (int i = 0; i < size; i++)
+                {
+                    var rnd = BitConverter.ToUInt32(data, i * 4);
+                    var idx = rnd % _chars.Length;
+
+                    result.Append(_chars[idx]);
+                }
+
+                return result.ToString();
             }
-            StringBuilder result = new StringBuilder(size);
-            for (int i = 0; i < size; i++)
+            catch (Exception e)
             {
-                var rnd = BitConverter.ToUInt32(data, i * 4);
-                var idx = rnd % _chars.Length;
-
-                result.Append(_chars[idx]);
+                return default;
             }
-
-            return result.ToString();
         }
     }
 }

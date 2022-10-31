@@ -46,7 +46,7 @@ namespace CwRetail.Data.Extensions
             }
             catch (Exception e)
             {
-                throw;
+                return default;
             }
         }
     }
