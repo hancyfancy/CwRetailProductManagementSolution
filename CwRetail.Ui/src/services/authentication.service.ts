@@ -67,6 +67,6 @@ export class AuthenticationService {
   }
 
   private log(message: string) {
-    console.log(`ProductAuditService: ${message}`);
+    console.log(`AuthenticationService: ${message}`);
   }
 }
