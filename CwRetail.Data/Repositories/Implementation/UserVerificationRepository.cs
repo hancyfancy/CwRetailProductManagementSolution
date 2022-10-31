@@ -138,7 +138,7 @@ namespace CwRetail.Data.Repositories.Implementation
 										v.PhoneVerified,
 										u.Email,
 										u.Phone,
-										(SELECT CONCAT(SubRole + ' ', Role) FROM auth.userroles WHERE RoleId = r.RoleId) AS Role,
+										(SELECT CONCAT(SubRole + ' ', Role) FROM auth.roles WHERE RoleId = r.RoleId) AS Role,
 										u.LastActive
                                     FROM 
 	                                    auth.users u
