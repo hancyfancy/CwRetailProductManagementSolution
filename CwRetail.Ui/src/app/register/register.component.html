@@ -7,10 +7,10 @@
   <div *ngIf="userUsername.invalid && (userUsername.dirty || userUsername.touched)"
        class="alert">
     <div *ngIf="userUsername.errors?.['required']">
-      Name is required.
+      Username is required.
     </div>
     <div *ngIf="userUsername.errors?.['lengthInvalid']">
-      Name can not exceed 100 characters.
+      Username can not exceed 100 characters.
     </div>
   </div>
 
@@ -20,10 +20,10 @@
   <div *ngIf="userEmail.invalid && (userEmail.dirty || userEmail.touched)"
        class="alert">
     <div *ngIf="userEmail.errors?.['required']">
-      Price is required.
+      Email is required.
     </div>
     <div *ngIf="userEmail.errors?.['lengthInvalid']">
-      Price may contain at most 2 decimal places.
+      Email may contain at most 2 decimal places.
     </div>
   </div>
 
@@ -33,10 +33,10 @@
   <div *ngIf="userPhone.invalid && (userPhone.dirty || userPhone.touched)"
        class="alert">
     <div *ngIf="userPhone.errors?.['required']">
-      Price is required.
+      Phone is required.
     </div>
     <div *ngIf="userPhone.errors?.['lengthInvalid']">
-      Price may contain at most 2 decimal places.
+      Phone may contain at most 2 decimal places.
     </div>
   </div>
 
