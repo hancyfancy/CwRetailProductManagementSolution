@@ -96,7 +96,7 @@ namespace CwRetail.Data.Repositories.Implementation
             {
                 string updateSql = product.AsUpdateSql();
 
-                if (string.IsNullOrWhiteSpace(updateSql))
+                if (updateSql.IsEmpty())
                 {
                     return 0;
                 }

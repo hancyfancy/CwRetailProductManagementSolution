@@ -19,7 +19,7 @@ namespace CwRetail.Data.Extensions
 
                 List<string> props = properties.Split(",").ToList();
 
-                props.RemoveAll(p => string.IsNullOrWhiteSpace(p));
+                props.RemoveAll(p => p.IsEmpty());
 
                 for (int i = 0; i < props.Count; i++)
                 {
