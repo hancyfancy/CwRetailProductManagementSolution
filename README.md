@@ -59,3 +59,4 @@ In Visual Studio:
 10. Use async/await instead of then/catch in angular
 11. Use streaming to push notifications to app, such as an insert or delete notification
 12. Inject repositories as dependencies to controllers instead of creating new repository instances
+13. Split authentication and authorisation into separate solutions
