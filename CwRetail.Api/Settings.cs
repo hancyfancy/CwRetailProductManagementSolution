@@ -7,5 +7,7 @@
         public static readonly bool SmtpUseSsl = true;
         public static readonly string SmtpSender = "malavdea@zohomail.com.au";
         public static readonly string SmtpPassword = "wSxzMhNxJ1NU";
+        public static readonly int EmailValidationSize = 200;
+        public static readonly int PhoneValidationSize = 6;
     }
 }

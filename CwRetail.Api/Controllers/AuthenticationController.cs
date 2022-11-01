@@ -98,27 +98,36 @@ namespace CwRetail.Api.Controllers
                 return BadRequest("Either email or phone needs to be verified to access content");
             }
 
-            string token = userVerification.Token = TokenExtensions.GetUniqueKey();
-
-            if (token.IsEmpty())
-            {
-                return BadRequest("Error while generating token");
-            }
-
-            _userTokensRepo.InsertOrUpdate(userVerification.UserId, token);
-
-            string validationMessage = $"Please use the following token, which expires in 24 hours, to login: {userVerification.Token}";
-
             if (userVerification.EmailVerified)
             {
+                userVerification.Token = TokenExtensions.GetUniqueKey(UserContactTypeEnum.Email, Settings.EmailValidationSize);
+
+                if (userVerification.Token.IsEmpty())
+                {
+                    return BadRequest("Error while generating token");
+                }
+
+                string validationMessage = $"Please use the following token, which expires in 24 hours, to login: {userVerification.Token}";
+
                 userVerification.Send(UserContactTypeEnum.Email, Settings.SmtpHost, Settings.SmtpPort, Settings.SmtpUseSsl, Settings.SmtpSender, Settings.SmtpPassword, "Validate login attempt", validationMessage);
             }
             else if (userVerification.PhoneVerified)
             {
+                userVerification.Token = TokenExtensions.GetUniqueKey(UserContactTypeEnum.Phone, Settings.PhoneValidationSize);
+
+                if (userVerification.Token.IsEmpty())
+                {
+                    return BadRequest("Error while generating token");
+                }
+
+                string validationMessage = $"Please use the following token, which expires in 24 hours, to login: {userVerification.Token}";
+
                 userVerification.Send(UserContactTypeEnum.Phone, Settings.SmtpHost, Settings.SmtpPort, Settings.SmtpUseSsl, Settings.SmtpSender, Settings.SmtpPassword, "Validate login attempt", validationMessage);
             }
 
-            return Ok(token);
+            _userTokensRepo.InsertOrUpdate(userVerification.UserId, userVerification.Token);
+
+            return Ok(userVerification.Token);
         }
 
         [HttpGet(Name = "Verify")]
