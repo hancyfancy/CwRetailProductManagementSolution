@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="BouncyCastle" Version="1.8.9" />
+    <PackageReference Include="ClickSendV3API" Version="5.0.72" />
     <PackageReference Include="jose-jwt" Version="4.0.1" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.2.9" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />

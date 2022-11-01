@@ -10,6 +10,7 @@
         public static readonly int EmailValidationSize = 200;
         public static readonly int PhoneValidationSize = 6;
         public static readonly string SmsSender = "malavdea";
-        public static readonly string TextLocalApiKey = "NmM3NDM5NGU3MTRmNDQ0NDZiNDI3MjUwNDY1ODZkMzU=";
+        public static readonly string ClickSendUsername = "atalmalavdework@gmail.com";
+        public static readonly string ClickSendApiKey = "F057035E-8019-E792-987F-6466C81E6B36";
     }
 }

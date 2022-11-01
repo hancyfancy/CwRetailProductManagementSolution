@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System.Text.Json.Nodes;
 using System.Text;
+using IO.ClickSend.ClickSend.Api;
+using IO.ClickSend.ClickSend.Model;
+using IO.ClickSend.Client;
 
 namespace CwRetail.Api.Extensions
 {
@@ -40,24 +43,30 @@ namespace CwRetail.Api.Extensions
             }
         }
 
-        public static void SendSms(this UserVerification userVerification, string smsApiKey, string sender, string body)
+        public static void SendSms(this UserVerification userVerification, string smsUsername, string smsApiKey, string sender, string body)
         {
             try
             {
-                string message = HttpUtility.UrlEncode(body);
-
-                using (var wb = new WebClient())
+                var configuration = new Configuration()
                 {
-                    byte[] response = wb.UploadValues("https://api.txtlocal.com/send/", new NameValueCollection()
-                    {
-                        {"apikey" , smsApiKey},
-                        {"numbers" , userVerification.Phone.Replace("+","")},
-                        {"message" , message},
-                        {"sender" , sender}
-                    });
+                    Username = smsUsername,
+                    Password = smsApiKey
+                };
 
-                    string result = Encoding.UTF8.GetString(response);
-                }
+                var smsApi = new SMSApi(configuration);
+
+                var listOfSms = new List<SmsMessage>
+                {
+                    new SmsMessage(
+                        to: userVerification.Phone,
+                        body: body,
+                        source: sender
+                    )
+                };
+
+                var smsCollection = new SmsMessageCollection(listOfSms);
+
+                var response = smsApi.SmsSendPost(smsCollection);
             }
             catch (Exception e)
             {

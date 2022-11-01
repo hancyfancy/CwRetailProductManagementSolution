@@ -90,7 +90,7 @@ namespace CwRetail.Api.Controllers
 
             if (!userVerification.PhoneVerified)
             {
-                userVerification.SendSms(Settings.TextLocalApiKey, Settings.SmsSender, $"Please verify phone number at https://localhost:7138/api/Authentication/Verify?mode=phone&user={encryptedUserVerificationJson}");
+                userVerification.SendSms(Settings.ClickSendUsername, Settings.ClickSendApiKey, Settings.SmsSender, $"Please verify phone number at https://localhost:7138/api/Authentication/Verify?mode=phone&user={encryptedUserVerificationJson}");
             }
 
             if (!(userVerification.EmailVerified || userVerification.PhoneVerified))
@@ -122,7 +122,7 @@ namespace CwRetail.Api.Controllers
 
                 string validationMessage = $"Please use the following token, which expires in 24 hours, to login: {userVerification.Token}";
 
-                userVerification.SendSms(Settings.TextLocalApiKey, Settings.SmsSender, validationMessage);
+                userVerification.SendSms(Settings.ClickSendUsername, Settings.ClickSendApiKey, Settings.SmsSender, validationMessage);
             }
 
             _userTokensRepo.InsertOrUpdate(userVerification.UserId, userVerification.Token);
