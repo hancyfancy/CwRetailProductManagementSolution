@@ -43,17 +43,13 @@ In Visual Studio:
 2. Select `Run All Tests`
 
 ### Todo
-1. Change controller api actions to return IActionResult [Done]
-2. Cater for invalid data in controller api actions [Done]
 3. Add authorisation for each controller api action [In progress]
     1. Need to test built functionality
     2. Need to ensure sms is being received on mobile (contact ClickSend to determine pricing plans)
     3. Need to ensure encrypted user is retrieved properly in ProductController and ProductAuditController
 4. Make controller api action async
-5. Show history of updates sql statements via audit.products table for a particular product id [Done]
 6. Check if mocked test cases need to be ammended
 7. Write another frontend using react typescript
-8. Move internal list of products to product service [Done]
 9. Change product id to string instead of long for better security
 10. Use async/await instead of then/catch in angular
 11. Use streaming to push notifications to app, such as an insert or delete notification
