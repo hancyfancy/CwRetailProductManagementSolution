@@ -83,7 +83,6 @@ namespace CwRetail.Api.Controllers
                 return BadRequest("User verification could not be processed");
             }
 
-            userVerification.EmailVerified = true;
             if (!userVerification.EmailVerified)
             {
                 userVerification.SendEmail(Settings.SmtpHost, Settings.SmtpPort, Settings.SmtpUseSsl, Settings.SmtpSender, Settings.SmtpPassword, "Verification required", $"Please verify email at https://localhost:7138/api/Authentication/Verify?mode=email&user={encryptedUserVerificationJson}");
