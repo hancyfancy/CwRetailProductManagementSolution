@@ -9,5 +9,7 @@
         public static readonly string SmtpPassword = "wSxzMhNxJ1NU";
         public static readonly int EmailValidationSize = 200;
         public static readonly int PhoneValidationSize = 6;
+        public static readonly string SmsSender = "malavdea";
+        public static readonly string TextLocalApiKey = "NmM3NDM5NGU3MTRmNDQ0NDZiNDI3MjUwNDY1ODZkMzU=";
     }
 }
