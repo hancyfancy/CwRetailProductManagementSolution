@@ -14,7 +14,7 @@ namespace CwRetail.Api.Extensions
 {
     public static class UserContactExtensions
     {
-        public static void Send(this UserVerification userVerification, UserContactTypeEnum userContactTypeEnum, string host, int port, bool useSsl, string username, string password, string title, string body)
+        public static void SendEmail(this UserVerification userVerification, string host, int port, bool useSsl, string username, string password, string title, string body)
         {
             try
             {
@@ -24,18 +24,8 @@ namespace CwRetail.Api.Extensions
                     message.From = new MailAddress(username);
                     message.Subject = title;
                     message.Body = body;
-
-                    if (userContactTypeEnum == UserContactTypeEnum.Email)
-                    {
-                        message.To.Add(new MailAddress(userVerification.Email));
-                        message.IsBodyHtml = true;
-                    }
-                    else if (userContactTypeEnum == UserContactTypeEnum.Phone)
-                    {
-                        message.To.Add(new MailAddress($"{userVerification.Phone.Replace("+", "")}@txt.att.net"));
-                        message.IsBodyHtml = false;
-                    }
-
+                    message.To.Add(new MailAddress(userVerification.Email));
+                    message.IsBodyHtml = true;
                     smtp.Port = port;
                     smtp.Host = host;
                     smtp.EnableSsl = useSsl;
