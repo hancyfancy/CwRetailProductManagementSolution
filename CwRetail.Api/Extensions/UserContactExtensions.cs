@@ -56,15 +56,12 @@ namespace CwRetail.Api.Extensions
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    NameValueCollection nameValueCollection = new NameValueCollection()
-                    {
-                        {"apikey" , smsApiKey},
-                        {"numbers" , userVerification.Phone.Replace("+","")},
-                        {"message" , body},
-                        {"sender" , sender}
-                    };
+                    string json = "{\"apikey\": \"" + smsApiKey + 
+                        "\", \"numbers\": \"" + userVerification.Phone.Replace("+", "") +
+                        "\", \"message\": \"" + body +
+                        "\", \"sender\": \"" + sender + "\"}";
 
-                    StringContent content = new StringContent(nameValueCollection.ToJson(), Encoding.UTF8, "application/json");
+                    StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
                     Uri uri = new Uri($"https://api.txtlocal.com/send/");
 
@@ -74,6 +71,11 @@ namespace CwRetail.Api.Extensions
                     };
 
                     HttpResponseMessage responseMessage = client.Send(httpRequestMessage);
+
+                    if (responseMessage.IsSuccessStatusCode)
+                    {
+                        string response = responseMessage.Content.ReadAsStringAsync().Result;
+                    }
                 }
             }
             catch (Exception e)
