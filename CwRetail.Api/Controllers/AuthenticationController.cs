@@ -12,6 +12,8 @@ using GenCryptography.Service.Utilities.Implementation;
 using GenCryptography.Service.Utilities.Interface;
 using GenNotification.Service.Utilities.Implementation;
 using GenNotification.Service.Utilities.Interface;
+using GenTokenization.Service.Utilities.Implementation;
+using GenTokenization.Service.Utilities.Interface;
 using GenValidation.Service.Utilities.Implementation;
 using GenValidation.Service.Utilities.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -36,8 +38,10 @@ namespace CwRetail.Api.Controllers
         private readonly IUserEncryptionRepository _userEncryptionRepository;
         private readonly IEmailDespatcher _emailDespatcher;
         private readonly ISmsDespatcher _smsDespatcher;
-        private readonly IEmailValidator _emailValidator;
-        private readonly IPhoneValidator _phoneValidator;
+        private readonly IValidator _emailValidator;
+        private readonly IValidator _phoneValidator;
+        private readonly AlphanumericTokenizer _alphanumericTokenizer;
+        private readonly NumericTokenizer _numericTokenizer;
 
         public AuthenticationController(ILogger<ProductAuditController> logger)
         {
@@ -55,17 +59,19 @@ namespace CwRetail.Api.Controllers
             _smsDespatcher = new SmsDespatcher();
             _emailValidator = new EmailValidator();
             _phoneValidator = new PhoneValidator();
+            _alphanumericTokenizer = new AlphanumericTokenizer();
+            _numericTokenizer = new NumericTokenizer();
         }
 
         [HttpPost(Name = "CreateUser")]
         public IActionResult CreateUser([FromBody] User user)
         {
-            if (!_emailValidator.IsValidEmail(user.Email))
+            if (!_emailValidator.IsValid(user.Email))
             {
                 return BadRequest("Invalid email");
             }
 
-            if (!_phoneValidator.IsValidPhone(user.Phone))
+            if (!_phoneValidator.IsValid(user.Phone))
             {
                 return BadRequest("Invalid phone");
             }
@@ -135,7 +141,7 @@ namespace CwRetail.Api.Controllers
 
             if (userVerification.EmailVerified)
             {
-                userVerification.Token = TokenExtensions.GetUniqueKey(UserContactTypeEnum.Email, Settings.EmailValidationSize);
+                userVerification.Token = _alphanumericTokenizer.GetUniqueKey(Settings.EmailValidationSize);
 
                 if (userVerification.Token.IsEmpty())
                 {
@@ -148,7 +154,7 @@ namespace CwRetail.Api.Controllers
             }
             else if (userVerification.PhoneVerified)
             {
-                userVerification.Token = TokenExtensions.GetUniqueKey(UserContactTypeEnum.Phone, Settings.PhoneValidationSize);
+                userVerification.Token = _numericTokenizer.GetUniqueKey(Settings.PhoneValidationSize);
 
                 if (userVerification.Token.IsEmpty())
                 {

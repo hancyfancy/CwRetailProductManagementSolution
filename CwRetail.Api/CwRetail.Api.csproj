@@ -12,6 +12,7 @@
     <PackageReference Include="GenCryptography.Data" Version="1.0.0" />
     <PackageReference Include="GenCryptography.Service" Version="1.0.0" />
     <PackageReference Include="GenNotification.Service" Version="1.0.0" />
+    <PackageReference Include="GenTokenization.Service" Version="1.0.0" />
     <PackageReference Include="GenValidation.Service" Version="1.0.0" />
     <PackageReference Include="jose-jwt" Version="4.0.1" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.2.9" />
