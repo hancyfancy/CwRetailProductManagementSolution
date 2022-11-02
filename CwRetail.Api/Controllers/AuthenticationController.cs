@@ -10,6 +10,8 @@ using GenCryptography.Data.Repositories.Implementation;
 using GenCryptography.Data.Repositories.Interface;
 using GenCryptography.Service.Utilities.Implementation;
 using GenCryptography.Service.Utilities.Interface;
+using GenNotification.Service.Utilities.Implementation;
+using GenNotification.Service.Utilities.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -30,6 +32,8 @@ namespace CwRetail.Api.Controllers
         private readonly IEncryptor _encryptor;
         private readonly IDecryptor _decryptor;
         private readonly IUserEncryptionRepository _userEncryptionRepository;
+        private readonly IEmailDespatcher _emailDespatcher;
+        private readonly ISmsDespatcher _smsDespatcher;
 
         public AuthenticationController(ILogger<ProductAuditController> logger)
         {
@@ -43,6 +47,8 @@ namespace CwRetail.Api.Controllers
             _encryptor = new Encryptor();
             _decryptor = new Decryptor();
             _userEncryptionRepository = new UserEncryptionRepository(ConnectionStrings.Test);
+            _emailDespatcher = new EmailDespatcher();
+            _smsDespatcher = new SmsDespatcher();
         }
 
         [HttpPost(Name = "CreateUser")]
@@ -108,12 +114,12 @@ namespace CwRetail.Api.Controllers
 
             if (!userVerification.EmailVerified)
             {
-                userVerification.SendEmail(Settings.SmtpHost, Settings.SmtpPort, Settings.SmtpUseSsl, Settings.SmtpSender, Settings.SmtpPassword, "Verification required", $"Please verify email at https://localhost:7138/api/Authentication/Verify?mode=email&user={encryptedUserVerificationJson}");
+                _emailDespatcher.SendEmail(Settings.SmtpHost, Settings.SmtpPort, Settings.SmtpUseSsl, userVerification.Email, Settings.SmtpSender, Settings.SmtpPassword, "Verification required", $"Please verify email at https://localhost:7138/api/Authentication/Verify?mode=email&user={encryptedUserVerificationJson}");
             }
 
             if (!userVerification.PhoneVerified)
             {
-                userVerification.SendSms(Settings.ClickSendUsername, Settings.ClickSendApiKey, Settings.SmsSender, $"Please verify phone number at https://localhost:7138/api/Authentication/Verify?mode=phone&user={encryptedUserVerificationJson}");
+                _smsDespatcher.SendSms(Settings.ClickSendUsername, Settings.ClickSendApiKey, userVerification.Phone, Settings.SmsSender, $"Please verify phone number at https://localhost:7138/api/Authentication/Verify?mode=phone&user={encryptedUserVerificationJson}");
             }
 
             if (!(userVerification.EmailVerified || userVerification.PhoneVerified))
@@ -132,7 +138,7 @@ namespace CwRetail.Api.Controllers
 
                 string validationMessage = $"Please use the following token, which expires in 24 hours, to login: {userVerification.Token}";
 
-                userVerification.SendEmail(Settings.SmtpHost, Settings.SmtpPort, Settings.SmtpUseSsl, Settings.SmtpSender, Settings.SmtpPassword, "Validate login attempt", validationMessage);
+                _emailDespatcher.SendEmail(Settings.SmtpHost, Settings.SmtpPort, Settings.SmtpUseSsl, userVerification.Email, Settings.SmtpSender, Settings.SmtpPassword, "Validate login attempt", validationMessage);
             }
             else if (userVerification.PhoneVerified)
             {
@@ -145,7 +151,7 @@ namespace CwRetail.Api.Controllers
 
                 string validationMessage = $"Please use the following token, which expires in 24 hours, to login: {userVerification.Token}";
 
-                userVerification.SendSms(Settings.ClickSendUsername, Settings.ClickSendApiKey, Settings.SmsSender, validationMessage);
+                _smsDespatcher.SendSms(Settings.ClickSendUsername, Settings.ClickSendApiKey, userVerification.Phone, Settings.SmsSender, validationMessage);
             }
 
             _userTokensRepo.InsertOrUpdate(userVerification.UserId, userVerification.Token);
