@@ -40,8 +40,8 @@ namespace CwRetail.Api.Controllers
         private readonly ISmsDespatcher _smsDespatcher;
         private readonly IValidator _emailValidator;
         private readonly IValidator _phoneValidator;
-        private readonly AlphanumericTokenizer _alphanumericTokenizer;
-        private readonly NumericTokenizer _numericTokenizer;
+        private readonly ITokenizer _alphanumericTokenizer;
+        private readonly ITokenizer _numericTokenizer;
 
         public AuthenticationController(ILogger<ProductAuditController> logger)
         {
