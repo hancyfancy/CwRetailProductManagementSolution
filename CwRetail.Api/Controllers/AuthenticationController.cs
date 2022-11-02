@@ -76,6 +76,8 @@ namespace CwRetail.Api.Controllers
                 return BadRequest("User could not be verified");
             }
 
+            byte[] encryptionKey = CryptoExtensions.GenerateEncryptionKey();
+
             string encryptedUserVerificationJson = userVerificationJson.Encrypt();
 
             if (encryptedUserVerificationJson.IsEmpty())
