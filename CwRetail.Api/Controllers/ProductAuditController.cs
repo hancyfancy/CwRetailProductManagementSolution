@@ -2,8 +2,14 @@
 using CwRetail.Data.Constants;
 using CwRetail.Data.Extensions;
 using CwRetail.Data.Models;
+using CwRetail.Data.Repositories;
 using CwRetail.Data.Repositories.Implementation;
 using CwRetail.Data.Repositories.Interface;
+using GenCryptography.Data.Models;
+using GenCryptography.Data.Repositories.Implementation;
+using GenCryptography.Data.Repositories.Interface;
+using GenCryptography.Service.Utilities.Implementation;
+using GenCryptography.Service.Utilities.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Asn1.Cms;
 
@@ -16,19 +22,25 @@ namespace CwRetail.Api.Controllers
     {
         private readonly ILogger<ProductAuditController> _logger;
         private readonly IProductAuditRepository _repo;
+        private readonly IUserEncryptionRepository _userEncryptionRepository;
+        private readonly IDecryptor _decryptor;
 
         public ProductAuditController(ILogger<ProductAuditController> logger)
         {
             _logger = logger;
             _repo = new ProductAuditRepository();
+            _userEncryptionRepository = new UserEncryptionRepository(ConnectionStrings.Test);
+            _decryptor = new Decryptor();
         }
 
         [HttpGet(Name = "GetUpdates")]
-        public IActionResult GetUpdates([FromHeader] string authorization, [FromHeader] long productId)
+        public IActionResult GetUpdates([FromHeader] long userId, [FromHeader] string authorization, [FromHeader] long productId)
         {
             try
             {
-                string decryptedUser = authorization.Replace("Bearer", "").Trim().Decrypt();
+                UserEncryption userEncryption = _userEncryptionRepository.Get(userId);
+
+                string decryptedUser = _decryptor.Decrypt(userEncryption.EncryptionKey, authorization.Replace("Bearer", "").Trim());
 
                 if (decryptedUser.IsEmpty())
                 {

@@ -2,8 +2,14 @@
 using CwRetail.Data.Enumerations;
 using CwRetail.Data.Extensions;
 using CwRetail.Data.Models;
+using CwRetail.Data.Repositories;
 using CwRetail.Data.Repositories.Implementation;
 using CwRetail.Data.Repositories.Interface;
+using GenCryptography.Data.Models;
+using GenCryptography.Data.Repositories.Implementation;
+using GenCryptography.Data.Repositories.Interface;
+using GenCryptography.Service.Utilities.Implementation;
+using GenCryptography.Service.Utilities.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -20,6 +26,10 @@ namespace CwRetail.Api.Controllers
         private readonly IUserRolesRepository _userRolesRepo;
         private readonly IUserTokensRepository _userTokensRepo;
         private readonly string _privateRsaKey;
+        private readonly IKeyGenerator _keyGenerator;
+        private readonly IEncryptor _encryptor;
+        private readonly IDecryptor _decryptor;
+        private readonly IUserEncryptionRepository _userEncryptionRepository;
 
         public AuthenticationController(ILogger<ProductAuditController> logger)
         {
@@ -29,6 +39,10 @@ namespace CwRetail.Api.Controllers
             _userRolesRepo = new UserRolesRepository();
             _userTokensRepo = new UserTokensRepository();
             _privateRsaKey = "";
+            _keyGenerator = new KeyGenerator();
+            _encryptor = new Encryptor();
+            _decryptor = new Decryptor();
+            _userEncryptionRepository = new UserEncryptionRepository(ConnectionStrings.Test);
         }
 
         [HttpPost(Name = "CreateUser")]
@@ -76,9 +90,16 @@ namespace CwRetail.Api.Controllers
                 return BadRequest("User could not be verified");
             }
 
-            byte[] encryptionKey = CryptoExtensions.GenerateEncryptionKey();
+            byte[] encryptionKey = _keyGenerator.GenerateEncryptionKey();
 
-            string encryptedUserVerificationJson = userVerificationJson.Encrypt();
+            if ((encryptionKey is null) || (encryptionKey.Count() == 0))
+            {
+                return BadRequest("Failed to generate encryption key");
+            }
+
+            _userEncryptionRepository.InsertOrUpdate(userVerification.UserId, encryptionKey);
+
+            string encryptedUserVerificationJson = _encryptor.Encrypt(encryptionKey, userVerificationJson);
 
             if (encryptedUserVerificationJson.IsEmpty())
             {
@@ -135,7 +156,7 @@ namespace CwRetail.Api.Controllers
         [HttpGet(Name = "Verify")]
         public IActionResult Verify(UserContactTypeEnum mode, string user)
         {
-            string decryptedUser = user.Decrypt();
+            string decryptedUser = _decryptor.Decrypt(new byte[] { }, user);
 
             if (decryptedUser.IsEmpty())
             {
@@ -183,7 +204,9 @@ namespace CwRetail.Api.Controllers
                 return BadRequest("Retrieved user could not be verified");
             }
 
-            string encryptedRetrievedUserJson = retrievedUserJson.Encrypt();
+            UserEncryption userEncryption = _userEncryptionRepository.Get(retrievedUser.UserId);
+
+            string encryptedRetrievedUserJson = _encryptor.Encrypt(userEncryption.EncryptionKey, retrievedUserJson);
 
             if (encryptedRetrievedUserJson.IsEmpty())
             {

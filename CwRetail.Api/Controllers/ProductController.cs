@@ -6,6 +6,11 @@ using CwRetail.Data.Models;
 using CwRetail.Data.Repositories;
 using CwRetail.Data.Repositories.Implementation;
 using CwRetail.Data.Repositories.Interface;
+using GenCryptography.Data.Models;
+using GenCryptography.Data.Repositories.Implementation;
+using GenCryptography.Data.Repositories.Interface;
+using GenCryptography.Service.Utilities.Implementation;
+using GenCryptography.Service.Utilities.Interface;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -24,19 +29,25 @@ namespace CwRetail.Api.Controllers
     {
         private readonly ILogger<ProductController> _logger;
         private readonly IProductRepository _repo;
+        private readonly IUserEncryptionRepository _userEncryptionRepository;
+        private readonly IDecryptor _decryptor;
 
         public ProductController(ILogger<ProductController> logger)
         {
             _logger = logger;
             _repo = new ProductRepository();
+            _userEncryptionRepository = new UserEncryptionRepository(ConnectionStrings.Test);
+            _decryptor = new Decryptor();
         }
 
         [HttpGet(Name = "Get")]
-        public IActionResult Get([FromHeader] string authorization)
+        public IActionResult Get([FromHeader] long userId, [FromHeader] string authorization)
         {
             try
             {
-                string decryptedUser = authorization.Replace("Bearer", "").Trim().Decrypt();
+                UserEncryption userEncryption = _userEncryptionRepository.Get(userId);
+
+                string decryptedUser = _decryptor.Decrypt(userEncryption.EncryptionKey, authorization.Replace("Bearer", "").Trim());
 
                 if (decryptedUser.IsEmpty())
                 {
@@ -92,11 +103,13 @@ namespace CwRetail.Api.Controllers
         }
 
         [HttpPost(Name = "Create")]
-        public IActionResult Create([FromHeader] string authorization, [FromBody] Product product)
+        public IActionResult Create([FromHeader] long userId, [FromHeader] string authorization, [FromBody] Product product)
         {
             try
             {
-                string decryptedUser = authorization.Replace("Bearer", "").Trim().Decrypt();
+                UserEncryption userEncryption = _userEncryptionRepository.Get(userId);
+
+                string decryptedUser = _decryptor.Decrypt(userEncryption.EncryptionKey, authorization.Replace("Bearer", "").Trim());
 
                 if (decryptedUser.IsEmpty())
                 {
@@ -132,11 +145,13 @@ namespace CwRetail.Api.Controllers
         }
 
         [HttpPatch(Name = "Edit")]
-        public IActionResult Edit([FromHeader] string authorization, [FromHeader] long id, [FromBody] JsonElement product)
+        public IActionResult Edit([FromHeader] long userId, [FromHeader] string authorization, [FromHeader] long productId, [FromBody] JsonElement product)
         {
             try
             {
-                string decryptedUser = authorization.Replace("Bearer", "").Trim().Decrypt();
+                UserEncryption userEncryption = _userEncryptionRepository.Get(userId);
+
+                string decryptedUser = _decryptor.Decrypt(userEncryption.EncryptionKey, authorization.Replace("Bearer", "").Trim());
 
                 if (decryptedUser.IsEmpty())
                 {
@@ -162,7 +177,7 @@ namespace CwRetail.Api.Controllers
                     return BadRequest("Unauthorised");
                 }
 
-                if (id <= 0)
+                if (productId <= 0)
                 {
                     return BadRequest("Invalid id");
                 }
@@ -191,7 +206,7 @@ namespace CwRetail.Api.Controllers
                     }
                 }
 
-                return Ok(_repo.Update(id, json));
+                return Ok(_repo.Update(productId, json));
             }
             catch (Exception e)
             {
@@ -202,11 +217,13 @@ namespace CwRetail.Api.Controllers
         }
 
         [HttpDelete(Name = "Remove")]
-        public IActionResult Remove([FromHeader] string authorization, [FromHeader] long id)
+        public IActionResult Remove([FromHeader] long userId, [FromHeader] string authorization, [FromHeader] long id)
         {
             try
             {
-                string decryptedUser = authorization.Replace("Bearer", "").Trim().Decrypt();
+                UserEncryption userEncryption = _userEncryptionRepository.Get(userId);
+
+                string decryptedUser = _decryptor.Decrypt(userEncryption.EncryptionKey, authorization.Replace("Bearer", "").Trim());
 
                 if (decryptedUser.IsEmpty())
                 {
