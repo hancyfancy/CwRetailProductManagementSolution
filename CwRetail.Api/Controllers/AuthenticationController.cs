@@ -12,6 +12,8 @@ using GenCryptography.Service.Utilities.Implementation;
 using GenCryptography.Service.Utilities.Interface;
 using GenNotification.Service.Utilities.Implementation;
 using GenNotification.Service.Utilities.Interface;
+using GenValidation.Service.Utilities.Implementation;
+using GenValidation.Service.Utilities.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -34,6 +36,8 @@ namespace CwRetail.Api.Controllers
         private readonly IUserEncryptionRepository _userEncryptionRepository;
         private readonly IEmailDespatcher _emailDespatcher;
         private readonly ISmsDespatcher _smsDespatcher;
+        private readonly IEmailValidator _emailValidator;
+        private readonly IPhoneValidator _phoneValidator;
 
         public AuthenticationController(ILogger<ProductAuditController> logger)
         {
@@ -49,17 +53,19 @@ namespace CwRetail.Api.Controllers
             _userEncryptionRepository = new UserEncryptionRepository(ConnectionStrings.Test);
             _emailDespatcher = new EmailDespatcher();
             _smsDespatcher = new SmsDespatcher();
+            _emailValidator = new EmailValidator();
+            _phoneValidator = new PhoneValidator();
         }
 
         [HttpPost(Name = "CreateUser")]
         public IActionResult CreateUser([FromBody] User user)
         {
-            if (!user.Email.IsValidEmail())
+            if (!_emailValidator.IsValidEmail(user.Email))
             {
                 return BadRequest("Invalid email");
             }
 
-            if (!user.Phone.IsValidPhone())
+            if (!_phoneValidator.IsValidPhone(user.Phone))
             {
                 return BadRequest("Invalid phone");
             }
