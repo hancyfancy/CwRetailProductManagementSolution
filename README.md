@@ -55,3 +55,4 @@ In Visual Studio:
 11. Use streaming to push notifications to app, such as an insert or delete notification
 12. Inject repositories as dependencies to controllers instead of creating new repository instances
 13. Split authentication and authorisation into separate solutions
+14. Need to limit how many email and sms messages users can send
