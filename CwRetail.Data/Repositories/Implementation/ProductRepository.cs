@@ -2,6 +2,8 @@
 using CwRetail.Data.Models;
 using CwRetail.Data.Repositories.Interface;
 using Dapper;
+using GenConversion.Service.Utilities.Implementation;
+using GenConversion.Service.Utilities.Interface;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -20,10 +22,12 @@ namespace CwRetail.Data.Repositories.Implementation
     public class ProductRepository : IProductRepository
     {
         private readonly SqlConnection _connection;
+        private readonly ISqlConverter _sqlConverter;
 
         public ProductRepository()
         {
             _connection = new SqlConnection(ConnectionStrings.Test);
+            _sqlConverter = new JsonToSqlUpdateParameterConverter();
         }
 
         public IEnumerable<Product> Get()
@@ -94,7 +98,7 @@ namespace CwRetail.Data.Repositories.Implementation
         {
             try
             {
-                string updateSql = product.AsUpdateSql();
+                string updateSql = _sqlConverter.ToSql(product);
 
                 if (updateSql.IsEmpty())
                 {
