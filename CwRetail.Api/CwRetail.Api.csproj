@@ -9,7 +9,6 @@
   <ItemGroup>
     <PackageReference Include="BouncyCastle" Version="1.8.9" />
     <PackageReference Include="ClickSendV3API" Version="5.0.72" />
-    <PackageReference Include="GenCryptography.Data" Version="1.0.0" />
     <PackageReference Include="GenCryptography.Service" Version="1.0.0" />
     <PackageReference Include="GenNotification.Service" Version="1.0.0" />
     <PackageReference Include="GenTokenization.Service" Version="1.0.0" />

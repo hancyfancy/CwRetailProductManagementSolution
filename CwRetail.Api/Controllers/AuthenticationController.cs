@@ -5,9 +5,6 @@ using CwRetail.Data.Models;
 using CwRetail.Data.Repositories;
 using CwRetail.Data.Repositories.Implementation;
 using CwRetail.Data.Repositories.Interface;
-using GenCryptography.Data.Models;
-using GenCryptography.Data.Repositories.Implementation;
-using GenCryptography.Data.Repositories.Interface;
 using GenCryptography.Service.Utilities.Implementation;
 using GenCryptography.Service.Utilities.Interface;
 using GenNotification.Service.Utilities.Implementation;
@@ -31,11 +28,11 @@ namespace CwRetail.Api.Controllers
         private readonly IUserVerificationRepository _userVerificationRepo;
         private readonly IUserRolesRepository _userRolesRepo;
         private readonly IUserTokensRepository _userTokensRepo;
+        private readonly IUserEncryptionRepository _userEncryptionRepo;
         private readonly string _privateRsaKey;
         private readonly IKeyGenerator _keyGenerator;
         private readonly IEncryptor _encryptor;
         private readonly IDecryptor _decryptor;
-        private readonly IUserEncryptionRepository _userEncryptionRepository;
         private readonly IEmailDespatcher _emailDespatcher;
         private readonly ISmsDespatcher _smsDespatcher;
         private readonly IValidator _emailValidator;
@@ -50,11 +47,11 @@ namespace CwRetail.Api.Controllers
             _userVerificationRepo = new UserVerificationRepository();
             _userRolesRepo = new UserRolesRepository();
             _userTokensRepo = new UserTokensRepository();
+            _userEncryptionRepo = new UserEncryptionRepository();
             _privateRsaKey = "";
             _keyGenerator = new KeyGenerator();
             _encryptor = new Encryptor();
             _decryptor = new Decryptor();
-            _userEncryptionRepository = new UserEncryptionRepository(ConnectionStrings.Test);
             _emailDespatcher = new EmailDespatcher();
             _smsDespatcher = new SmsDespatcher();
             _emailValidator = new EmailValidator();
@@ -115,7 +112,7 @@ namespace CwRetail.Api.Controllers
                 return BadRequest("Failed to generate encryption key");
             }
 
-            _userEncryptionRepository.InsertOrUpdate(userVerification.UserId, encryptionKey);
+            _userEncryptionRepo.InsertOrUpdate(userVerification.UserId, encryptionKey);
 
             string encryptedUserVerificationJson = _encryptor.Encrypt(encryptionKey, userVerificationJson);
 
@@ -222,7 +219,7 @@ namespace CwRetail.Api.Controllers
                 return BadRequest("Retrieved user could not be verified");
             }
 
-            UserEncryption userEncryption = _userEncryptionRepository.Get(retrievedUser.UserId);
+            UserEncryption userEncryption = _userEncryptionRepo.Get(retrievedUser.UserId);
 
             string encryptedRetrievedUserJson = _encryptor.Encrypt(userEncryption.EncryptionKey, retrievedUserJson);
 

@@ -5,9 +5,6 @@ using CwRetail.Data.Models;
 using CwRetail.Data.Repositories;
 using CwRetail.Data.Repositories.Implementation;
 using CwRetail.Data.Repositories.Interface;
-using GenCryptography.Data.Models;
-using GenCryptography.Data.Repositories.Implementation;
-using GenCryptography.Data.Repositories.Interface;
 using GenCryptography.Service.Utilities.Implementation;
 using GenCryptography.Service.Utilities.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +26,7 @@ namespace CwRetail.Api.Controllers
         {
             _logger = logger;
             _repo = new ProductAuditRepository();
-            _userEncryptionRepository = new UserEncryptionRepository(ConnectionStrings.Test);
+            _userEncryptionRepository = new UserEncryptionRepository();
             _decryptor = new Decryptor();
         }
 
