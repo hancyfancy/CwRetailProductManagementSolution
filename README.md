@@ -43,7 +43,7 @@ In Visual Studio:
 2. Select `Run All Tests`
 
 ### Todo
-3. Add authorisation for each controller api action [Completed, to be deployed]
+3. Add authorisation for each controller api action **[Completed, to be deployed]**
     1. Need to test built functionality
     2. Need to ensure encrypted user is retrieved properly in ProductController and ProductAuditController
     3. Need to create data repository specifically for each api, offering limited calls to the database, only the calls which are consumed by the api should be offered by the repository
@@ -53,6 +53,6 @@ In Visual Studio:
 9. Change product id to string instead of long for better security
 10. Use async/await instead of then/catch in angular
 11. Use streaming to push notifications to app, such as an insert or delete notification
-12. Inject repositories as dependencies to controllers instead of creating new repository instances [Done, only for projects where Program.cs file is available, such as Api projects]
-13. Split authentication and authorisation into separate solutions [Done]
+12. Inject repositories as dependencies to controllers instead of creating new repository instances **[Done, only for projects where Program.cs file is available, such as Api projects]**
+13. Split authentication and authorisation into separate solutions **[Done]**
 14. Need to limit how many email and sms messages users can send
