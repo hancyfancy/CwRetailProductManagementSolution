@@ -43,10 +43,10 @@ In Visual Studio:
 2. Select `Run All Tests`
 
 ### Todo
-3. Add authorisation for each controller api action [In progress]
+3. Add authorisation for each controller api action [Completed, to be deployed]
     1. Need to test built functionality
-    2. Need to ensure sms is being received on mobile (contact ClickSend to determine pricing plans)
-    3. Need to ensure encrypted user is retrieved properly in ProductController and ProductAuditController
+    2. Need to ensure encrypted user is retrieved properly in ProductController and ProductAuditController
+    3. Need to create data repository specifically for each api, offering limited calls to the database, only the calls which are consumed by the api should be offered by the repository
 4. Make controller api action async
 6. Check if mocked test cases need to be ammended
 7. Write another frontend using react typescript
