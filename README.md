@@ -53,6 +53,6 @@ In Visual Studio:
 9. Change product id to string instead of long for better security
 10. Use async/await instead of then/catch in angular
 11. Use streaming to push notifications to app, such as an insert or delete notification
-12. Inject repositories as dependencies to controllers instead of creating new repository instances
-13. Split authentication and authorisation into separate solutions
+12. Inject repositories as dependencies to controllers instead of creating new repository instances [Done, only for projects where Program.cs file is available, such as Api projects]
+13. Split authentication and authorisation into separate solutions [Done]
 14. Need to limit how many email and sms messages users can send
